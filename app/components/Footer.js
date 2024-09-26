@@ -35,7 +35,7 @@ const Footer = () => {
             target="_blank"
             className="text-1xl"
           >
-            WhatsappBtn
+            Whatsapp
           </a>
         </div>
       </div>
