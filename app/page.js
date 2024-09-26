@@ -2,8 +2,12 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
+let baseUrl = process.env.VERCEL_URL
+  ? `http://${process.env.VERCEL_URL}`
+  : "http://localhost:3000";
+
 const getOfertas = async () => {
-  const ofertas = await fetch("http://localhost:3000/api/ofertas", {
+  const ofertas = await fetch(`${baseUrl}/api/ofertas`, {
     cache: "force-cache",
     next: {
       revalidate: 3600,
