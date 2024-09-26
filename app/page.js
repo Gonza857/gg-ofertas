@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
@@ -21,11 +22,13 @@ const Ofertas = () => {
   const [resultados, setResultados] = useState([]);
   const [endDate, setEndDate] = useState("");
   const [message, setMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     getOfertas().then((r) => {
       setOfertas(r.games);
       setEndDate(r.ends);
+      setIsLoading(false);
     });
   }, []);
 
@@ -81,62 +84,78 @@ const Ofertas = () => {
           </div>
           <p className="w-11/12 md:w-8/12 mx-auto">{message}</p>
           <div className="min-h-fit">
-            <table className="w-full md:w-8/12 mx-auto bg-white border rounded-lg">
-              <thead>
-                <tr className="bg-gray-800 text-white text-center">
-                  <th className="py-2 px-2 md:py-2 md:px-4">Juego</th>
-                  <th className="py-2 px-2 md:py-2 md:px-4">Lista</th>
-                  <th className="py-2 px-2 md:py-2 md:px-4">Transferencia</th>
-                </tr>
-              </thead>
-              <tbody>
-                {resultados.length > 0 ? (
-                  <>
-                    {resultados.map((game) => {
-                      let aumentado = game.price * 1.15;
-                      return (
-                        <tr
-                          className="border-b border-gray-200"
-                          key={`${game.price + game.name}`}
-                        >
-                          <td className="text-sm py-1 px-2 md:py-2 md:px-4 text-black">
-                            {game.name}
-                          </td>
-                          <td className="text-sm py-1 px-2 md:py-2 md:px-4 text-black text-center">
-                            ${aumentado.toFixed(0)}
-                          </td>
-                          <td className="text-sm py-1 px-2 md:py-2 md:px-4 text-black text-center">
-                            ${game.price}
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </>
-                ) : (
-                  <>
-                    {ofertas.map((game) => {
-                      let aumentado = game.price * 1.15;
-                      return (
-                        <tr
-                          className="border-b border-gray-200"
-                          key={`${game.price + game.name}`}
-                        >
-                          <td className="text-sm py-2 px-2 md:py-2 md:px-4 text-black">
-                            {game.name}
-                          </td>
-                          <td className="text-sm py-2 px-2 md:py-2 md:px-4 text-black text-center">
-                            ${aumentado.toFixed(0)}
-                          </td>
-                          <td className="text-sm py-2 px-2 md:py-2 md:px-4 text-black text-center">
-                            ${game.price}
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </>
-                )}
-              </tbody>
-            </table>
+            {isLoading ? (
+              <>
+                <Image
+                  src={"/images/logo-nuevo.png"}
+                  alt="Vercel Logo"
+                  width={100}
+                  height={100}
+                  className="rounded-full animate-spin mx-auto"
+                />
+              </>
+            ) : (
+              <>
+                <table className="w-full md:w-8/12 mx-auto bg-white border rounded-lg">
+                  <thead>
+                    <tr className="bg-gray-800 text-white text-center">
+                      <th className="py-2 px-2 md:py-2 md:px-4">Juego</th>
+                      <th className="py-2 px-2 md:py-2 md:px-4">Lista</th>
+                      <th className="py-2 px-2 md:py-2 md:px-4">
+                        Transferencia
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {resultados.length > 0 ? (
+                      <>
+                        {resultados.map((game) => {
+                          let aumentado = game.price * 1.15;
+                          return (
+                            <tr
+                              className="border-b border-gray-200"
+                              key={`${game.price + game.name}`}
+                            >
+                              <td className="text-sm py-1 px-2 md:py-2 md:px-4 text-black">
+                                {game.name}
+                              </td>
+                              <td className="text-sm py-1 px-2 md:py-2 md:px-4 text-black text-center">
+                                ${aumentado.toFixed(0)}
+                              </td>
+                              <td className="text-sm py-1 px-2 md:py-2 md:px-4 text-black text-center">
+                                ${game.price}
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </>
+                    ) : (
+                      <>
+                        {ofertas.map((game) => {
+                          let aumentado = game.price * 1.15;
+                          return (
+                            <tr
+                              className="border-b border-gray-200"
+                              key={`${game.price + game.name}`}
+                            >
+                              <td className="text-sm py-2 px-2 md:py-2 md:px-4 text-black">
+                                {game.name}
+                              </td>
+                              <td className="text-sm py-2 px-2 md:py-2 md:px-4 text-black text-center">
+                                ${aumentado.toFixed(0)}
+                              </td>
+                              <td className="text-sm py-2 px-2 md:py-2 md:px-4 text-black text-center">
+                                ${game.price}
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </>
+                    )}
+                  </tbody>
+                </table>
+              </>
+            )}
           </div>
         </div>
       </main>
