@@ -20,6 +20,7 @@ const Ofertas = () => {
   const [search, setSearch] = useState("");
   const [resultados, setResultados] = useState([]);
   const [endDate, setEndDate] = useState("");
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     getOfertas().then((r) => {
@@ -38,9 +39,19 @@ const Ofertas = () => {
     if (e.target.value == "") {
       setSearch("");
       setResultados([]);
+    } else {
+      let results = buscar(e.target.value);
+      setSearch(e.target.value);
+      if (results.length == 0) {
+        setResultados([]);
+        setMessage(
+          "No se encontraron resultados. Estas visualizado el listado completo."
+        );
+      } else {
+        setResultados(buscar(e.target.value));
+        setMessage(`Se encontraron ${results.length} resultados.`);
+      }
     }
-    setSearch(e.target.value);
-    setResultados(buscar(e.target.value));
   };
 
   return (
@@ -68,9 +79,7 @@ const Ofertas = () => {
               placeholder="Ingresa un juego para la busqueda"
             />
           </div>
-          {resultados.length > 0 && (
-            <p className="w-11/12 md:w-8/12 mx-auto">Buscando: {search}</p>
-          )}
+          <p className="w-11/12 md:w-8/12 mx-auto">{message}</p>
           <div className="min-h-fit">
             <table className="w-full md:w-8/12 mx-auto bg-white border rounded-lg">
               <thead>
