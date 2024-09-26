@@ -1,10 +1,10 @@
 "use client";
 import Image from "next/image";
-import { Convertidor } from "./helpers/Converter";
 import { useState } from "react";
 import Link from "next/link";
 import { addDoc, collection } from "firebase/firestore";
-import { db } from "./firebase/config";
+import { Convertidor } from "@/app/helpers/Converter";
+import { db } from "@/app/firebase/config";
 
 const converter = new Convertidor();
 
