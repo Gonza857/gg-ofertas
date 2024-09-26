@@ -3,9 +3,9 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 const getOfertas = async () => {
-  let baseUrl = process.env.VERCEL_URL
-  ? `http://${process.env.VERCEL_URL}`
-  : "http://localhost:3000";
+  let baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL
+    ? `http://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+    : "http://localhost:3000";
   const ofertas = await fetch(`${baseUrl}/api/ofertas`, {
     cache: "force-cache",
     next: {
