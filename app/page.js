@@ -8,10 +8,7 @@ const getOfertas = async () => {
     ? process.env.NEXT_PUBLIC_VERCEL_URL
     : "http://localhost:3000";
   const ofertas = await fetch(`${baseUrl}/api/ofertas`, {
-    cache: "force-cache",
-    next: {
-      revalidate: 3600,
-    },
+    cache: "no-store",
   }).then((r) => r.json());
   return ofertas[0];
 };
