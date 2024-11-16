@@ -10,6 +10,7 @@ const getOfertas = async () => {
   const ofertas = await fetch(`${baseUrl}/api/ofertas`, {
     cache: "no-store",
   }).then((r) => r.json());
+  console.log(ofertas[0])
   return ofertas[0];
 };
 

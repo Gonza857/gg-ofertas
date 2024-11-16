@@ -3,41 +3,53 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+    --background: #ffffff;
+    --foreground: #171717;
 }
 
 body {
-  color: var(--background);
-  background: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+    color: var(--background);
+    background: var(--foreground);
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+    .text-balance {
+        text-wrap: balance;
+    }
 }
 
 .animacion {
-  background-color: #15803d;
-  animation: parpadeo 2s infinite ease-in-out, escalar 2s infinite ease-in-out;
+    background-color: #15803d;
+    animation: parpadeo 2s infinite ease-in-out, escalar 2s infinite ease-in-out;
 }
 
 @keyframes parpadeo {
-  0%, 100% {
-      background-color: #1a9b49;
-  }
-  50% {
-      background-color: #15803d;
-  }
+    0%, 100% {
+        background-color: #1a9b49;
+    }
+    50% {
+        background-color: #15803d;
+    }
 }
 
 @keyframes escalar {
-  0%, 100% {
-      transform: scale(1);
-  }
-  50% {
-      transform: scale(1.02);
-  }
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.02);
+    }
+}
+
+.bor1 {
+    border: 5px solid red;
+}
+
+.bor2 {
+    border: 5px solid blue;
+}
+
+.bor3 {
+    border: 5px solid green;
 }
