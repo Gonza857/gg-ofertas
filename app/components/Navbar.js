@@ -5,7 +5,7 @@ import React from "react";
 const Navbar = () => {
   return (
     <header className="flex w-full h-20 bg-cyan-900">
-      <div className="w-10/12 mx-auto flex justify-between items-center">
+      <div className="w-full px-4 md:px-0 md:w-10/12 mx-auto flex justify-between items-center">
         <Link href={"/"} className="rounded-full overflow-hidden">
           <Image
             src={"/images/logo-nuevo.png"}
@@ -14,7 +14,7 @@ const Navbar = () => {
             alt="Logo Garret Games"
           />
         </Link>
-        <nav>
+        <nav className={""}>
           <ul className="flex gap-5 flex-wrap">
             {/* <Link href={"/pages/ofertas"}>
               <li>Ofertas</li>
