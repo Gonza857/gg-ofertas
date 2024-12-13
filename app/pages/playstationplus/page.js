@@ -1,4 +1,6 @@
 import React from "react";
+import Image from "next/image";
+import {AiFillCreditCard} from "react-icons/ai";
 
 let i = 0;
 
@@ -19,13 +21,13 @@ const PlayStationPlus = () => {
         <>
             <main className="w-full min-h-screen py-4 pb-12 flex flex-col gap-4">
                 <div className="w-11/12 md:w-4/12 mx-auto flex flex-col gap-1 md:gap-2">
-                    <h1 className="text-2xl font-semibold">
-                        PlayStation Plus PS4 & PS5
+                    <h1 className="text-2xl font-semibold flex gap-2">
+                        PlayStation Plus PS4 & PS5 <Image width={32} height={32} src={"/images/plus-logo.png"} alt={"Plus"}/>
                     </h1>
                     <p className="list-item ms-4">Se envia un usuario que se activa como principal y permite los
                         beneficios de dicha membresía</p>
                     <p className="list-item ms-4">
-                        Hasta 3 cuotas sin interés con débito/crédito (precio lista).
+                        Hasta 3 cuotas sin interés con débito/crédito (precio lista)
                     </p>
                     <p className="list-item ms-4">
                         Garantía durante el tiempo adquirido
