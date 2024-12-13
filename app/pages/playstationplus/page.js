@@ -20,9 +20,10 @@ const PlayStationPlus = () => {
     return (
         <>
             <main className="w-full min-h-screen py-4 pb-12 flex flex-col gap-4">
-                <div className="w-11/12 md:w-4/12 mx-auto flex flex-col gap-1 md:gap-2">
-                    <h1 className="text-2xl font-semibold flex gap-2">
-                        PlayStation Plus PS4 & PS5 <Image width={32} height={32} src={"/images/plus-logo.png"} alt={"Plus"}/>
+                <div className="w-full sm:w-8/12 md:w-7/12 lg:w-5/12 xl:w-4/12 mx-auto flex flex-col gap-1 md:gap-2">
+                    <h1 className="text-xl md:text-2xl font-semibold flex flex-wrap gap-2 items-center">
+                        <span>PlayStation Plus PS4 & PS5</span>
+                        <Image width={32} height={32} src={"/images/plus-logo.png"} alt={"Plus"}/>
                     </h1>
                     <p className="list-item ms-4">Se envia un usuario que se activa como principal y permite los
                         beneficios de dicha membresía</p>
@@ -36,7 +37,7 @@ const PlayStationPlus = () => {
                         Licencias originales.
                     </p>
                 </div>
-                <table className="w-full md:w-4/12 mx-auto bg-white border rounded-lg">
+                <table className="w-full sm:w-8/12 md:w-7/12 lg:w-5/12 xl:w-4/12 mx-auto bg-white border rounded-lg">
                     <thead>
                     <tr className="bg-gray-800 text-white text-center">
                         <th className="py-2 px-2 md:py-2 md:px-4">Juego</th>
