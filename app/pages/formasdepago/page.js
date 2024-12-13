@@ -8,8 +8,8 @@ const page = () => {
         <p className="list-item ms-4">Transferencia</p>
         <p className="list-item ms-4">Efectivo rapipago/pagofacil</p>
         <p className="list-item ms-4">Cuenta DNI (20% OFF)</p>
-        <p className="list-item ms-4">Tarjeta de crédito</p>
-        <p className="list-item ms-4">Tarjeta de débito</p>
+        <p className="list-item ms-4">Tarjeta de crédito (hasta 3 o 6 pagos, consultar)</p>
+        <p className="list-item ms-4">Tarjeta de débito (hasta 3 pagos)</p>
         <p className="list-item ms-4">Cryptomonedas</p>
       </div>
     </main>

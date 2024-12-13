@@ -22,6 +22,9 @@ const Navbar = () => {
             <Link href={"/pages/formasdepago"}>
               <li>Formas de pago</li>
             </Link>
+            <Link href={"/pages/playstationplus"}>
+              <li>PlayStation Plus</li>
+            </Link>
           </ul>
         </nav>
       </div>
