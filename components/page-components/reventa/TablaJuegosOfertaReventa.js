@@ -15,8 +15,8 @@ function redondearCien(num) {
 
 function TablaJuegosOfertaReventa({juegos = [], fechaExpiracion, titulo = null}) {
     const [juegoCopiado, setJuegoCopiado] = useState(null)
-    const [estaBuscando, setEstaBuscando] = useState(false)
-    const [busqueda, setBusqueda] = useState(juegos)
+    const [juegoBuscado, setJuegoBuscado] = useState("")
+    const [busqueda, setBusqueda] = useState(null)
 
     const copiarJuego = (text, id) => {
         navigator.clipboard
@@ -40,7 +40,9 @@ function TablaJuegosOfertaReventa({juegos = [], fechaExpiracion, titulo = null})
     }
 
     const tablaProps = {
-        juegos: busqueda,
+        juegoBuscado,
+        juegos,
+        busqueda,
         copiarJuego,
         juegoCopiado
     }
@@ -52,6 +54,7 @@ function TablaJuegosOfertaReventa({juegos = [], fechaExpiracion, titulo = null})
         const juegosFiltrados = [...juegos].filter((j) => {
             return j.name.toLowerCase().includes(e.target.value.toLowerCase())
         });
+        setJuegoBuscado(e.target.value)
         setBusqueda(juegosFiltrados)
     }
 
@@ -80,7 +83,7 @@ function TablaJuegosOfertaReventa({juegos = [], fechaExpiracion, titulo = null})
     }
 
     return (
-        <article className={"w-full sm:w-11/12 md:w-10/12 lg:w-8/12 mx-auto pt-4"}>
+        <article className={"w-full sm:w-11/12 md:w-10/12 lg:w-8/12 mx-auto py-4"}>
             {titulo && <h2 className="text-2xl font-bold mb-2 text-center">{titulo}</h2>}
             <div className="w-full bg-white shadow-xl rounded-xl border p-6 mb-8 max-w-4xl mx-auto">
                 <h2 className="text-xl italic font-semibold mb-4 text-center">Información Importante</h2>
@@ -129,15 +132,16 @@ function TablaJuegosOfertaReventa({juegos = [], fechaExpiracion, titulo = null})
                 <p className={"mt-4 text-sm text-neutral-500 dark:text-neutral-400 text-center"}>Atentamente, Garret
                     Games</p>
             </div>
-            <h2 className="text-2xl font-bold mb-2 text-center">Juegos en oferta hasta el {fechaExpiracion} 19:00hs</h2>
-            <div className={"flex gap-4 py-2"}>
+            <h2 className="text-2xl font-bold mb-2 text-center px-2">Juegos en oferta hasta el {fechaExpiracion} 19:00hs</h2>
+            <div className={"flex flex-col md:flex-row md:justify-between gap-4 py-2 px-2"}>
                 <Input
                     onChange={buscarJuego}
                     placeholder={"Buscar por nombre de juego"}
+                    className={"w-full md:w-3/4"}
                 />
-                <div>
+                <div className={"w-full md:w-1/4"}>
                     <Select onValueChange={handleSortChange}>
-                        <SelectTrigger className="w-[180px]">
+                        <SelectTrigger className="w-full">
                             <SelectValue placeholder="Ordenar por..."/>
                         </SelectTrigger>
                         <SelectContent>
@@ -152,37 +156,52 @@ function TablaJuegosOfertaReventa({juegos = [], fechaExpiracion, titulo = null})
                     </Select>
                 </div>
             </div>
-            {busqueda ?
-                <TablaOfertas {...tablaProps}/>
-                :
-                <>
-                    <h1>No hay juegos</h1>
-                </>
-            }
+            <TablaOfertas {...tablaProps}/>
         </article>
     )
 }
 
 const TablaOfertas = (props) => {
     return (
-        <Table>
-            <TableCaption>Juegos en oferta - Precios actualizados</TableCaption>
-            <Cabecera/>
-            <Cuerpo {...props}/>
-        </Table>
+        <>
+            <p>
+                {props?.busqueda !== null ?
+                    props?.busqueda.length === 0 ?
+                        `No se encontraron coincidencias para: ${props?.juegoBuscado}`
+                        :
+                        `Se muestran resultados para: ${props?.juegoBuscado}`
+                    :
+                    ""
+                }
+            </p>
+            <Table>
+                <TableCaption>Juegos en oferta - Precios actualizados</TableCaption>
+                <Cabecera/>
+                <Cuerpo {...props}/>
+            </Table>
+        </>
     )
 }
 
-const Cuerpo = ({juegos = [], copiarJuego, juegoCopiado}) => {
+const Cuerpo = ({juegos = [], copiarJuego, juegoCopiado, busqueda = null}) => {
     return (
         <TableBody>
-            {juegos.map(j => (
-                <Registro
-                    juego={j}
-                    key={j.name}
-                    copiarJuego={copiarJuego}
-                    juegoCopiado={juegoCopiado}
-                />))
+            {busqueda ?
+                busqueda.map(j => (
+                    <Registro
+                        juego={j}
+                        key={j.name}
+                        copiarJuego={copiarJuego}
+                        juegoCopiado={juegoCopiado}
+                    />))
+                :
+                juegos.map(j => (
+                    <Registro
+                        juego={j}
+                        key={j.name}
+                        copiarJuego={copiarJuego}
+                        juegoCopiado={juegoCopiado}
+                    />))
             }
         </TableBody>
     )
