@@ -50,6 +50,7 @@ function TablaJuegosOfertaConsumidores({juegos = [], fechaExpiracion, titulo = n
     const buscarJuego = (e) => {
         if (e.target.value.length === 0) {
             setBusqueda(null)
+            console.log("nulo ahora")
         }
         const juegosFiltrados = [...juegos].filter((j) => {
             return j.name.toLowerCase().includes(e.target.value.toLowerCase())
@@ -222,15 +223,16 @@ const Registro = ({juego, copiarJuego, juegoCopiado}) => {
     const precioTransferencia = redondearCien((juego.price) * 1.15).toFixed(0)
 
     return (
-        <TableRow>
-            <TableCell className="font-medium">{juego.name}</TableCell>
-            <TableCell>${precioTransferencia}</TableCell>
-            <TableCell>${precioLista}</TableCell>
-            <TableCell className="text-right">
+        <TableRow
+            onClick={() => copiarJuego(`${juego.name} - PL:$${precioLista} - T:${precioTransferencia}`, juego.name)}>
+            <TableCell className="font-medium p-2">{juego.name}</TableCell>
+            <TableCell className={"p-2 text-center"}>${precioTransferencia}</TableCell>
+            <TableCell className={"p-2 text-center"}>${precioLista}</TableCell>
+            <TableCell className="hidden md:table-cell p-2">
                 <div
                     onClick={() => copiarJuego(`${juego.name} - PL:$${precioLista} - T:${precioTransferencia}`, juego.name)}
-                >
-                    {juegoCopiado === juego.name ? <Check className="h-4 w-4"/> : <Copy className="h-4 w-4"/>}
+                    className={"flex justify-center items-center cursor-pointer"}>
+                        {juegoCopiado === juego.name ? <Check className="h-4 w-4"/> : <Copy className="h-4 w-4"/>}
                     <span className="sr-only">Copiar información del juego</span>
                 </div>
             </TableCell>
@@ -242,10 +244,10 @@ const Cabecera = () => {
     return (
         <TableHeader>
             <TableRow>
-                <TableHead>Nombre del Juego</TableHead>
-                <TableHead>Precio Lista</TableHead>
-                <TableHead>Transferencia</TableHead>
-                <TableHead>Copiar</TableHead>
+                <TableHead className={"w-1/2 p-2 text-center"}>Nombre del Juego</TableHead>
+                <TableHead className={"w-2/12 p-2 text-center"}>Precio Lista</TableHead>
+                <TableHead className={"w-2/12 p-2 text-center"}>Transferencia</TableHead>
+                <TableHead className={"w-1/12 p-2 hidden md:table-cell text-center"}>Copiar</TableHead>
             </TableRow>
         </TableHeader>
     )
