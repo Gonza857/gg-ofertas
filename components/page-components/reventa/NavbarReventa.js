@@ -6,7 +6,7 @@ const Navbar = () => {
   return (
     <header className="flex w-full h-20 bg-cyan-900">
       <div className="w-full px-4 md:px-0 md:w-10/12 mx-auto flex justify-between items-center">
-        <Link href={"/"} className="rounded-full overflow-hidden">
+        <Link href={"/reventa/ofertas-juegos"} className="rounded-full overflow-hidden">
           <Image
             src={"/images/logo-nuevo.png"}
             width={60}
@@ -15,14 +15,14 @@ const Navbar = () => {
           />
         </Link>
         <nav className={""}>
-          <ul className="flex gap-5 flex-wrap">
-            {/* <Link href={"/pages/ofertas"}>
+          <ul className="flex gap-5 flex-wrap text-white">
+            <Link href={"/reventa/ofertas-juegos"}>
               <li>Ofertas</li>
-            </Link> */}
-            <Link href={"/pages/formasdepago"}>
-              <li>Formas de pago</li>
             </Link>
-            <Link href={"/pages/playstationplus"}>
+            {/*<Link href={"/(pages)/formasdepago"}>*/}
+            {/*  <li>Formas de pago</li>*/}
+            {/*</Link>*/}
+            <Link href={"/reventa/playstationplus"}>
               <li>PlayStation Plus</li>
             </Link>
           </ul>

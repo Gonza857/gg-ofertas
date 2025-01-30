@@ -1,8 +1,9 @@
 import localFont from "next/font/local";
 import "./globals.css";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
-import WhatsappBtn from "./components/WhatsappBtn";
+import NavbarConsumidores from "@/components/page-components/consumidores/NavbarConsumidores";
+import Footer from "@/components/page-components/principales/Footer";
+import WhatsappBtn from "@/components/personalized-ui/WhatsappBtn";
+import {ToastContainer} from "react-toastify";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -22,13 +23,12 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="es">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased relative`}
       >
-        <Navbar />
         {children}
-        <Footer />
+        <ToastContainer/>
         <WhatsappBtn />
       </body>
     </html>

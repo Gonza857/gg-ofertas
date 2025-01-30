@@ -8,7 +8,7 @@ const Footer = () => {
       {/* WRAPPER */}
       <div className="w-10/12 mx-auto flex flex-col md:flex-row flex-wrap gap-4 md:gap-0">
         <div className="w-full md:w-6/12 flex flex-col items-center justify-center gap-4 order-2 md:order-0">
-          <Link href={"/"} className="rounded-full overflow-hidden">
+          <Link href={"/public"} className="rounded-full overflow-hidden">
             <Image
               src={"/images/logo-nuevo.png"}
               width={150}

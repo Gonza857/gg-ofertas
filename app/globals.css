@@ -2,11 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-    --background: #ffffff;
-    --foreground: #171717;
-}
-
 body {
     color: var(--background);
     background: var(--foreground);
@@ -22,6 +17,20 @@ body {
 .animacion {
     background-color: #15803d;
     animation: parpadeo 2s infinite ease-in-out, escalar 2s infinite ease-in-out;
+}
+
+.animacionTelegram {
+    background-color: #0088cc; /* Color de Telegram */
+    animation: parpadeoTelegram 2s infinite ease-in-out, escalar 2s infinite ease-in-out;
+}
+
+@keyframes parpadeoTelegram {
+    0%, 100% {
+        background-color: #229ED9; /* Azul más claro */
+    }
+    50% {
+        background-color: #0088cc; /* Azul oficial de Telegram */
+    }
 }
 
 @keyframes parpadeo {
@@ -52,4 +61,15 @@ body {
 
 .bor3 {
     border: 5px solid green;
+}
+
+@layer base {
+  :root {
+        --radius: 0.5rem;
+    }
+}
+
+.styledMain,
+.styledPerfilNAvigation {
+    min-height: calc(100vh - 96px);
 }

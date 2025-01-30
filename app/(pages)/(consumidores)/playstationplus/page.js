@@ -16,7 +16,7 @@ const data = [
     {id: i++, title: "12 Mes Deluxe", bt_price: 71500, cc_price: 85000},
 ]
 
-const PlayStationPlus = () => {
+const PlayStationPlusSSS = () => {
     return (
         <>
             <main className="w-full min-h-screen py-4 pb-12 flex flex-col gap-4">
@@ -56,7 +56,7 @@ const PlayStationPlus = () => {
     )
 }
 
-export default PlayStationPlus;
+export default PlayStationPlusSSS;
 
 
 const PlusTr = ({data}) => {
