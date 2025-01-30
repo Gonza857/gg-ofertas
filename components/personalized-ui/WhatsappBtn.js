@@ -10,8 +10,8 @@ const WhatsappBtn = () => {
             target="_blank"
         >
             <div
-                className="m-4 fixed bottom-0 right-0 w-16 h-16 rounded-full flex items-center text-white justify-center bg-green-700 animacion">
-                <FaWhatsapp/>
+                className="m-4 fixed bottom-0 left-0 w-12 h-12 rounded-full flex items-center text-white justify-center bg-green-700 animacion">
+                <FaWhatsapp className={"text-3xl"}/>
             </div>
         </a>
     );

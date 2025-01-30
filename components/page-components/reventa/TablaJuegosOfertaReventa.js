@@ -1,6 +1,6 @@
 "use client"
 
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {toast} from "@/hooks/use-toast";
 import {Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
 import {Button} from "@/components/ui/button";
@@ -17,6 +17,7 @@ function TablaJuegosOfertaReventa({juegos = [], fechaExpiracion, titulo = null})
     const [juegoCopiado, setJuegoCopiado] = useState(null)
     const [juegoBuscado, setJuegoBuscado] = useState("")
     const [busqueda, setBusqueda] = useState(null)
+    const topRef = useRef(null); // Referencia al elemento superior
 
     const copiarJuego = (text, id) => {
         navigator.clipboard
@@ -80,10 +81,15 @@ function TablaJuegosOfertaReventa({juegos = [], fechaExpiracion, titulo = null})
             }
             return sortedGames;
         });
+
+        // Desplazar hacia la parte superior
+        if (topRef.current) {
+            topRef.current.scrollIntoView({ behavior: "smooth" });
+        }
     }
 
     return (
-        <article className={"w-full sm:w-11/12 md:w-10/12 lg:w-8/12 mx-auto py-4"}>
+        <article className={"w-full sm:w-11/12 md:w-10/12 lg:w-8/12 mx-auto py-4"} ref={topRef}>
             {titulo && <h2 className="text-2xl font-bold mb-2 text-center">{titulo}</h2>}
             <div className="w-full bg-white shadow-xl rounded-xl border p-6 mb-8 max-w-4xl mx-auto">
                 <h2 className="text-xl italic font-semibold mb-4 text-center">Información Importante</h2>
@@ -164,7 +170,7 @@ function TablaJuegosOfertaReventa({juegos = [], fechaExpiracion, titulo = null})
 const TablaOfertas = (props) => {
     return (
         <>
-            <p>
+            <p className={"px-2"}>
                 {props?.busqueda !== null ?
                     props?.busqueda.length === 0 ?
                         `No se encontraron coincidencias para: ${props?.juegoBuscado}`

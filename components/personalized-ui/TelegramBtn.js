@@ -9,8 +9,8 @@ const TelegramBtn = () => {
             href="https://t.me/GARRETG_PSN"
             target="_blank"
         >
-            <div className="m-4 fixed bottom-20 right-0 w-16 h-16 rounded-full flex items-center text-white justify-center bg-blue-500 animacionTelegram">
-                <FaTelegramPlane/>
+            <div className="m-4 fixed bottom-16 left-0 w-12 h-12 rounded-full flex items-center text-white justify-center bg-blue-500 animacionTelegram">
+                <FaTelegramPlane className={"text-3xl"}/>
             </div>
         </a>
     );
