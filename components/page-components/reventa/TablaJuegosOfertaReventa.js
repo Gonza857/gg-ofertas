@@ -1,9 +1,8 @@
 "use client"
 
-import {useEffect, useRef, useState} from "react";
+import {useRef, useState} from "react";
 import {toast} from "@/hooks/use-toast";
 import {Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
-import {Button} from "@/components/ui/button";
 import {Box, Check, Clock, Copy, Info, Scroll} from "lucide-react";
 import {Input} from "@/components/ui/input";
 import {Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";

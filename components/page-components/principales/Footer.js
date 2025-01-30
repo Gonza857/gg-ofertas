@@ -4,9 +4,9 @@ import React from "react";
 
 const Footer = () => {
     return (
-        <footer className="w-full bg-cyan-900 py-8 text-white pb-4">
+        <footer className="w-full bg-cyan-900 py-8 md:py-12 text-white">
             {/* WRAPPER */}
-            <div className="w-10/12 mx-auto grid grid-cols-1 md:grid-cols-2 pb-4">
+            <div className="w-10/12 mx-auto grid grid-cols-1 md:grid-cols-2 pb-4 md:pb-8">
 
                 <div
                     className="p-4 md:p-0 flex flex-col gap-2 md:gap-4 items-center justify-center">

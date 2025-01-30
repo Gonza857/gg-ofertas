@@ -10,9 +10,7 @@ async function JuegosOfertaReventa() {
 
     return (
         <main className={"styledMain"}>
-            <Suspense fallback={<h1>Cargando juegos...</h1>}>
-                <TablaJuegosOfertaReventa juegos={juegos} fechaExpiracion={termina} titulo={titulo}/>
-            </Suspense>
+            <TablaJuegosOfertaReventa juegos={juegos} fechaExpiracion={termina} titulo={titulo}/>
         </main>
     )
 }
