@@ -129,7 +129,7 @@ function TablaJuegosOfertaConsumidores ({juegos = [], fechaExpiracion, titulo = 
                     Games</p>
             </div>
 
-            {!busqueda ?
+            {busqueda ?
                 <>
                     <h2 className="text-2xl font-bold mb-2 text-center">Juegos en oferta hasta
                         el {fechaExpiracion} 19:00hs</h2>
