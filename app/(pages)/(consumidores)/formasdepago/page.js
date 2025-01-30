@@ -73,7 +73,7 @@ const metodosDePago = [
 function MetodosDePago ()  {
   return (
       <main className="styledMain py-8">
-        <article className={"w-full sm:w-11/12 md:w-10/12 lg:w-9/12 mx-auto"}>
+        <article className={"w-full sm:w-11/12 md:w-10/12 lg:w-9/12 mx-auto px-2"}>
           <h1 className="text-3xl font-bold text-center mb-8">Medios de Pago Aceptados</h1>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {metodosDePago.map((method, index) => (
