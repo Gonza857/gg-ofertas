@@ -3,7 +3,9 @@ import Fetcher from "@/infraestructura/Fetcher";
 export async function obtenerJuegosOferta() {
     const fetchParams = {
         method: 'GET',
-        cache: "no-cache"
+        next: {
+            revalidate: 900
+        }
     }
     return Fetcher.request(`/juegos/ofertas`, fetchParams)
 }
