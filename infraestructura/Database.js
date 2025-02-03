@@ -115,27 +115,14 @@ class MiFirebase {
         }
     }
 
-    // Obtiene todos los documentos de una colección
-    async obtenerTodos(coleccion) {
-        try {
-            const referenciaParaBuscar = collection(this.BASE_DE_DATOS, coleccion);
 
-            const querySnapshot = await getDocs(referenciaParaBuscar);
-
-            return querySnapshot.docs.map((doc) => ({...doc.data(), id: doc.id}));
-        } catch (e) {
-            throw new FirebaseError(e.message);
-        }
-    }
-
-    // Obtiene un solo documento
     async obtenerTodos(coleccion) {
         try {
             const referenciaColeccion = collection(this.BASE_DE_DATOS, coleccion);
             const snapshot = await getDocs(referenciaColeccion);
             return snapshot.docs.map((doc) => ({
-                id: doc.id,     // ID del documento
-                ...doc.data()   // Datos del documento
+                id: doc.id,
+                ...doc.data()
             }));
         } catch (e) {
             throw new FirebaseError(e.message);

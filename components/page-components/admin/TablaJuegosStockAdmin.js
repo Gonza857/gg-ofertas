@@ -14,66 +14,66 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/c
 import {Input} from "@/components/ui/input";
 import {CardDescription} from "@/components/ui/card";
 
-function TablaPlusLiquidacionAdmin({subscripciones: s}) {
-    const [subscripciones, setSubscripciones] = useState(s)
+function TablaJuegosStockAdmin({juegos: j}) {
+    const [juegos, setJuegos] = useState(j)
     const [modalEditarAbierto, setModalEditarAbierto] = useState(false)
     const [modalEliminarAbierto, setModalEliminarAbierto] = useState(false)
-    const [plusSeleccionado, setPlusSeleccionado] = useState(null)
+    const [juegoSeleccionado, setJuegoSeleccionado] = useState(null)
 
-    const manejarModalEditar = (plus = null) => {
+    const manejarModalEditar = (juego = null) => {
         if (modalEditarAbierto) {
             setModalEditarAbierto(false)
-            setPlusSeleccionado(null)
+            setJuegoSeleccionado(null)
         } else {
             setModalEditarAbierto(true)
-            setPlusSeleccionado(plus)
+            setJuegoSeleccionado(juego)
         }
     };
 
     const manejarModalEliminar = (plus = null) => {
         if (modalEliminarAbierto) {
             setModalEliminarAbierto(false)
-            setPlusSeleccionado(null)
+            setJuegoSeleccionado(null)
         } else {
             setModalEliminarAbierto(true)
-            setPlusSeleccionado(plus)
+            setJuegoSeleccionado(plus)
         }
     };
 
 
-    const eliminarPlus = (plus) => manejarModalEliminar(plus)
-    const editarPlus = (plus) => manejarModalEditar(plus)
+    const eliminarJuego = (juego) => manejarModalEliminar(juego)
+    const editarJuego = (juego) => manejarModalEditar(juego)
 
     const eliminarLocal = (idPlus) => {
-        return subscripciones.filter(s => s.id !== idPlus)
+        return juegos.filter(s => s.id !== idPlus)
     }
 
-    const manejarEliminarPlus = async () => {
-        if (!plusSeleccionado.id) return toastError("No se pudo eliminar el PlayStation Plus")
-        const {mensaje, exito} = await eliminarMembresia(plusSeleccionado.id)
-        setSubscripciones(eliminarLocal(plusSeleccionado.id))
+    const manejarEliminarJuego = async () => {
+        if (!juegoSeleccionado.id) return toastError("No se pudo eliminar el PlayStation Plus")
+        const {mensaje, exito} = await eliminarMembresia(juegoSeleccionado.id)
+        setJuegos(eliminarLocal(juegoSeleccionado.id))
         manejarModalEliminar()
         if (exito) return toastSuccess(mensaje)
         toastError(mensaje)
     }
 
     const tablaProps = {
-        eliminarPlus,
-        editarPlus,
-        subscripciones
+        eliminarJuego,
+        editarJuego,
+        juegos
     }
 
     const modalEditarProps = {
         estaAbierto: modalEditarAbierto,
         manejarModalEditar,
-        plusSeleccionado
+        juegoSeleccionado
     }
 
     const modalEliminarProps = {
         estaAbierto: modalEliminarAbierto,
         manejarModalEliminar,
-        plusSeleccionado,
-        manejarEliminarPlus
+        juegoSeleccionado,
+        manejarEliminarJuego
     }
 
     return (
@@ -93,7 +93,7 @@ const InputWrapper = ({children}) => {
 const ModalEliminar = ({estaAbierto, manejarEliminarPlus, manejarModalEliminar}) => {
     return (
         <ModalCustomizado estaAbierto={estaAbierto}>
-            <ModalCustomizado.Titulo>¿Deseas eliminar este PlayStataion Plus?</ModalCustomizado.Titulo>
+            <ModalCustomizado.Titulo>¿Deseas eliminar este juego?</ModalCustomizado.Titulo>
             <CardDescription>Esta acción no se puede deshacer.</CardDescription>
             <div className={"flex justify-end gap-4 w-full"}>
                 <Button
@@ -114,14 +114,14 @@ const ModalEliminar = ({estaAbierto, manejarEliminarPlus, manejarModalEliminar})
     )
 }
 
-const ModalEditar = ({estaAbierto, manejarModalEditar, plusSeleccionado = null}) => {
-    const [datosFormulario, setDatosFormulario] = useState({...plusSeleccionado});
+const ModalEditar = ({estaAbierto, manejarModalEditar, juegoSeleccionado = null}) => {
+    const [datosFormulario, setDatosFormulario] = useState({...juegoSeleccionado});
 
-    if (!plusSeleccionado) return;
+    if (!juegoSeleccionado) return;
 
     const enviarFormulario = async (e) => {
         e.preventDefault()
-        const {mensaje, exito} = await actualizarPlus({...plusSeleccionado, ...datosFormulario});
+        const {mensaje, exito} = await actualizarPlus({...juegoSeleccionado, ...datosFormulario});
         manejarModalEditar()
         if (exito) return toastSuccess(mensaje);
         return toastError(mensaje);
@@ -135,14 +135,14 @@ const ModalEditar = ({estaAbierto, manejarModalEditar, plusSeleccionado = null})
 
     return (
         <ModalCustomizado estaAbierto={estaAbierto}>
-            <ModalCustomizado.Titulo>{plusSeleccionado.id}</ModalCustomizado.Titulo>
+            <ModalCustomizado.Titulo>{juegoSeleccionado.id}</ModalCustomizado.Titulo>
             <form className={"space-y-4"} onSubmit={enviarFormulario}>
                 <div>
                     <Label>Selecciona el tipo de PlayStation Plus</Label>
                     <Select
                         onValueChange={(valor) => manejarSelect("tipo", valor)}
                         name="tipo"
-                        defaultValue={plusSeleccionado.tipo}
+                        defaultValue={juegoSeleccionado.tipo}
                     >
                         <SelectTrigger className="w-full">
                             <SelectValue placeholder="Elige una opción"/>
@@ -162,7 +162,7 @@ const ModalEditar = ({estaAbierto, manejarModalEditar, plusSeleccionado = null})
                             type={"number"}
                             onChange={manejarCampos}
                             placeholder={"777"}
-                            defaultValue={plusSeleccionado.slotsPs4}
+                            defaultValue={juegoSeleccionado.slotsPs4}
                         />
                     </div>
                     <div className={"space-y-2"}>
@@ -172,7 +172,7 @@ const ModalEditar = ({estaAbierto, manejarModalEditar, plusSeleccionado = null})
                             type={"number"}
                             onChange={manejarCampos}
                             placeholder={"777"}
-                            defaultValue={plusSeleccionado.slotsPs5}
+                            defaultValue={juegoSeleccionado.slotsPs5}
                         />
                     </div>
                 </div>
@@ -182,7 +182,7 @@ const ModalEditar = ({estaAbierto, manejarModalEditar, plusSeleccionado = null})
                         name={"costo"}
                         type={"number"}
                         onChange={manejarCampos}
-                        defaultValue={plusSeleccionado.costo}
+                        defaultValue={juegoSeleccionado.costo}
                     />
                 </InputWrapper>
                 <div className={"flex justify-end gap-4 w-full"}>
@@ -208,7 +208,7 @@ const ModalEditar = ({estaAbierto, manejarModalEditar, plusSeleccionado = null})
 const Tabla = (props) => {
     return (
         <Table>
-            <TableCaption>PlayStation Plus en liquidación - Precios actualizados</TableCaption>
+            <TableCaption>Juegos en stock - Precios actualizados</TableCaption>
             <Cabecera/>
             <Cuerpo {...props}/>
         </Table>
@@ -219,10 +219,14 @@ const Cabecera = () => {
     return (
         <TableHeader>
             <TableRow>
-                <TableHead className={"w-4/12 px-2 md:px-4"}>Membresia</TableHead>
-                <TableHead className={"w-1/12 px-2 md:px-4 text-center"}>Días restantes</TableHead>
-                <TableHead className={"w-2/12 px-2 md:px-4 text-center"}>Consola</TableHead>
-                <TableHead className={"w-2/12 px-2 md:px-4 text-center"}>Precio</TableHead>
+                <TableHead className={"w-3/12 px-2 md:px-4"}>Nombre</TableHead>
+                <TableHead className={"w-1/12 px-2 md:px-4 text-center"}>Stock</TableHead>
+                <TableHead className={"w-1/12 px-2 md:px-4 text-center"}>P.C</TableHead>
+                <TableHead className={"w-1/12 px-2 md:px-4 text-center"}>P.R</TableHead>
+                <TableHead className={"w-1/12 px-2 md:px-4 text-center"}>Consola</TableHead>
+                <TableHead className={"w-1/12 px-2 md:px-4 text-center"}>Tipo</TableHead>
+                <TableHead className={"w-1/12 px-2 md:px-4 text-center"}>M.I</TableHead>
+                <TableHead className={"w-1/12 px-2 md:px-4 text-center"}>Idioma</TableHead>
                 <TableHead className={"w-1/12 px-2 md:px-4 text-center"}>Editar</TableHead>
                 <TableHead className={"w-1/12 px-2 md:px-4 text-center"}>Eliminar</TableHead>
             </TableRow>
@@ -230,62 +234,46 @@ const Cabecera = () => {
     )
 }
 
-const Cuerpo = ({subscripciones, editarPlus, eliminarPlus}) => {
+const Cuerpo = ({juegos, editarJuego, eliminarJuego}) => {
     return (
         <TableBody>
-            {subscripciones.map(p => (
+            {juegos.map(j => (
                 <Registro
-                    plus={p}
-                    key={p.id}
-                    editarPlus={editarPlus}
-                    eliminarPlus={eliminarPlus}
+                    juego={j}
+                    key={j.id}
+                    editarJuego={editarJuego}
+                    eliminarJuego={eliminarJuego}
                 />))
             }
         </TableBody>
     )
 }
 
-const saberDuracion = {
-    30: "1 mes",
-    90: "3 meses",
-    365: "12 meses"
-}
-
-const diccionarioTipos = {
-    "essential": "bg-gray-300 text-black",
-    "extra": "bg-yellow-500 text-black",
-    "deluxe": "bg-gray-800 text-yellow-500"
-}
-
-const Registro = ({plus, editarPlus, eliminarPlus}) => {
-    const meses = saberDuracion[plus.duracion]
-    const consola = `${plus.slotsPs4 > 0 ? "PS4" : ""} ${(plus.slotsPs4 > 0 && plus.slotsPs5 > 0) ? "/" : ""} ${plus.slotsPs5 > 0 ? "PS5" : ""}`
+const Registro = ({juego: j, editarJuego, eliminarJuego}) => {
     return (
         <TableRow>
-            <TableCell className={"p-1 py-2 flex items-center"}>
-                <Badge className={`${diccionarioTipos[plus.tipo.toLowerCase()]} mx-1 md:mx-2 h-6`}>
-                    {plus.tipo}
-                </Badge>
-                <span>{meses}</span>
-            </TableCell>
-
-            <TableCell className={"p-1 text-center"}>{plus.diasRestantes}</TableCell>
-            <TableCell className={"p-1 text-center"}>{consola}</TableCell>
-            <TableCell className={"p-1 text-center"}>${plus.costo}</TableCell>
+            <TableCell className={"p-1 py-2"}>{j.nombre}</TableCell>
+            <TableCell className={"p-1 py-2 text-center"}>{j.stock}</TableCell>
+            <TableCell className={"p-1 py-2 text-center"}>{j.precioCliente}</TableCell>
+            <TableCell className={"p-1 py-2 text-center"}>{j.precioReventa}</TableCell>
+            <TableCell className={"p-1 py-2 text-center"}>{j.consola}</TableCell>
+            <TableCell className={"p-1 py-2 text-center"}>{j.tipo}</TableCell>
+            <TableCell className={"p-1 py-2 text-center"}>{j.mostrarIdioma ? "Sí" : "No"}</TableCell>
+            <TableCell className={"p-1 py-2 text-center"}>{j.idioma}</TableCell>
             <TableCell className={"p-1 text-center"}>
                 <Pen
                     className="h-4 w-4 mx-auto"
-                    onClick={() => editarPlus(plus)}
+                    onClick={() => editarJuego(j)}
                 />
             </TableCell>
             <TableCell className={"p-1 text-center"}>
                 <Trash2
                     className="h-4 w-4 mx-auto"
-                    onClick={() => eliminarPlus(plus)}
+                    onClick={() => eliminarJuego(j)}
                 />
             </TableCell>
         </TableRow>
     )
 }
 
-export default TablaPlusLiquidacionAdmin;
+export default TablaJuegosStockAdmin;

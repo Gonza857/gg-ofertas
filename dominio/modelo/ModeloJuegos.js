@@ -5,6 +5,22 @@ class ModeloJuegos {
         this.repositorioJuegos = repositorioJuegos;
     }
 
+    async guardarJuegoStock (juego) {
+        if (!juego) throw new Error("No se pudo guardar el juego.")
+        juego.precioCliente = Number(juego.precioCliente)
+        juego.precioReventa = Number(juego.precioReventa)
+        juego.stock = Number(juego.stock)
+        const resultado = await this.repositorioJuegos.guardarJuegoStock(juego);
+        return {
+            exito: resultado,
+            mensaje: "Guardado correctamante."
+        }
+    }
+
+    async obtenerJuegosStock() {
+        return await this.repositorioJuegos.obtenerTodosLosJuegosStock()
+    }
+
     async obtenerJuegosOfertaReventa() {
         return await this.repositorioJuegos.obtenerJuegos()
     }

@@ -63,7 +63,7 @@ const Registro = ({plus}) => {
     const {copiar, copiado} = useCopiarAlPortapapeles()
     const meses = saberDuracion[plus.duracion]
     const consola = `${plus.slotsPs4 > 0 ? "PS4" : ""}${(plus.slotsPs4 > 0 && plus.slotsPs5 > 0) ? "/" : ""}${plus.slotsPs5 > 0 ? "PS5" : ""}`
-    const textoParaCopiar = `PlayStation Plus ${plus.tipo} | ${meses} ${plus.diasRestantes} días | ${consola} | $${plus.costo}`
+    const textoParaCopiar = `PlayStation Plus ${plus.tipo} |${plus.estado.toLowerCase() !== "liquidacion" ? meses : ""} ${plus.diasRestantes} días | ${consola} | $${plus.costo}`
     return (
         <TableRow onClick={() => copiar(textoParaCopiar, plus.id)}>
             <TableCell className={"p-1 py-2 flex items-center"}>

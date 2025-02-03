@@ -19,6 +19,27 @@ export async function subirOfertas(ofertas) {
     return Fetcher.request(`/juegos/ofertas`, fetchParams);
 }
 
+export async function guardarJuegoStock(juego) {
+    const fetchParams = {
+        method: 'POST',
+        headers: { 'Content-type': 'application/json' },
+        body: JSON.stringify(juego),
+    };
+    return Fetcher.request(`/admin/stock/juego`, fetchParams);
+}
+
+export async function obtenerJuegosStock() {
+    const fetchParams = {
+        method: 'GET',
+        next: {
+            revalidate: 1
+        }
+    }
+    return Fetcher.request(`/admin/stock/juego`, fetchParams)
+}
+
+
+
 export async function vaciarCarrito(idUsuario) {
     const fetchParams = {
         method: 'DELETE',

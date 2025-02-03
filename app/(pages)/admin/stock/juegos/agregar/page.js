@@ -4,14 +4,29 @@ import {Label} from "@/components/ui/label";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
 import {useState} from "react";
 import {Button} from "@/components/ui/button";
+import {RadioGroup, RadioGroupItem} from "@/components/ui/radio-group";
+import {guardarJuegoStock} from "@/dominio/servicios/juegos";
+import {toastError, toastSuccess} from "@/lib/Toast";
 
 function AgregarJuego() {
-    const [datosFormulario, setDatosFormulario] = useState({});
+    const [datosFormulario, setDatosFormulario] = useState({
+        nombre: "",
+        stock: 0,
+        precioCliente: 0,
+        precioReventa: 0,
+        mostrarIdioma: false,
+        tipo: "primaria",
+        idioma: null,
+        consola: "PS4/PS5"
+    });
 
-    const enviarFormulario = (e) => {
+    const enviarFormulario = async (e) => {
         e.preventDefault()
         console.log("Envio estos datos")
         console.log(datosFormulario);
+        const {mensaje, exito} = await guardarJuegoStock(datosFormulario)
+        if (exito) return toastSuccess(mensaje)
+        return toastError(mensaje)
     }
 
     const manejarCampos = (e) => {
@@ -22,7 +37,7 @@ function AgregarJuego() {
 
     return (
         <main className={"styledMain"}>
-            <article className={"bor1 w-full sm:w-11/12 md:w-8/12 lg:w-1/4 mx-auto"}>
+            <article className={"bor1 w-full sm:w-11/12 md:w-8/12 lg:w-1/2 xl:w-1/3 mx-auto"}>
                 <form className={"space-y-4"} onSubmit={enviarFormulario}>
                     <div className={"space-y-2"}>
                         <Label htmlFor={"nombre"}>Nombre del juego</Label>
@@ -62,6 +77,36 @@ function AgregarJuego() {
                             />
                         </div>
                     </div>
+                    <InputWrapper>
+                        <Label>Mostrar Idioma</Label>
+                        <RadioGroup
+                            value={datosFormulario?.mostrarIdioma}
+                            onValueChange={(value) => manejarSelect("mostrarIdioma", value)}
+                        >
+                            <div className="flex items-center space-x-2">
+                                <RadioGroupItem value={true} id="si"/>
+                                <Label htmlFor="si">Sí</Label>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                                <RadioGroupItem value={false} id="no"/>
+                                <Label htmlFor="no">No</Label>
+                            </div>
+                        </RadioGroup>
+                    </InputWrapper>
+                    <div>
+                        <Label>Selecciona para que consolas es</Label>
+                        <Select onValueChange={(valor) => manejarSelect("consola", valor)} name="consola">
+                            <SelectTrigger className="w-full">
+                                <SelectValue placeholder="Elige una opción"/>
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="PS3">PS3</SelectItem>
+                                <SelectItem value="PS4">PS4</SelectItem>
+                                <SelectItem value="PS5">PS5</SelectItem>
+                                <SelectItem value="PS4/PS5">PS4/PS5</SelectItem>
+                            </SelectContent>
+                        </Select>
+                    </div>
                     <div>
                         <Label>Selecciona el tipo de cuenta</Label>
                         <Select onValueChange={(valor) => manejarSelect("tipo", valor)} name="tipo">
@@ -69,8 +114,8 @@ function AgregarJuego() {
                                 <SelectValue placeholder="Elige una opción"/>
                             </SelectTrigger>
                             <SelectContent>
-                                <SelectItem value="primaria">Primaria</SelectItem>
-                                <SelectItem value="secundaria">Secundaria</SelectItem>
+                                <SelectItem value="Primaria">Primaria</SelectItem>
+                                <SelectItem value="Secundaria">Secundaria</SelectItem>
                             </SelectContent>
                         </Select>
                     </div>
@@ -89,7 +134,7 @@ function AgregarJuego() {
                                 <SelectItem value="Inglés con subtitulos en español">Inglés con subtitulos en
                                     español</SelectItem>
                                 <SelectItem value="Inglés">Inglés</SelectItem>
-                                <SelectItem value="Sin información">Sin información</SelectItem>
+                                <SelectItem value={"-"}>Sin información</SelectItem>
                             </SelectContent>
                         </Select>
                     </div>
@@ -101,6 +146,14 @@ function AgregarJuego() {
                 </form>
             </article>
         </main>
+    )
+}
+
+const InputWrapper = ({children}) => {
+    return (
+        <div className={"space-y-2"}>
+            {children}
+        </div>
     )
 }
 
