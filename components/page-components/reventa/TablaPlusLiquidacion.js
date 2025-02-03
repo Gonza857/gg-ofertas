@@ -5,11 +5,25 @@ import {useCopiarAlPortapapeles} from "@/hooks/useCopyToClipboard";
 import {Badge} from "@/components/ui/badge";
 import {Check, Copy} from "lucide-react";
 import {Button} from "@/components/ui/button";
+import {toast} from "@/hooks/use-toast";
+
+const diccionarioTipos = {
+    "essential": "bg-gray-300 text-black",
+    "extra": "bg-yellow-500 text-black",
+    "deluxe": "bg-gray-800 text-yellow-500"
+}
+
+const saberDuracion = {
+    30: "1 mes",
+    90: "3 meses",
+    365: "12 meses"
+}
+
 
 const copiarTodos = (datos) => {
     const textoCompleto = datos
         .map(plus =>
-            `PlayStation Plus ${plus.tipo} |${plus.estado.toLowerCase() !== "liquidacion" ? plus.meses : ""} ${plus.diasRestantes} días | ${plus.consola} | $${plus.costo}`
+            `PlayStation Plus ${plus.tipo} | ${plus.diasRestantes} días | ${plus.slotsPs4 > 0 ? "PS4" : ""}${(plus.slotsPs4 > 0 && plus.slotsPs5 > 0) ? "/" : ""}${plus.slotsPs5 > 0 ? "PS5" : ""} | $${plus.costo}`
         )
         .join("\n"); // Une cada registro en una nueva línea
 
@@ -84,17 +98,8 @@ const Cuerpo = ({subscripciones}) => {
     )
 }
 
-const saberDuracion = {
-    30: "1 mes",
-    90: "3 meses",
-    365: "12 meses"
-}
 
-const diccionarioTipos = {
-    "essential": "bg-gray-300 text-black",
-    "extra": "bg-yellow-500 text-black",
-    "deluxe": "bg-gray-800 text-yellow-500"
-}
+
 
 const Registro = ({plus}) => {
     const {copiar, copiado} = useCopiarAlPortapapeles()
