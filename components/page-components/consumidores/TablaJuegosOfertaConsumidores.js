@@ -93,53 +93,7 @@ function TablaJuegosOfertaConsumidores({juegos = [], fechaExpiracion, titulo = n
     return (
         <article className={"w-full sm:w-11/12 md:w-10/12 lg:w-8/12 mx-auto py-4"}>
             {(titulo && !busqueda) && <h2 className="text-2xl font-bold mb-2 text-center">{titulo}</h2>}
-            <div className="w-full bg-white shadow-xl rounded-xl border p-6 mb-8 max-w-4xl mx-auto">
-                <h2 className="text-xl italic font-semibold mb-4 text-center">Información Importante</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm md:text-base">
-                    <div className="flex items-start">
-                        <Info className="w-6 h-6 mr-2 text-blue-500 flex-shrink-0 mt-1"/>
-                        <div>
-                            <h3 className="font-semibold mb-2">Compatibilidad</h3>
-                            <p className="text-gray-600">
-                                Los juegos publicados son en cuenta PRIMARIA para PS4 & PS5. Consultar compatibilidad de
-                                juegos retro. Consultar disponibilidad en cuenta SECUNDARIA.
-                            </p>
-                        </div>
-                    </div>
-                    <div className="flex items-start">
-                        <Clock className="w-6 h-6 mr-2 text-yellow-500 flex-shrink-0 mt-1"/>
-                        <div>
-                            <h3 className="font-semibold mb-2">Tiempo de Entrega</h3>
-                            <p className="text-gray-600">
-                                Las entregas se realizan de 08:00 a 22:00. Compras realizadas fuera de este horario se
-                                entregan al día siguiente.
-                            </p>
-                        </div>
-                    </div>
-                    <div className="flex items-start">
-                        <Box className="w-6 h-6 mr-2 text-purple-500 flex-shrink-0 mt-1"/>
-                        <div>
-                            <h3 className="font-semibold mb-2">Envío</h3>
-                            <p className="text-gray-600">
-                                Se envía un usuario y contraseña junto con el instructivo de instalación para seguir los
-                                pasos y poder descargar el juego en la consola.
-                            </p>
-                        </div>
-                    </div>
-                    <div className="flex items-start">
-                        <Scroll className="w-6 h-6 mr-2 text-green-500 flex-shrink-0 mt-1"/>
-                        <div>
-                            <h3 className="font-semibold mb-2">Garantía</h3>
-                            <p className="text-gray-600">
-                                Nuestros productos son 100% originales y con licencias oficiales. La garantía abarca el
-                                tiempo adquirido y garantiza el acceso al usuario.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <p className={"mt-4 text-sm text-neutral-500 dark:text-neutral-400 text-center"}>Atentamente, Garret
-                    Games</p>
-            </div>
+            <InformacionPsPlus/>
             <h2 className="text-2xl font-bold mb-2 text-center">Juegos en oferta hasta
                 el {fechaExpiracion} 19:00hs</h2>
             <div className={"flex flex-col md:flex-row md:justify-between gap-4 py-2 px-2"}>
@@ -170,7 +124,59 @@ function TablaJuegosOfertaConsumidores({juegos = [], fechaExpiracion, titulo = n
     )
 }
 
-export default TablaJuegosOfertaConsumidores
+export default TablaJuegosOfertaConsumidores;
+
+const InformacionPsPlus = () => {
+    return (
+        <div className="w-full bg-white shadow-xl rounded-xl border p-6 mb-8 mx-auto">
+            <h2 className="text-xl italic font-semibold mb-4 text-center">Información Importante</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm md:text-base">
+                <div className="flex items-start">
+                    <Info className="w-6 h-6 mr-2 text-blue-500 flex-shrink-0 mt-1"/>
+                    <div>
+                        <h3 className="font-semibold mb-2">Compatibilidad</h3>
+                        <p className="text-gray-600">
+                            Los juegos publicados son en cuenta PRIMARIA para PS4 & PS5. Consultar compatibilidad de
+                            juegos retro. Consultar disponibilidad en cuenta SECUNDARIA.
+                        </p>
+                    </div>
+                </div>
+                <div className="flex items-start">
+                    <Clock className="w-6 h-6 mr-2 text-yellow-500 flex-shrink-0 mt-1"/>
+                    <div>
+                        <h3 className="font-semibold mb-2">Tiempo de Entrega</h3>
+                        <p className="text-gray-600">
+                            Las entregas se realizan de 08:00 a 22:00. Compras realizadas fuera de este horario se
+                            entregan al día siguiente.
+                        </p>
+                    </div>
+                </div>
+                <div className="flex items-start">
+                    <Box className="w-6 h-6 mr-2 text-purple-500 flex-shrink-0 mt-1"/>
+                    <div>
+                        <h3 className="font-semibold mb-2">Envío</h3>
+                        <p className="text-gray-600">
+                            Se envía un usuario y contraseña junto con el instructivo de instalación para seguir los
+                            pasos y poder descargar el juego en la consola.
+                        </p>
+                    </div>
+                </div>
+                <div className="flex items-start">
+                    <Scroll className="w-6 h-6 mr-2 text-green-500 flex-shrink-0 mt-1"/>
+                    <div>
+                        <h3 className="font-semibold mb-2">Garantía</h3>
+                        <p className="text-gray-600">
+                            Nuestros productos son 100% originales y con licencias oficiales. La garantía abarca el
+                            tiempo adquirido y garantiza el acceso al usuario.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <p className={"mt-4 text-sm text-neutral-500 dark:text-neutral-400 text-center"}>Atentamente, Garret
+                Games</p>
+        </div>
+    )
+}
 
 const TablaOfertas = (props) => {
     return (
@@ -232,7 +238,7 @@ const Registro = ({juego, copiarJuego, juegoCopiado}) => {
                 <div
                     onClick={() => copiarJuego(`${juego.name} - PL:$${precioLista} - T:${precioTransferencia}`, juego.name)}
                     className={"flex justify-center items-center cursor-pointer"}>
-                        {juegoCopiado === juego.name ? <Check className="h-4 w-4"/> : <Copy className="h-4 w-4"/>}
+                    {juegoCopiado === juego.name ? <Check className="h-4 w-4"/> : <Copy className="h-4 w-4"/>}
                     <span className="sr-only">Copiar información del juego</span>
                 </div>
             </TableCell>

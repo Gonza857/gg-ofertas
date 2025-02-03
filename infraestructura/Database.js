@@ -66,78 +66,7 @@ class MiFirebase {
         }
     }
 
-    async actualizarStockCarrito(coleccion, idUsuario, carrito) {
-        const productosSinStockSuficiente = []
-        try {
-            await runTransaction(this.BASE_DE_DATOS, async (transaccion) => {
-                const snapshots = [];
 
-                // Lectura de documentos
-                // Agrego al array los que no hay stock (más de lo que pide)
-                for (const producto of carrito) {
-                    const referenciaProducto = doc(this.BASE_DE_DATOS, "productos", producto.id);
-                    const snapshotProducto = await transaccion.get(referenciaProducto);
-                    if (!snapshotProducto.exists()) throw new FirebaseError(`El producto ${producto.nombre} no existe.`);
-                    const informacionProducto = snapshotProducto.data();
-                    if (Number(producto.cantidad) > Number(informacionProducto.stock)) {
-                        productosSinStockSuficiente.push(
-                            {
-                                ...informacionProducto,
-                                stock: informacionProducto.stock,
-                                id: snapshotProducto.id,
-                            }
-                        )
-                    }
-
-                    snapshots.push({referenciaProducto, informacionProducto});
-                }
-
-                carrito = carrito.map((item) => {
-                    const productoBD = snapshots.find(s => s.referenciaProducto.id === item.id);
-                    if (productoBD) {
-                        return {
-                            ...item,
-                            cantidad: Math.min(item.cantidad, productoBD.informacionProducto.stock), // Ajustar cantidad si es necesario
-                            stock: productoBD.informacionProducto.stock // Actualizar stock en el carrito
-                        };
-                    }
-                    return item;
-                });
-
-                const referenciaCarrito = doc(this.BASE_DE_DATOS, "carrito", idUsuario);
-                transaccion.set(referenciaCarrito, {productos: carrito});
-            });
-
-            return {exito: productosSinStockSuficiente.length === 0, carrito, sinStock: productosSinStockSuficiente};
-        } catch (e) {
-            return {
-                exito: false, mensaje: e.message
-            }
-        }
-    }
-
-    async obtenerUltimoNumeroDePedido (coleccion, id) {
-        const referenciaContador = doc(this.BASE_DE_DATOS, coleccion, id);
-        try {
-            return await runTransaction(this.BASE_DE_DATOS, async (transaccion) => {
-                const contadorDoc = await transaccion.get(referenciaContador);
-
-                if (!contadorDoc.exists()) {
-                    throw new Error("No existe el documento");
-                }
-
-                const ultimoNumero = contadorDoc.data().nroUltimoPedido || 0;
-                const nuevoNumero = ultimoNumero + 1;
-
-                transaccion.update(referenciaContador, {nroUltimoPedido: nuevoNumero});
-
-                return nuevoNumero;
-            });
-        } catch (error) {
-            console.error("Error al generar número de pedido:", error);
-            throw error;
-        }
-    }
 
     async invertirValorBooleano(coleccion, idDocumento, campo) {
         const referenciaDocumento = doc(this.BASE_DE_DATOS, coleccion, idDocumento);
@@ -187,7 +116,7 @@ class MiFirebase {
     }
 
     // Obtiene todos los documentos de una colección
-    async obtenerTodosLosDocumentosDeUnaColeccion(coleccion) {
+    async obtenerTodos(coleccion) {
         try {
             const referenciaParaBuscar = collection(this.BASE_DE_DATOS, coleccion);
 

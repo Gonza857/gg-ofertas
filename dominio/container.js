@@ -3,6 +3,8 @@ import ModeloTurquia from "@/dominio/modelo/ModeloTurquia";
 import ModeloJuegos from "@/dominio/modelo/ModeloJuegos";
 import MiFirebase from "@/infraestructura/Database";
 import RepositorioJuegos from "@/dominio/repositorio/RepositorioJuegos";
+import ModeloPlus from "@/dominio/modelo/ModeloPlus";
+import RepositorioPlus from "@/dominio/repositorio/RepositorioPlus";
 
 class Container {
     constructor() {
@@ -31,10 +33,14 @@ class Container {
         this.register('BaseDeDatos', new MiFirebase(APP_PRINCIPAL));
 
         this.register("RepositorioJuegos", new RepositorioJuegos(this.resolve("BaseDeDatos")));
+        this.register("RepositorioPlus", new RepositorioPlus(this.resolve("BaseDeDatos")));
 
         this.register('ModeloTurquia', new ModeloTurquia());
         this.register('ModeloJuegos', new ModeloJuegos(
             this.resolve("RepositorioJuegos")
+        ));
+        this.register('ModeloPlus', new ModeloPlus(
+            this.resolve("RepositorioPlus")
         ));
 
 

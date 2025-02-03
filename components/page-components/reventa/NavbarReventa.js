@@ -23,7 +23,10 @@ const Navbar = () => {
             {/*  <li>Formas de pago</li>*/}
             {/*</Link>*/}
             <Link href={"/reventa/playstationplus"}>
-              <li>PlayStation Plus</li>
+              <li>PS Plus</li>
+            </Link>
+            <Link href={"/reventa/playstationplus-liquidacion"}>
+              <li>Liquidación PS Plus</li>
             </Link>
           </ul>
         </nav>
