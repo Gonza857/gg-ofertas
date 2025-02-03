@@ -4,9 +4,46 @@ import {Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, Table
 import {useCopiarAlPortapapeles} from "@/hooks/useCopyToClipboard";
 import {Badge} from "@/components/ui/badge";
 import {Check, Copy} from "lucide-react";
+import {Button} from "@/components/ui/button";
+
+const copiarTodos = (datos) => {
+    const textoCompleto = datos
+        .map(plus =>
+            `PlayStation Plus ${plus.tipo} |${plus.estado.toLowerCase() !== "liquidacion" ? plus.meses : ""} ${plus.diasRestantes} días | ${plus.consola} | $${plus.costo}`
+        )
+        .join("\n"); // Une cada registro en una nueva línea
+
+    navigator.clipboard.writeText(textoCompleto)
+        .then(() => {
+            toast({
+                title: "Copiado al portapapeles",
+                description: "Todos los registros han sido copiados.",
+            });
+        })
+        .catch((err) => {
+            console.error("Error al copiar: ", err);
+            toast({
+                title: "Error",
+                description: "No se pudo copiar al portapapeles.",
+                variant: "destructive",
+            });
+        });
+};
 
 function TablaPlusLiquidacion({subscripciones}) {
-    return <Tabla subscripciones={subscripciones}/>
+    return (
+        <>
+            <Tabla subscripciones={subscripciones}/>
+            <Button
+                variant={"outline"}
+                onClick={() => copiarTodos(subscripciones)}
+                className={"w-full mt-4"}
+            >
+                Copiar todos
+            </Button>
+        </>
+    )
+
 }
 
 const Tabla = ({subscripciones = null}) => {
