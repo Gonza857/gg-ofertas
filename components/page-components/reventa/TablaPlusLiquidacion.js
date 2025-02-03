@@ -9,7 +9,8 @@ function TablaPlusLiquidacion({subscripciones}) {
     return <Tabla subscripciones={subscripciones}/>
 }
 
-const Tabla = ({subscripciones}) => {
+const Tabla = ({subscripciones = null}) => {
+    if (!subscripciones) return;
     return (
         <Table>
             <TableCaption>PlayStation Plus en liquidación - Precios actualizados</TableCaption>
@@ -23,11 +24,11 @@ const Cabecera = () => {
     return (
         <TableHeader>
             <TableRow>
-                <TableHead>Membresia</TableHead>
-                <TableHead>Días restantes</TableHead>
-                <TableHead>Consola</TableHead>
-                <TableHead>Precio</TableHead>
-                <TableHead>Copiar</TableHead>
+                <TableHead className={"w-7/12 md:w-5/12 px-2 md:px-4"}>Membresia</TableHead>
+                <TableHead className={"w-1/12 md:w-2/12 px-2 md:px-4"}>Días restantes</TableHead>
+                <TableHead className={"w-2/12 md:w-2/12 px-2 md:px-4 text-center"}>Consola</TableHead>
+                <TableHead className={"w-2/12 md:w-2/12 px-2 md:px-4 text-center"}>Precio</TableHead>
+                <TableHead className={"hidden md:table-cell md:w-1/12"}>Copiar</TableHead>
             </TableRow>
         </TableHeader>
     )
@@ -61,22 +62,22 @@ const diccionarioTipos = {
 const Registro = ({plus}) => {
     const {copiar, copiado} = useCopiarAlPortapapeles()
     const meses = saberDuracion[plus.duracion]
-    const consola = `${plus.slotsPs4 > 0 ? "PS4" : ""} ${(plus.slotsPs4 > 0 && plus.slotsPs5 > 0) ? "/" : ""} ${plus.slotsPs5 > 0 ? "PS5" : ""}`
-    const textoParaCopiar = `PlayStation Plus ${plus.tipo} ${meses} ${consola} ${plus.costo}`
+    const consola = `${plus.slotsPs4 > 0 ? "PS4" : ""}${(plus.slotsPs4 > 0 && plus.slotsPs5 > 0) ? "/" : ""}${plus.slotsPs5 > 0 ? "PS5" : ""}`
+    const textoParaCopiar = `PlayStation Plus ${plus.tipo} | ${meses} ${plus.diasRestantes} días | ${consola} | $${plus.costo}`
     return (
-        <TableRow>
-            <TableCell>
-                PlayStation Plus
-                <Badge className={`${diccionarioTipos[plus.tipo.toLowerCase()]} mx-2`}>
+        <TableRow onClick={() => copiar(textoParaCopiar, plus.id)}>
+            <TableCell className={"p-1 py-2 flex items-center"}>
+                <span>PlayStation Plus</span>
+                <Badge className={`${diccionarioTipos[plus.tipo.toLowerCase()]} mx-1 md:mx-2 h-6`}>
                     {plus.tipo}
                 </Badge>
-                {meses}
+                <span className={`${plus.estado.toLowerCase() === "liquidacion" && "hidden"}`}>{meses}</span>
             </TableCell>
 
-            <TableCell className={"text-center"}>{plus.diasRestantes}</TableCell>
-            <TableCell>{consola}</TableCell>
-            <TableCell>${plus.costo}</TableCell>
-            <TableCell className="hidden md:table-cell p-2">
+            <TableCell className={"p-1 text-center"}>{plus.diasRestantes}</TableCell>
+            <TableCell className={"p-1 text-sm text-center"}>{consola}</TableCell>
+            <TableCell className={"p-1 text-sm text-center"}>${plus.costo}</TableCell>
+            <TableCell className="hidden md:table-cell p-1">
                 <div
                     onClick={() => copiar(textoParaCopiar, plus.id)}
                     className={"flex justify-center items-center cursor-pointer w-fit mx-auto"}>
