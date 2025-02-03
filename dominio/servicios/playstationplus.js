@@ -27,7 +27,9 @@ export async function eliminarPlus(id) {
 export async function obtenerPlusStock() {
     const fetchParams = {
         method: 'GET',
-        cache: "no-store"
+        next: {
+            revalidate: 60
+        }
     };
     return Fetcher.request(`/admin/stock/playstationplus`, fetchParams);
 }

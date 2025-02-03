@@ -2,6 +2,9 @@ import {obtenerPlusStock} from "@/dominio/servicios/playstationplus";
 import TablaPlusLiquidacion from "@/components/page-components/reventa/TablaPlusLiquidacion";
 import TablaPlusLiquidacionAdmin from "@/components/page-components/admin/TablaPlusLiquidacionAdmin";
 
+export const revalidate = 3600;
+export const dynamic = "force-dynamic";
+
 async function StockPlayStationPlusAdmin() {
     const subscripciones = await obtenerPlusStock()
     return (
