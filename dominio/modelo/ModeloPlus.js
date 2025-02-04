@@ -1,25 +1,25 @@
-import {differenceInDays, formatDate, parse, subDays} from "date-fns";
+import {addDays, differenceInDays, formatDate, parse, subDays} from "date-fns";
 
 class ModeloPlus {
 
     repositorioPlus
     referenciaPrecios = [
-        {dias: 30, tipo: "essential", precio: 8400},
-        {dias: 90, tipo: "essential", precio: 15000},
-        {dias: 365, tipo: "essential", precio: 40000},
+        {dias: 30, tipo: "essential", precio: 8800},
+        {dias: 90, tipo: "essential", precio: 16500},
+        {dias: 365, tipo: "essential", precio: 38500},
         {dias: 30, tipo: "extra", precio: 11500},
-        {dias: 90, tipo: "extra", precio: 25000},
-        {dias: 365, tipo: "extra", precio: 60000},
-        {dias: 30, tipo: "deluxe", precio: 13500},
-        {dias: 90, tipo: "deluxe", precio: 30000},
-        {dias: 365, tipo: "deluxe", precio: 70000}
+        {dias: 90, tipo: "extra", precio: 27500},
+        {dias: 365, tipo: "extra", precio: 55000},
+        {dias: 30, tipo: "deluxe", precio: 14800},
+        {dias: 90, tipo: "deluxe", precio: 33000},
+        {dias: 365, tipo: "deluxe", precio: 71500}
     ];
 
     constructor(repositorio) {
         this.repositorioPlus = repositorio;
     }
 
-    async actualizar (plus) {
+    async actualizar(plus) {
         if (!plus) throw new Error("No se pudo actualizar.")
         delete plus.diasRestantes;
         const resultado = await this.repositorioPlus.actualizar(plus)
@@ -29,8 +29,8 @@ class ModeloPlus {
         }
     }
 
-    async eliminar (idPlus) {
-        if (!idPlus) throw new Error ("No se pudo actualizar el PlayStation Plus")
+    async eliminar(idPlus) {
+        if (!idPlus) throw new Error("No se pudo actualizar el PlayStation Plus")
         const resultado = await this.repositorioPlus.eliminar(idPlus)
         return {
             exito: resultado,
@@ -65,7 +65,7 @@ class ModeloPlus {
             if (s.diasRestantes <= 0) return;
             s.diasRestantes = this.#obtenerDiasRestantes(s);
             delete s.precio;
-            s.costo = this.#obtenerPrecioFinalSegunParametros(s.diasRestantes, s.tipo, s.duracion) * 0.9
+            s.costo = this.#obtenerPrecioFinalSegunParametros(s.diasRestantes, s.tipo, s.duracion)
             console.log(`costo calculado ${s.costo}`)
             return s;
         })
@@ -78,9 +78,11 @@ class ModeloPlus {
     }
 
     #obtenerDiasRestantes(subscripcion) {
-        const a = new Date(parse(subscripcion.creado, 'dd/MM/yyyy', new Date()));
-        a.setDate(a.getDate() + Number(subscripcion.duracion));
-        return differenceInDays(a, new Date());
+        const fechaCreacion = new Date(parse(subscripcion.creado, 'dd/MM/yyyy', new Date()))
+        const fechaFin = addDays(fechaCreacion, subscripcion.duracion)
+        const hoy = new Date()
+        const diasRestantes = differenceInDays(fechaFin, hoy) + 1
+        return diasRestantes > 0 ? diasRestantes : 0;
     }
 
     #obtenerPrecioFinalSegunParametros(diasRestantes, tipo, duracion) {
@@ -88,8 +90,9 @@ class ModeloPlus {
         duracion = Number(duracion);
         const ref = this.referenciaPrecios.find((ref) =>
             ref.tipo.toLowerCase() === tipo.toLowerCase() && Number(ref.dias) === duracion);
-        if (ref) return this.#redondearCien((diasRestantes / ref.dias) * ref.precio);
-        return 0;
+        const precioCalculado = this.#redondearCien((diasRestantes / ref.dias) * ref.precio)
+        if (diasRestantes !== duracion) return precioCalculado * 0.9
+        return precioCalculado;
     }
 
     #redondearCien(numero) {
