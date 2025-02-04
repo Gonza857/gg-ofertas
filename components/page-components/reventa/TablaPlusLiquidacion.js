@@ -113,7 +113,6 @@ const Registro = ({plus}) => {
                 <Badge className={`${diccionarioTipos[plus.tipo.toLowerCase()]} mx-1 md:mx-2 h-6`}>
                     {plus.tipo}
                 </Badge>
-                <span className={`${plus.estado.toLowerCase() === "liquidacion" && "hidden"}`}>{meses}</span>
             </TableCell>
 
             <TableCell className={"p-1 text-center"}>{plus.diasRestantes}</TableCell>

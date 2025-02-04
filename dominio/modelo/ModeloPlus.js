@@ -66,7 +66,6 @@ class ModeloPlus {
             s.diasRestantes = this.#obtenerDiasRestantes(s);
             delete s.precio;
             s.costo = this.#obtenerPrecioFinalSegunParametros(s.diasRestantes, s.tipo, s.duracion)
-            console.log(`costo calculado ${s.costo}`)
             return s;
         })
     }
