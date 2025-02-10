@@ -12,7 +12,7 @@ async function StockJuegos() {
     const juegos = await obtenerJuegosStock()
     return (
         <main className={"styledMain py-4"}>
-            <article className={"w-full sm:w-11/12 md:w-3/4 xl:w-1/2 mx-auto p-2 md:p-0"}>
+            <article className={"w-full sm:w-11/12 md:w-10/12 xl:w-3/4 mx-auto p-2 md:p-0"}>
                 <h1 className="text-xl md:text-3xl font-bold text-center mb-4">
                     Juegos en stock PS4 & PS5
                 </h1>
@@ -25,7 +25,7 @@ async function StockJuegos() {
 
 const Recordatorios = () => {
     return (
-        <div className="w-full bg-white shadow-lg border rounded-lg p-4 mb-8 max-w-4xl mx-auto">
+        <div className="w-full bg-white shadow-lg border rounded-lg p-4 mb-2 lg:mb-6 lg:w-3/4 mx-auto">
             <Accordion type="single" collapsible className="w-full">
                 <AccordionItem value="item-1">
                     <AccordionTrigger className="text-xl font-semibold">Información Importante</AccordionTrigger>

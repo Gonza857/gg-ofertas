@@ -24,9 +24,23 @@ function AgregarJuego() {
         e.preventDefault()
         console.log("Envio estos datos")
         console.log(datosFormulario);
-        const {mensaje, exito} = await guardarJuegoStock(datosFormulario)
+        const juegoParaGuardar = {
+            ...datosFormulario,
+            consola: test(datosFormulario.consola),
+        }
+        const {mensaje, exito} = await guardarJuegoStock(juegoParaGuardar)
         if (exito) return toastSuccess(mensaje)
         return toastError(mensaje)
+    }
+
+    const test = (datosConsola) => {
+        const diccionario = {
+            "PS4/PS5": ["PS4", "PS5"],
+            "PS4": ["PS4"],
+            "PS5": ["PS5"]
+        }
+        if (!diccionario[datosConsola]) return []
+        return diccionario[datosConsola]
     }
 
     const manejarCampos = (e) => {

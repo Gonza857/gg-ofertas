@@ -6,6 +6,7 @@ import {Box, Check, Clock, Copy, Info, Scroll} from "lucide-react";
 import {Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
 import {Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
 import {Input} from "@/components/ui/input";
+import {useCopiarAlPortapapeles} from "@/hooks/useCopyToClipboard";
 
 function redondearCien(num) {
     const resto = num % 100;
@@ -13,44 +14,20 @@ function redondearCien(num) {
 }
 
 function TablaJuegosOfertaConsumidores({juegos = [], fechaExpiracion, titulo = null}) {
-    const [juegoCopiado, setJuegoCopiado] = useState(null)
     const [juegoBuscado, setJuegoBuscado] = useState("")
     const [busqueda, setBusqueda] = useState(null)
     const topRef = useRef(null); // Referencia al elemento superior
 
-    const copiarJuego = (text, id) => {
-        navigator.clipboard
-            .writeText(text)
-            .then(() => {
-                setJuegoCopiado(id)
-                toast({
-                    title: "Copiado al portapapeles",
-                    description: `"${text}" ha sido copiado.`,
-                })
-                setTimeout(() => setJuegoCopiado(null), 2000)
-            })
-            .catch((err) => {
-                console.error("Error al copiar: ", err)
-                toast({
-                    title: "Error",
-                    description: "No se pudo copiar al portapapeles.",
-                    variant: "destructive",
-                })
-            })
-    }
 
     const tablaProps = {
         juegoBuscado,
         juegos,
         busqueda,
-        copiarJuego,
-        juegoCopiado
     }
 
     const buscarJuego = (e) => {
         if (e.target.value.length === 0) {
             setBusqueda(null)
-            console.log("nulo ahora")
         }
         const juegosFiltrados = [...juegos].filter((j) => {
             return j.name.toLowerCase().includes(e.target.value.toLowerCase())
@@ -200,7 +177,7 @@ const TablaOfertas = (props) => {
     )
 }
 
-const Cuerpo = ({juegos = [], copiarJuego, juegoCopiado, busqueda = null}) => {
+const Cuerpo = ({juegos = [], busqueda = null}) => {
     return (
         <TableBody>
             {busqueda ?
@@ -208,37 +185,34 @@ const Cuerpo = ({juegos = [], copiarJuego, juegoCopiado, busqueda = null}) => {
                     <Registro
                         juego={j}
                         key={j.name}
-                        copiarJuego={copiarJuego}
-                        juegoCopiado={juegoCopiado}
                     />))
                 :
                 juegos.map(j => (
                     <Registro
                         juego={j}
                         key={j.name}
-                        copiarJuego={copiarJuego}
-                        juegoCopiado={juegoCopiado}
                     />))
             }
         </TableBody>
     )
 }
 
-const Registro = ({juego, copiarJuego, juegoCopiado}) => {
+const Registro = ({juego}) => {
+    const {copiar, copiado} = useCopiarAlPortapapeles()
     const precioLista = redondearCien(juego.price).toFixed(0)
     const precioTransferencia = redondearCien((juego.price) * 1.15).toFixed(0)
 
     return (
         <TableRow
-            onClick={() => copiarJuego(`${juego.name} - PL:$${precioLista} - T:${precioTransferencia}`, juego.name)}>
+            onClick={() => copiar(`${juego.name} - PL:$${precioLista} - T:${precioTransferencia}`, juego.name)}>
             <TableCell className="font-medium p-2">{juego.name}</TableCell>
             <TableCell className={"p-2 text-center"}>${precioTransferencia}</TableCell>
             <TableCell className={"p-2 text-center"}>${precioLista}</TableCell>
             <TableCell className="hidden md:table-cell p-2">
                 <div
-                    onClick={() => copiarJuego(`${juego.name} - PL:$${precioLista} - T:${precioTransferencia}`, juego.name)}
+                    onClick={() => copiar(`${juego.name} - PL:$${precioLista} - T:${precioTransferencia}`, juego.name)}
                     className={"flex justify-center items-center cursor-pointer"}>
-                    {juegoCopiado === juego.name ? <Check className="h-4 w-4"/> : <Copy className="h-4 w-4"/>}
+                    {copiado === juego.name ? <Check className="h-4 w-4"/> : <Copy className="h-4 w-4"/>}
                     <span className="sr-only">Copiar información del juego</span>
                 </div>
             </TableCell>

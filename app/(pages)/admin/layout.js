@@ -1,8 +1,10 @@
-function AdminLayout ({children}) {
+import AdminNavbar from "@/components/personalized-ui/AdminNavbar";
+
+function AdminLayout({children}) {
     return (
         <>
+            <AdminNavbar />
             {children}
-        Esto es admin Layout
         </>
     )
 }
