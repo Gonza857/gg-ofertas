@@ -194,11 +194,11 @@ export default function Home() {
 const PreviewTablaJuegos = ({juegos = [], termina = "null", titulo = "null"}) => {
     if (!juegos) return
     return (
-        <>
+        <section className={"lg:w-3/4 mx-auto"}>
             {titulo && <h2 className="text-2xl font-bold mb-2 text-center">{titulo}</h2>}
             <h3 className="text-2xl font-bold mb-2 text-center">Juegos en oferta hasta el {termina} 19:00hs</h3>
             <TablaOfertas juegos={juegos}/>
-        </>
+        </section>
     )
 
 
@@ -239,12 +239,12 @@ const Registro = ({juego}) => {
 
     return (
         <TableRow>
-            <TableCell className="font-medium">{juego.name}</TableCell>
-            <TableCell>${precioLista}</TableCell>
-            <TableCell>${precioTransferencia}</TableCell>
-            <TableCell>${precioReventa}</TableCell>
-            <TableCell className="text-right">
-                <div>
+            <TableCell className="font-medium p-2">{juego.name}</TableCell>
+            <TableCell className={"p-2 text-center"}>${precioTransferencia}</TableCell>
+            <TableCell className={"p-2 text-center"}>${precioLista}</TableCell>
+            <TableCell className={"p-2 text-center"}>${precioReventa}</TableCell>
+            <TableCell className="text-right p-2">
+                <div className={"mx-auto w-fit"}>
                     <Copy className="h-4 w-4"/>
                     <span className="sr-only">Copiar información del juego</span>
                 </div>
@@ -258,10 +258,10 @@ const Cabecera = () => {
         <TableHeader>
             <TableRow>
                 <TableHead>Nombre del Juego</TableHead>
-                <TableHead>Precio Lista</TableHead>
-                <TableHead>Transferencia</TableHead>
-                <TableHead>Reventa</TableHead>
-                <TableHead>Copiar</TableHead>
+                <TableHead className={"text-center"}>P. Lista</TableHead>
+                <TableHead className={"text-center"}>P. Transferencia</TableHead>
+                <TableHead className={"text-center"}>P. Reventa</TableHead>
+                <TableHead className={"text-center"}>Copiar</TableHead>
             </TableRow>
         </TableHeader>
     )
