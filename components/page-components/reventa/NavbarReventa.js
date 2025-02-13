@@ -44,7 +44,7 @@ const opcionesMenuLateral = [
     {
         name: "Juegos en stock",
         icon: <Gamepad2 className="mr-2 h-6 w-6"/>,
-        href: "/juegos/stock"
+        href: "/reventa/juegos/stock"
     },
     {
         name: "PlayStation Plus",
