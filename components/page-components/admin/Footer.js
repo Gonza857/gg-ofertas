@@ -5,19 +5,19 @@ import React from "react";
 const seccionesItems = [
     {
         nombre: "Juegos en oferta",
-        ruta: "/"
+        ruta: "/reventa"
     },
     {
         nombre: "Juegos en stock",
-        ruta: "/stock"
+        ruta: "/reventa/juegos/stock"
     },
     {
         nombre: "PlayStation Plus",
-        ruta: "/playstationplus"
+        ruta: "/reventa/playstationplus"
     },
     {
         nombre: "Instructivos",
-        ruta: "/instructivos"
+        ruta: "/reventa/instructivos"
     }
 ]
 
@@ -85,15 +85,15 @@ const Contacto = () => {
             className="p-4 md:p-0 flex flex-col gap-2 md:gap-4 items-center">
             <p className="text-2xl font-semibold">Contacto</p>
             <a
-                href="https://www.instagram.com/garret.games2_?igsh=N2NzYjlxaTNyNjN2"
+                href="https://t.me/GARRETG_PSN"
                 target="_blank"
-                className="text-1xl">
-                Instagram
+            >
+                Telegram
             </a>
             <a
                 href="https://wa.me/5491132001372"
                 target="_blank"
-                className="text-1xl">
+            >
                 Whatsapp
             </a>
         </div>

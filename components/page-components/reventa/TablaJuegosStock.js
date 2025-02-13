@@ -10,7 +10,7 @@ import {Input} from "@/components/ui/input";
 import {Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
 import ordenador from "@/lib/ordenamiento";
 
-function TablaJuegosStock({juegos: s}) {
+function TablaJuegosStock({juegos: s, cliente = false}) {
     const [juegos, setJuegos] = useState(s || [])
     const [juegoBuscado, setJuegoBuscado] = useState("")
     const [stockFiltrado, setStockFiltrado] = useState([])
@@ -85,6 +85,7 @@ function TablaJuegosStock({juegos: s}) {
     }
 
     const tablaProps = {
+        cliente,
         juegos: filtros.tipo.length === 0 && filtros.consola.length === 0 ? juegos : stockFiltrado
     }
 
@@ -214,30 +215,30 @@ const Cabecera = () => {
     )
 }
 
-const Cuerpo = ({juegos, editarJuego, eliminarJuego}) => {
+const Cuerpo = ({juegos, cliente}) => {
     return (
         <TableBody>
             {juegos.map(j => (
                 <Registro
                     juego={j}
                     key={j.id}
-                    editarJuego={editarJuego}
-                    eliminarJuego={eliminarJuego}
+                    cliente={cliente}
                 />))
             }
         </TableBody>
     )
 }
 
-const Registro = ({juego: j}) => {
+const Registro = ({juego: j, cliente}) => {
     const {copiar, copiado} = useCopiarAlPortapapeles()
     const textoParaCopiar = `${j.nombre} ${j.mostrarIdioma && j.idioma} | ${j.tipo} | ${j.consola} | $${j.precioReventa.toLocaleString("es-AR")}`;
+    const precio = cliente ? j.precioCliente : j.precioReventa
 
     return (
         <TableRow onClick={() => copiar(textoParaCopiar, j.id)}>
             <TableCell className={"p-1 py-2"}>{j.nombre} {j.mostrarIdioma && j.idioma}</TableCell>
             <TableCell className={"p-1 py-2 text-center"}>{j.consola.join("/")}</TableCell>
-            <TableCell className={"p-1 py-2 text-center"}>${j.precioReventa.toLocaleString("es-AR")}</TableCell>
+            <TableCell className={"p-1 py-2 text-center"}>${precio.toLocaleString("es-AR")}</TableCell>
             <TableCell className={"p-1 py-2 text-center"}>{j.tipo}</TableCell>
             <TableCell className="hidden md:table-cell p-1">
                 <div

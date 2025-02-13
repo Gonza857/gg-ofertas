@@ -1,6 +1,6 @@
 import NavbarReventa from "@/components/page-components/reventa/NavbarReventa";
 import TelegramBtn from "@/components/personalized-ui/TelegramBtn";
-import Footer from "@/components/page-components/principales/Footer";
+import Footer from "@/components/page-components/admin/Footer";
 
 function ReventaLayout ({children}) {
     return (

@@ -13,6 +13,7 @@ import {actualizarPlus, eliminarPlus as eliminarMembresia} from "@/dominio/servi
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
 import {Input} from "@/components/ui/input";
 import {CardDescription} from "@/components/ui/card";
+import Link from "next/link";
 
 function TablaPlusLiquidacionAdmin({subscripciones: s}) {
     const [subscripciones, setSubscripciones] = useState(s)
@@ -81,6 +82,11 @@ function TablaPlusLiquidacionAdmin({subscripciones: s}) {
             <ModalEliminar {...modalEliminarProps}/>
             <ModalEditar {...modalEditarProps}/>
             <Tabla {...tablaProps}/>
+            <Link href={"/admin/stock/playstationplus-liquidacion/agregar"}>
+                <Button className={"w-full mt-2"} variant={"outline"}>
+                    Agregar
+                </Button>
+            </Link>
         </>)
 }
 

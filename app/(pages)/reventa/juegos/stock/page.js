@@ -1,6 +1,4 @@
 import {Box, Clock, Gamepad2, Scroll} from "lucide-react";
-import {obtenerPlusStock} from "@/dominio/servicios/playstationplus";
-import TablaPlusLiquidacion from "@/components/page-components/reventa/TablaPlusLiquidacion";
 import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from "@/components/ui/accordion";
 import {obtenerJuegosStock} from "@/dominio/servicios/juegos";
 import TablaJuegosStock from "@/components/page-components/reventa/TablaJuegosStock";
@@ -17,7 +15,7 @@ async function StockJuegos() {
                     Juegos en stock PS4 & PS5
                 </h1>
                 <Recordatorios/>
-                <TablaJuegosStock juegos={juegos}/>
+                <TablaJuegosStock juegos={juegos} cliente={false}/>
             </article>
         </main>
     )
