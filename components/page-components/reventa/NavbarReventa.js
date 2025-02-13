@@ -39,27 +39,27 @@ const opcionesMenuLateral = [
     {
         name: "Juegos en oferta",
         icon: <Gamepad2 className="mr-2 h-6 w-6"/>,
-        href: "/juegos"
+        href: "/reventa"
     },
     {
         name: "Juegos en stock",
         icon: <Gamepad2 className="mr-2 h-6 w-6"/>,
-        href: "/juegos"
+        href: "/juegos/stock"
     },
     {
         name: "PlayStation Plus",
         icon: <PlusCircle className="mr-2 h-6 w-6"/>,
-        href: "/playstation-plus"
+        href: "/reventa/playstationplus"
     },
     {
         name: "Liquidación PlayStation Plus",
         icon: <PlusCircle className="mr-2 h-6 w-6"/>,
-        href: "/playstation-plus"
+        href: "/reventa/playstationplus-liquidacion"
     },
     {
         name: "Instructivos",
         icon: <FileText className="mr-2 h-6 w-6"/>,
-        href: "/instructivos"
+        href: "/reventa/instructivos"
     },
 ]
 
