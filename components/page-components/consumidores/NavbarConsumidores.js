@@ -63,13 +63,13 @@ const NavbarConsumidores = () => {
         {/* WRAPPER */}
         <div className={"w-full flex items-center justify-between md:w-10/12 mx-auto"}>
           <aside
-              className={`mt-20 fixed inset-0 z-10 flex items-start transition-opacity duration-300
+              className={`mt-20 fixed inset-0 z-40 flex items-start transition-opacity duration-300
                 ${estaAbierto ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}
                 lg:hidden lg:opacity-100 lg:pointer-events-auto lg:relative`}
           >
             {/* Fondo oscuro semitransparente */}
             <div
-                className="absolute inset-0 bg-black bg-opacity-50 transition-opacity duration-300"
+                className="absolute inset-0 bg-black bg-opacity-50 transition-opacity duration-300 z-30"
                 onClick={() => manejarNav()} // Puedes usar una función de cierre aquí
             ></div>
 

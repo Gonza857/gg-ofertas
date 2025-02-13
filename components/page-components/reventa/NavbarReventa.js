@@ -73,7 +73,7 @@ const Navbar = () => {
             {/* WRAPPER */}
             <div className={"w-full flex items-center justify-between md:w-10/12 mx-auto"}>
                 <aside
-                    className={`mt-20 fixed inset-0 z-10 flex items-start transition-opacity duration-300
+                    className={`mt-20 fixed inset-0 z-30 flex items-start transition-opacity duration-300
                 ${estaAbierto ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}
                 lg:hidden lg:opacity-100 lg:pointer-events-auto lg:relative`}
                 >

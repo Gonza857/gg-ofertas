@@ -48,10 +48,10 @@ const instructivosData = [
 
 function Instructivos() {
     return (
-        <main className={"styledMain px-2"}>
+        <main className={"styledMain px-2 pb-4"}>
             <h1 className={"text-2xl font-semibold text-center py-4 font-sans"}>Instructivos de instalacion</h1>
-            <article className={"w-full sm:w-3/4 md:w-1/2 xl:w-5/12 mx-auto grid grid-cols-1 sm:grid-cols-2 gap-2"}>
-                {instructivosData.map((e)=>(
+            <article className={"w-3/4 md:w-7/12 xl:w-5/12 mx-auto grid grid-cols-1 sm:grid-cols-2 gap-2"}>
+                {instructivosData.map((e) => (
                     <Instructivo key={e.nombre} datos={e}/>
                 ))}
             </article>
@@ -62,10 +62,10 @@ function Instructivos() {
 const Instructivo = ({datos}) => {
     return (
         <Link href={datos.ruta} className={"h-fit transition-all duration-200 hover:scale-105 cursor-pointer"}>
-            <Card className={`relative overflow-hidden w-full max-w-md mx-auto h-40 sm:h-32 flex justify-center items-center`}>
+            <Card className={`relative overflow-hidden w-full mx-auto h-40 sm:h-32 flex justify-center items-center`}>
                 <div
                     className="absolute inset-0 bg-cover bg-center z-0"
-                    style={{ backgroundImage: `url(${datos.imagenUrl})` }}
+                    style={{backgroundImage: `url(${datos.imagenUrl})` }}
                     role="img"
                     aria-label={datos.nombre}
                 />
@@ -75,7 +75,6 @@ const Instructivo = ({datos}) => {
                 </CardContent>
             </Card>
         </Link>
-
     )
 }
 
