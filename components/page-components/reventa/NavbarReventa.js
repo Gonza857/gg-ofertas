@@ -26,7 +26,7 @@ const opcionesNavbar = [
     {
         id: id++,
         nombre: "PS Plus Liquidación",
-        ruta: "/reventa/playstationplus/liquidacion"
+        ruta: "/reventa/playstationplus-liquidacion"
     },
     {
         id: id++,
