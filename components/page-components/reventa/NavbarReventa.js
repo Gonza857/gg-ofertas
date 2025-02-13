@@ -90,7 +90,7 @@ const Navbar = () => {
                     >
                         {opcionesMenuLateral.map(item => (
                             <Link
-                                onClick={()=>manejarNav()}
+                                onClick={() => manejarNav()}
                                 key={item.name}
                                 href={item.href}
                                 className="flex items-center p-2 mb-2 text-cyan-900 transition-all duration-200 hover:bg-gray-200 rounded"
@@ -151,7 +151,6 @@ const BotonMenu = ({manejarNav, estaAbierto}) => {
         </div>
     )
 }
-
 
 
 export default Navbar;
