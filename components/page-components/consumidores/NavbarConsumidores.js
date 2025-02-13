@@ -44,7 +44,7 @@ const opcionesMenuLateral = [
     {
         name: "PlayStation Plus",
         icon: <PlusCircle className="mr-2 h-6 w-6"/>,
-        href: "/playstation-plus"
+        href: "/playstationplus"
     },
     {
         name: "Instructivos",
@@ -80,6 +80,7 @@ const NavbarConsumidores = () => {
             >
               {opcionesMenuLateral.map(item => (
                   <Link
+                      onClick={()=>manejarNav()}
                       key={item.name}
                       href={item.href}
                       className="flex items-center p-2 mb-2 text-cyan-900 transition-all duration-200 hover:bg-gray-200 rounded"
