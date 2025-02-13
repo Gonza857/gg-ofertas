@@ -16,7 +16,7 @@ const opcionesNavbar = [
     {
         id: id++,
         nombre: "Stock",
-        ruta: "/juegos/stock"
+        ruta: "/stock"
     },
     {
         id: id++,
