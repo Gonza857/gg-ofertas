@@ -11,6 +11,14 @@ class RepositorioJuegos {
         return await this.BaseDeDatos.obtenerPorId(this.COLECCION, "nbC1nBnbrJarc6vaCbOc");
     }
 
+    async eliminarJuegoEnStock(id) {
+        return await this.BaseDeDatos.eliminar("stock-juegos", id)
+    }
+
+    async actualizarJuegoEnStock(juego, id) {
+        return await this.BaseDeDatos.actualizar("stock-juegos", juego, id);
+    }
+
     async obtenerTodosLosJuegosStock() {
         return await this.BaseDeDatos.obtenerTodos("stock-juegos")
     }

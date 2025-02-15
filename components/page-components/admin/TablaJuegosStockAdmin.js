@@ -1,19 +1,17 @@
 "use client"
 
 import {Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
-import {useCopiarAlPortapapeles} from "@/hooks/useCopyToClipboard";
-import {Badge} from "@/components/ui/badge";
 import {Check, Copy, Pen, Trash2} from "lucide-react";
 import ModalCustomizado from "@/components/personalized-ui/Modal";
 import {useState} from "react";
 import {Button} from "@/components/ui/button";
 import {Label} from "@/components/ui/label";
 import {toastError, toastSuccess} from "@/lib/Toast";
-import {actualizarPlus, eliminarPlus as eliminarMembresia} from "@/dominio/servicios/playstationplus";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
 import {Input} from "@/components/ui/input";
 import {CardDescription} from "@/components/ui/card";
 import {RadioGroup, RadioGroupItem} from "@/components/ui/radio-group";
+import {actualizarJuegoStock, eliminarJuegoStock} from "@/dominio/servicios/stock-juegos";
 
 function TablaJuegosStockAdmin({juegos: j}) {
     const [juegos, setJuegos] = useState(j)
@@ -59,13 +57,26 @@ function TablaJuegosStockAdmin({juegos: j}) {
     const eliminarJuego = (juego) => manejarModalEliminar(juego)
     const editarJuego = (juego) => manejarModalEditar(juego)
 
-    const eliminarLocal = (idPlus) => {
-        return juegos.filter(s => s.id !== idPlus)
+    const eliminarLocal = (idJuego) => {
+        return juegos.filter(s => s.id !== idJuego)
+    }
+
+    const actualizarLocal = (juegoActualizado) => {
+        const juegosActualizados = [...juegos].map((j)=>{
+            if (j.id === juegoActualizado.id) {
+                return {
+                    ...j,
+                    ...juegoActualizado
+                }
+            }
+            return j;
+        })
+        setJuegos(juegosActualizados)
     }
 
     const manejarEliminarJuego = async () => {
         if (!juegoSeleccionado.id) return toastError("No se pudo eliminar el PlayStation Plus")
-        const {mensaje, exito} = await eliminarMembresia(juegoSeleccionado.id)
+        const {mensaje, exito} = await eliminarJuegoStock(juegoSeleccionado.id)
         setJuegos(eliminarLocal(juegoSeleccionado.id))
         manejarModalEliminar()
         if (exito) return toastSuccess(mensaje)
@@ -81,7 +92,8 @@ function TablaJuegosStockAdmin({juegos: j}) {
     const modalEditarProps = {
         estaAbierto: modalEditarAbierto,
         manejarModalEditar,
-        juegoSeleccionado
+        juegoSeleccionado,
+        actualizarLocal
     }
 
     const modalEliminarProps = {
@@ -111,7 +123,7 @@ const InputWrapper = ({children}) => {
     )
 }
 
-const ModalEliminar = ({estaAbierto, manejarEliminarPlus, manejarModalEliminar}) => {
+const ModalEliminar = ({estaAbierto, manejarEliminarJuego, manejarModalEliminar}) => {
     return (
         <ModalCustomizado estaAbierto={estaAbierto}>
             <ModalCustomizado.Titulo>¿Deseas eliminar este juego?</ModalCustomizado.Titulo>
@@ -126,7 +138,7 @@ const ModalEliminar = ({estaAbierto, manejarEliminarPlus, manejarModalEliminar})
                 </Button>
                 <Button
                     type={"button"}
-                    onClick={() => manejarEliminarPlus()}
+                    onClick={() => manejarEliminarJuego()}
                 >
                     Eliminar
                 </Button>
@@ -135,17 +147,18 @@ const ModalEliminar = ({estaAbierto, manejarEliminarPlus, manejarModalEliminar})
     )
 }
 
-const ModalEditar = ({estaAbierto, manejarModalEditar, juegoSeleccionado = null}) => {
+const ModalEditar = ({estaAbierto, manejarModalEditar, juegoSeleccionado = null, actualizarLocal}) => {
     const [datosFormulario, setDatosFormulario] = useState({...juegoSeleccionado});
 
     if (!juegoSeleccionado) return;
 
     const enviarFormulario = async (e) => {
         e.preventDefault()
-        // const {mensaje, exito} = await actualizarPlus({...juegoSeleccionado, ...datosFormulario});
-        // manejarModalEditar()
-        // if (exito) return toastSuccess(mensaje);
-        // return toastError(mensaje);
+        const {mensaje, exito} = await actualizarJuegoStock({...juegoSeleccionado, ...datosFormulario});
+        manejarModalEditar()
+        actualizarLocal({...juegoSeleccionado, ...datosFormulario})
+        if (exito) return toastSuccess(mensaje);
+        return toastError(mensaje);
     }
 
     const manejarCampos = (e) => {

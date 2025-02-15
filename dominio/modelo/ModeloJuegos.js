@@ -5,7 +5,7 @@ class ModeloJuegos {
         this.repositorioJuegos = repositorioJuegos;
     }
 
-    async guardarJuegoStock (juego) {
+    async guardarJuegoStock(juego) {
         if (!juego) throw new Error("No se pudo guardar el juego.")
         juego.precioCliente = Number(juego.precioCliente)
         juego.precioReventa = Number(juego.precioReventa)
@@ -17,6 +17,24 @@ class ModeloJuegos {
         }
     }
 
+    async actualizarJuegoStock(input) {
+        if (!input || !input.id) throw new Error("No se pudo actualizar el juego")
+        const resultado = await this.repositorioJuegos.actualizarJuegoEnStock(input, input.id)
+        return {
+            mensaje: "Juego actualizado correctamante",
+            exito: resultado
+        }
+    }
+
+    async eliminarJuegoStock(id) {
+        if (!id) throw new Error("No se pudo eliminar el juego.")
+        await this.repositorioJuegos.eliminarJuegoEnStock(id)
+        return {
+            mensaje: "Juego eliminado correctamente",
+            exito: 1,
+        }
+    }
+
     async obtenerJuegosStock() {
         return await this.repositorioJuegos.obtenerTodosLosJuegosStock()
     }
@@ -25,7 +43,7 @@ class ModeloJuegos {
         return await this.repositorioJuegos.obtenerJuegos()
     }
 
-    async subirOfertas (ofertas) {
+    async subirOfertas(ofertas) {
         if (!ofertas) throw new Error("No se recibieron los datos.")
         console.log("recibo ofertas", ofertas)
         const resultado = await this.repositorioJuegos.subirOfertas(ofertas)

@@ -5,8 +5,8 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/c
 import {useState} from "react";
 import {Button} from "@/components/ui/button";
 import {RadioGroup, RadioGroupItem} from "@/components/ui/radio-group";
-import {guardarJuegoStock} from "@/dominio/servicios/juegos";
 import {toastError, toastSuccess} from "@/lib/Toast";
+import {guardarJuegoStock} from "@/dominio/servicios/stock-juegos";
 
 function AgregarJuego() {
     const [datosFormulario, setDatosFormulario] = useState({

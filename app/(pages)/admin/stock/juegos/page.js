@@ -1,11 +1,8 @@
-import {obtenerPlusStock} from "@/dominio/servicios/playstationplus";
-import TablaPlusLiquidacion from "@/components/page-components/reventa/TablaPlusLiquidacion";
-import TablaPlusLiquidacionAdmin from "@/components/page-components/admin/TablaPlusLiquidacionAdmin";
-import {obtenerJuegosStock} from "@/dominio/servicios/juegos";
 import TablaJuegosStockAdmin from "@/components/page-components/admin/TablaJuegosStockAdmin";
 import {Button} from "@/components/ui/button";
 import {Plus} from "lucide-react";
 import Link from "next/link";
+import {obtenerJuegosStock} from "@/dominio/servicios/stock-juegos";
 
 export const revalidate = 3600;
 export const dynamic = "force-dynamic";

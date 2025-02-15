@@ -56,7 +56,6 @@ class MiFirebase {
     }
 
     async actualizar_o_agregar(coleccion, objeto, id) {
-        console.log("DATABASE: actualizar_o_agregar")
         try {
             const referenciaDocumento = doc(this.BASE_DE_DATOS, coleccion, id);
             await setDoc(referenciaDocumento, objeto, {merge: true});
