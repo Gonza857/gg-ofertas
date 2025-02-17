@@ -74,6 +74,7 @@ const Recordatorios = () => {
                     </AccordionContent>
                 </AccordionItem>
             </Accordion>
+            <p className={"mt-4 text-sm text-neutral-500 dark:text-neutral-400 text-center"}>¡Podes copiar al portapeles el producto que desees y enviarnos un mensaje!</p>
         </div>
     )
 }
