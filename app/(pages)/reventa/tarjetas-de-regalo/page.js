@@ -1,8 +1,3 @@
-import Link from "next/link";
-import {Card, CardContent} from "@/components/ui/card";
-import React from "react";
-import {BsPlaystation} from "react-icons/bs";
-import {SiSteam} from "react-icons/si";
 import TablaTarjetasRegaloReventa from "@/components/page-components/reventa/TablaTarjetasRegaloReventa";
 
 const tarjetasHard = [

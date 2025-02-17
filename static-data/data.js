@@ -1,4 +1,4 @@
-import {Banknote, FileText, Gamepad2, PlusCircle, Tag} from "lucide-react";
+import {Banknote, FileText, Gamepad2, MessageCircleQuestion, PlusCircle, Tag} from "lucide-react";
 import React from "react";
 import {SiSteam} from "react-icons/si";
 import {BsPlaystation} from "react-icons/bs";
@@ -812,6 +812,11 @@ const opcionesMenuLateralConsumidor = [
         name: "PlayStation Plus",
         icon: <PsplusLogo/>,
         href: "/playstationplus"
+    },
+    {
+        name: "Preguntas frecuentes",
+        icon: <MessageCircleQuestion className="mr-2 h-6 w-6"/>,
+        href: "/preguntas-frecuentes"
     },
     {
         name: "Instructivos",
