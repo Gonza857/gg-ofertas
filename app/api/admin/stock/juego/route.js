@@ -8,7 +8,8 @@ export async function POST(req, res) {
     try {
         const cuerpo = await req.json();
         const resultado = await modeloJuegos.guardarJuegoStock(cuerpo);
-        revalidatePath("/reventa/stock-juegos")
+        revalidatePath("/reventa/juegos/stock")
+        revalidatePath("//stock")
         revalidatePath("/admin/stock/juegos")
         return NextResponse.json(
             resultado
