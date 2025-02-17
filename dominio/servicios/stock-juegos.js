@@ -3,9 +3,7 @@ import Fetcher from "@/infraestructura/Fetcher";
 export async function obtenerJuegosStock() {
     const fetchParams = {
         method: 'GET',
-        next: {
-            revalidate: 1
-        }
+        cache: "no-store"
     }
     return Fetcher.request(`/juegos/stock`, fetchParams)
 }
