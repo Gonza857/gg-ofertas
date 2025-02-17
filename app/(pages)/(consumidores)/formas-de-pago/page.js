@@ -41,7 +41,7 @@ const metodosDePago = [
   {
     name: "Tarjeta de Crédito",
     icon: CreditCard,
-    description: "Pago con tarjeta de crédito en cuotas.",
+    description: "Pago con tarjeta de crédito en cuotas. Hasta 3 cuotas sin interés.",
     color: "bg-red-500",
   },
   {

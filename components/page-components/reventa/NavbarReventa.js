@@ -5,63 +5,7 @@ import Link from "next/link";
 import React, {useState} from "react";
 import {Button} from "@/components/ui/button";
 import {FileText, Gamepad2, Menu, PlusCircle, X} from "lucide-react";
-
-let id = 0;
-const opcionesNavbar = [
-    {
-        id: id++,
-        nombre: "Ofertas",
-        ruta: "/reventa"
-    },
-    {
-        id: id++,
-        nombre: "Stock",
-        ruta: "/reventa/juegos/stock"
-    },
-    {
-        id: id++,
-        nombre: "PlayStation Plus",
-        ruta: "/reventa/playstationplus"
-    },
-    {
-        id: id++,
-        nombre: "PS Plus Liquidación",
-        ruta: "/reventa/playstationplus-liquidacion"
-    },
-    {
-        id: id++,
-        nombre: "Instructivos",
-        ruta: "/instructivos"
-    }
-]
-
-const opcionesMenuLateral = [
-    {
-        name: "Juegos en oferta",
-        icon: <Gamepad2 className="mr-2 h-6 w-6"/>,
-        href: "/reventa"
-    },
-    {
-        name: "Juegos en stock",
-        icon: <Gamepad2 className="mr-2 h-6 w-6"/>,
-        href: "/reventa/juegos/stock"
-    },
-    {
-        name: "PlayStation Plus",
-        icon: <PlusCircle className="mr-2 h-6 w-6"/>,
-        href: "/reventa/playstationplus"
-    },
-    {
-        name: "Liquidación PlayStation Plus",
-        icon: <PlusCircle className="mr-2 h-6 w-6"/>,
-        href: "/reventa/playstationplus-liquidacion"
-    },
-    {
-        name: "Instructivos",
-        icon: <FileText className="mr-2 h-6 w-6"/>,
-        href: "/reventa/instructivos"
-    },
-]
+import {opcionesMenuLateralReventa, opcionesNavbarReventa} from "@/static-data/data";
 
 const Navbar = () => {
     const [estaAbierto, setEstaAbierto] = useState(false);
@@ -71,7 +15,7 @@ const Navbar = () => {
     return (
         <header className="flex items-center w-full h-20 bg-cyan-900 px-2 md:px-8 relative">
             {/* WRAPPER */}
-            <div className={"w-full flex items-center justify-between md:w-10/12 mx-auto"}>
+            <div className={"flex items-center justify-between w-full md:w-11/12 lg:w-5/6 mx-auto"}>
                 <aside
                     className={`mt-20 fixed inset-0 z-30 flex items-start transition-opacity duration-300
                 ${estaAbierto ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}
@@ -88,7 +32,7 @@ const Navbar = () => {
                         className={`relative p-4 w-10/12 max-w-sm bg-white h-full shadow-2xl transform transition-transform duration-300 ease-in-out
                     ${estaAbierto ? 'translate-x-0' : '-translate-x-full'}`}
                     >
-                        {opcionesMenuLateral.map(item => (
+                        {opcionesMenuLateralReventa.map(item => (
                             <Link
                                 onClick={() => manejarNav()}
                                 key={item.name}
@@ -115,7 +59,7 @@ const Navbar = () => {
                     <nav className={"hidden md:block"}>
                         <ul className="flex gap-5 flex-wrap text-white">
                             {
-                                opcionesNavbar.map((o) => (
+                                opcionesNavbarReventa.map((o) => (
                                     <Link href={o.ruta} key={o.id}>{o.nombre}</Link>
                                 ))
                             }

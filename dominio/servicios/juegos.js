@@ -24,9 +24,7 @@ export async function subirOfertas(ofertas) {
 export async function obtenerJuegosStock() {
     const fetchParams = {
         method: 'GET',
-        next: {
-            revalidate: 1
-        }
+        cache: "no-store"
     }
     return Fetcher.request(`/admin/stock/juego`, fetchParams)
 }
