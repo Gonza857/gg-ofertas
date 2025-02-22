@@ -3,15 +3,16 @@ import Fetcher from "@/infraestructura/Fetcher";
 export async function subirPlaystationplus(plus) {
     const fetchParams = {
         method: 'POST',
-        headers: { 'Content-type': 'application/json' },
+        headers: {'Content-type': 'application/json'},
         body: JSON.stringify(plus),
     };
     return Fetcher.request(`/admin/stock/playstationplus`, fetchParams);
 }
+
 export async function actualizarPlus(plus) {
     const fetchParams = {
         method: 'PATCH',
-        headers: { 'Content-type': 'application/json' },
+        headers: {'Content-type': 'application/json'},
         body: JSON.stringify(plus),
     };
     return Fetcher.request(`/admin/stock/playstationplus`, fetchParams);
@@ -27,9 +28,7 @@ export async function eliminarPlus(id) {
 export async function obtenerPlusStock() {
     const fetchParams = {
         method: 'GET',
-        next: {
-            revalidate: 60
-        }
+        cache: "no-store"
     };
     return Fetcher.request(`/admin/stock/playstationplus`, fetchParams);
 }

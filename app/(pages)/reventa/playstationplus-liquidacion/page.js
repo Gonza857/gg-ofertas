@@ -3,7 +3,7 @@ import {obtenerPlusStock} from "@/dominio/servicios/playstationplus";
 import TablaPlusLiquidacion from "@/components/page-components/reventa/TablaPlusLiquidacion";
 import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from "@/components/ui/accordion";
 
-export const revalidate = 3600;
+export const revalidate = 0;
 export const dynamic = "force-dynamic";
 
 async function StockPlayStationPlus() {
