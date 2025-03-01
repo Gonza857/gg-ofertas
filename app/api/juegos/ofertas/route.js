@@ -7,8 +7,6 @@ const modeloJuegos = container.resolve("ModeloJuegos");
 export async function GET(req, res) {
     try {
         const juegos = await modeloJuegos.obtenerJuegosOfertaReventa();
-        // revalidatePath(`/admin/productos/editar/${id}`)
-        // revalidatePath(`/admin/productos/todos`)
         return NextResponse.json(
             juegos
         )
@@ -25,8 +23,7 @@ export async function POST(req, res) {
     try {
         const cuerpo = await req.json();
         const resultado = await modeloJuegos.subirOfertas(cuerpo);
-        revalidatePath("/reventa/oferta-juegos")
-        revalidatePath("/")
+        revalidar()
         return NextResponse.json(
             resultado
         )
@@ -37,4 +34,9 @@ export async function POST(req, res) {
             }
         )
     }
+}
+
+const revalidar = () => {
+    revalidatePath("/reventa")
+    revalidatePath("/")
 }

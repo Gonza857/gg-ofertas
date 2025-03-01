@@ -2,7 +2,6 @@ import TablaJuegosOfertaReventa from "@/components/page-components/reventa/Tabla
 import {obtenerJuegosOferta} from "@/dominio/servicios/juegos";
 import {Suspense} from "react";
 
-export const revalidate = 3600;
 export const dynamic = "force-dynamic";
 
 async function JuegosOfertaReventa() {
