@@ -7,6 +7,7 @@ const modeloJuegos = container.resolve("ModeloJuegos");
 export async function GET(req, res) {
     try {
         const juegos = await modeloJuegos.obtenerJuegosOfertaReventa();
+        revalidar()
         return NextResponse.json(
             juegos
         )

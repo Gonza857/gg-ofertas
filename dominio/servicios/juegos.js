@@ -4,7 +4,7 @@ export async function obtenerJuegosOferta() {
     const fetchParams = {
         method: 'GET',
         next: {
-            revalidate: 900
+            revalidate: 60
         }
     }
     return Fetcher.request(`/juegos/ofertas`, fetchParams)

@@ -1,6 +1,5 @@
 import TablaJuegosOfertaReventa from "@/components/page-components/reventa/TablaJuegosOfertaReventa";
 import {obtenerJuegosOferta} from "@/dominio/servicios/juegos";
-import {Suspense} from "react";
 
 export const dynamic = "force-dynamic";
 
