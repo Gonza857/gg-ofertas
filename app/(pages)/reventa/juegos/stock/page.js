@@ -3,8 +3,12 @@ import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from "@/co
 import {obtenerJuegosStock} from "@/dominio/servicios/juegos";
 import TablaJuegosStock from "@/components/page-components/reventa/TablaJuegosStock";
 
-export const revalidate = 3600;
 export const dynamic = "force-dynamic";
+
+export const metadata = {
+    title: "Garret Games",
+    description: "Listado de juegos en stock para revendedores",
+};
 
 async function StockJuegos() {
     const juegos = await obtenerJuegosStock()

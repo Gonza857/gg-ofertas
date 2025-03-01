@@ -4,6 +4,11 @@ import TablaJuegosOfertaConsumidores from "@/components/page-components/consumid
 
 export const dynamic = "force-dynamic";
 
+export const metadata = {
+    title: "Garret Games",
+    description: "Listado de ofertas",
+};
+
 async function Ofertas() {
     const {juegos, termina, titulo} = await obtenerJuegosOferta()
 

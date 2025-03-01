@@ -18,10 +18,7 @@ const geistMono = localFont({
     weight: "100 900",
 });
 
-export const metadata = {
-    title: "Garret Games",
-    description: "Listado de ofertas",
-};
+
 
 export default function RootLayout({children}) {
     return (

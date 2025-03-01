@@ -3,8 +3,12 @@ import TablaJuegosStock from "@/components/page-components/reventa/TablaJuegosSt
 import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from "@/components/ui/accordion";
 import {Box, Clock, Gamepad2, Scroll} from "lucide-react";
 
-export const revalidate = 3600;
 export const dynamic = "force-dynamic";
+
+export const metadata = {
+    title: "Garret Games",
+    description: "Listado de juegos en stock",
+};
 
 async function JuegosEnStock () {
     const juegos = await obtenerJuegosStock()

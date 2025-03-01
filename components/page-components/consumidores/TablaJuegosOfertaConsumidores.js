@@ -73,6 +73,12 @@ function TablaJuegosOfertaConsumidores({juegos = [], fechaExpiracion, titulo = n
             <InformacionPsPlus/>
             <h2 className="text-2xl font-bold mb-2 text-center">Juegos en oferta hasta
                 el {fechaExpiracion} 19:00hs</h2>
+            <p className={"mt-2 text-sm text-neutral-500 dark:text-neutral-400 text-center"}>
+                Precio lista - Hasta 3 pagos con tarjeta de crédito/débito (Ver formas de pago)
+            </p>
+            <p className={"mt-2 text-sm text-neutral-500 dark:text-neutral-400 text-center"}>
+                Transferencia - Precio abonando por transferencia bancaria CVU/CBU
+            </p>
             <div className={"flex flex-col md:flex-row md:justify-between gap-4 py-2 px-2"}>
                 <Input
                     onChange={buscarJuego}
@@ -106,7 +112,7 @@ export default TablaJuegosOfertaConsumidores;
 const InformacionPsPlus = () => {
     return (
         <div className="w-full bg-white shadow-xl rounded-xl border p-6 mb-8 mx-auto">
-            <h2 className="text-xl italic font-semibold mb-4 text-center">Información Importante</h2>
+        <h2 className="text-xl italic font-semibold mb-4 text-center">Información Importante</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm md:text-base">
                 <div className="flex items-start">
                     <Info className="w-6 h-6 mr-2 text-blue-500 flex-shrink-0 mt-1"/>
@@ -149,8 +155,9 @@ const InformacionPsPlus = () => {
                     </div>
                 </div>
             </div>
-            <p className={"mt-4 text-sm text-neutral-500 dark:text-neutral-400 text-center"}>Atentamente, Garret
-                Games</p>
+            <p className={"mt-4 text-sm text-neutral-500 dark:text-neutral-400 text-center"}>
+                ¡Podes copiar el juego que desees y enviarnos un mensaje! (Click en la fila o usá el botón de copiar)
+            </p>
         </div>
     )
 }
@@ -163,7 +170,7 @@ const TablaOfertas = (props) => {
                     props?.busqueda.length === 0 ?
                         `No se encontraron coincidencias para: ${props?.juegoBuscado}`
                         :
-                        `Se muestran resultados para: ${props?.juegoBuscado}`
+                        `Se muestran ${props.busqueda.length} resultados para: ${props?.juegoBuscado}`
                     :
                     ""
                 }
