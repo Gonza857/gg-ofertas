@@ -7,7 +7,6 @@ export default class Fetcher {
 
 
     static async request(endpoint, parametros = {}) {
-        console.log(`hago fetch a: ${this.baseUrl}${endpoint}`);
         try {
             const respuesta = await fetch(`${this.baseUrl}${endpoint}`, parametros);
             return await this.#manejarResultadoOk(respuesta);

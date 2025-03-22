@@ -237,7 +237,6 @@ const Registro = ({juego: j, cliente}) => {
     return (
         <TableRow onClick={() => copiar(textoParaCopiar, j.id)}>
             <TableCell className={"p-1 py-2"}>{j.nombre} {j.mostrarIdioma && j.idioma}</TableCell>
-            <TableCell className={"p-1 py-2 text-center"}>{j.consola.join("/")}</TableCell>
             <TableCell className={"p-1 py-2 text-center"}>${precio.toLocaleString("es-AR")}</TableCell>
             <TableCell className={"p-1 py-2 text-center"}>{j.tipo}</TableCell>
             <TableCell className="hidden md:table-cell p-1">

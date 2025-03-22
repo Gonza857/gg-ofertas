@@ -12,7 +12,7 @@ export const metadata = {
 
 async function StockJuegos() {
     const juegos = await obtenerJuegosStock()
-    return (
+        return (
         <main className={"styledMain py-4"}>
             <article className={"w-full sm:w-11/12 md:w-10/12 xl:w-3/4 mx-auto p-2 md:p-0"}>
                 <h1 className="text-xl md:text-3xl font-bold text-center mb-4">
