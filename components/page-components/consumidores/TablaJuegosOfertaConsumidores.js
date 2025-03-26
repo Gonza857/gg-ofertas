@@ -206,15 +206,16 @@ const Cuerpo = ({juegos = [], busqueda = null}) => {
 
 const Registro = ({juego}) => {
     const {copiar, copiado} = useCopiarAlPortapapeles()
-    const precioLista = redondearCien(juego.price).toFixed(0)
-    const precioTransferencia = redondearCien((juego.price) * 1.2).toFixed(0)
+    const precioLista = redondearCien(juego.price * 1.2).toFixed(0)
+    const descuentoTransferencia = redondearCien((juego.price * 1.2) - juego.price).toFixed(0)
+    const precioTransferencia = redondearCien(juego.price - descuentoTransferencia).toFixed(0)
 
     return (
         <TableRow
             onClick={() => copiar(`${juego.name} - PL:$${precioLista} - T:${precioTransferencia}`, juego.name)}>
             <TableCell className="font-medium p-2">{juego.name}</TableCell>
-            <TableCell className={"p-2 text-center"}>${precioTransferencia}</TableCell>
             <TableCell className={"p-2 text-center"}>${precioLista}</TableCell>
+            <TableCell className={"p-2 text-center"}>${precioTransferencia}</TableCell>
             <TableCell className="hidden md:table-cell p-2">
                 <div
                     onClick={() => copiar(`${juego.name} - PL:$${precioLista} - T:${precioTransferencia}`, juego.name)}
