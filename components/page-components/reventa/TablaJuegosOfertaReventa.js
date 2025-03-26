@@ -216,9 +216,9 @@ const Registro = ({juego, copiarJuego, juegoCopiado}) => {
     const precioJuego = redondearCien((juego.price) * 0.95).toFixed(0)
     return (
         <TableRow>
-            <TableCell className="font-medium">{juego.name}</TableCell>
-            <TableCell>${precioJuego}</TableCell>
-            <TableCell className="text-right">
+            <TableCell className="font-medium p-1 py-2">{juego.name}</TableCell>
+            <TableCell className={"p-1 py-2"}>${precioJuego}</TableCell>
+            <TableCell className="text-right p-1 py-2">
                 <div
                     onClick={() => copiarJuego(`${juego.name} - $${precioJuego}`, juego.name)}
                 >
@@ -234,9 +234,9 @@ const Cabecera = () => {
     return (
         <TableHeader>
             <TableRow>
-                <TableHead>Nombre del Juego</TableHead>
-                <TableHead>Precio</TableHead>
-                <TableHead>Copiar</TableHead>
+                <TableHead className={"px-2 md:px-4"}>Nombre del Juego</TableHead>
+                <TableHead className={"px-2 md:px-4"}>Precio</TableHead>
+                <TableHead className={"px-2 md:px-4"}>Copiar</TableHead>
             </TableRow>
         </TableHeader>
     )
