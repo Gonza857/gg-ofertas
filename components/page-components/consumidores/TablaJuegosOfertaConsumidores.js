@@ -207,7 +207,7 @@ const Cuerpo = ({juegos = [], busqueda = null}) => {
 const Registro = ({juego}) => {
     const {copiar, copiado} = useCopiarAlPortapapeles()
     const precioLista = redondearCien(juego.price).toFixed(0)
-    const precioTransferencia = redondearCien((juego.price) * 1.15).toFixed(0)
+    const precioTransferencia = redondearCien((juego.price) * 1.2).toFixed(0)
 
     return (
         <TableRow
