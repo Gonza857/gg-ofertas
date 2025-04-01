@@ -15,12 +15,14 @@ const diccionarioTipos = {
 }
 
 const ganancia = 1.20;
+const comisionCuotas = 0.2;
 
 const subscriptions = [
     {
         tipo: "Essential",
         duracion: 1,
-        precio: 8800 * ganancia,
+        precio: 8800,
+        precioCuotas: 8800 + (8800 * 0.2),
         caracteristicas: ["Juegos mensuales", "Multijugador online"],
         badgeStyle: diccionarioTipos[0]
 
@@ -28,7 +30,7 @@ const subscriptions = [
     {
         tipo: "Essential",
         duracion: 3,
-        precio: 16500 * ganancia,
+        precio: 16500,
         caracteristicas: ["Juegos mensuales", "Multijugador online"],
         badgeStyle: diccionarioTipos[0]
 
@@ -36,7 +38,7 @@ const subscriptions = [
     {
         tipo: "Essential",
         duracion: 12,
-        precio: 38500 * ganancia,
+        precio: 38500,
         caracteristicas: ["Juegos mensuales", "Multijugador online"],
         badgeStyle: diccionarioTipos[0]
 
@@ -44,7 +46,7 @@ const subscriptions = [
     {
         tipo: "Extra",
         duracion: 1,
-        precio: 11500 * ganancia,
+        precio: 11500,
         caracteristicas: ["Beneficios de Essential", "Catálogo de juegos", "Pruebas de juegos"],
         badgeStyle: diccionarioTipos[1]
 
@@ -52,7 +54,7 @@ const subscriptions = [
     {
         tipo: "Extra",
         duracion: 3,
-        precio: 27500 * ganancia,
+        precio: 27500,
         caracteristicas: ["Beneficios de Essential", "Catálogo de juegos", "Pruebas de juegos"],
         badgeStyle: diccionarioTipos[1]
 
@@ -60,7 +62,7 @@ const subscriptions = [
     {
         tipo: "Extra",
         duracion: 12,
-        precio: 55000 * ganancia,
+        precio: 55000,
         caracteristicas: ["Beneficios de Essential", "Catálogo de juegos", "Pruebas de juegos"],
         badgeStyle: diccionarioTipos[1]
 
@@ -68,7 +70,7 @@ const subscriptions = [
     {
         tipo: "Deluxe",
         duracion: 1,
-        precio: 14800 * ganancia,
+        precio: 14800,
         caracteristicas: ["Beneficios de Extra", "Clásicos", "Pruebas extendidas"],
         badgeStyle: diccionarioTipos[2]
 
@@ -76,7 +78,7 @@ const subscriptions = [
     {
         tipo: "Deluxe",
         duracion: 3,
-        precio: 33000 * ganancia,
+        precio: 33000,
         caracteristicas: ["Beneficios de Extra", "Clásicos", "Pruebas extendidas"],
         badgeStyle: diccionarioTipos[2]
 
@@ -84,7 +86,7 @@ const subscriptions = [
     {
         tipo: "Deluxe",
         duracion: 12,
-        precio: 71500 * ganancia,
+        precio: 71500,
         caracteristicas: ["Beneficios de Extra", "Clásicos", "Pruebas extendidas"],
         badgeStyle: diccionarioTipos[2]
 
@@ -107,11 +109,11 @@ const SubscripcionCard = ({sub}) => {
                         <div className="space-y-2 text-sm">
                             <p>
                                 <span className="font-semibold">Precio en cuotas:</span>
-                                <br/>3 pagos de ${(sub.precio / 3).toFixed(2)}
+                                <br/>3 pagos de ${(sub.precioCuotas / 3).toFixed(2)}
                             </p>
                             <p>
                                 <span className="font-semibold">Precio con transferencia:</span>
-                                <br/>${(sub.precio * 0.85).toFixed(0)} (15% de descuento)
+                                <br/>${(sub.precio).toFixed(0)} (20% de descuento)
                             </p>
                         </div>
                         <ul className="text-left space-y-2">
