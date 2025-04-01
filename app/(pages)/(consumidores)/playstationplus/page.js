@@ -30,7 +30,7 @@ const subscriptions = [
     {
         tipo: "Essential",
         duracion: 3,
-        precio: 16500,
+        precio: 15400,
         caracteristicas: ["Juegos mensuales", "Multijugador online"],
         badgeStyle: diccionarioTipos[0]
 
@@ -54,7 +54,7 @@ const subscriptions = [
     {
         tipo: "Extra",
         duracion: 3,
-        precio: 27500,
+        precio: 26400,
         caracteristicas: ["Beneficios de Essential", "Catálogo de juegos", "Pruebas de juegos"],
         badgeStyle: diccionarioTipos[1]
 
@@ -62,7 +62,7 @@ const subscriptions = [
     {
         tipo: "Extra",
         duracion: 12,
-        precio: 55000,
+        precio: 49500,
         caracteristicas: ["Beneficios de Essential", "Catálogo de juegos", "Pruebas de juegos"],
         badgeStyle: diccionarioTipos[1]
 
@@ -78,7 +78,7 @@ const subscriptions = [
     {
         tipo: "Deluxe",
         duracion: 3,
-        precio: 33000,
+        precio: 30800,
         caracteristicas: ["Beneficios de Extra", "Clásicos", "Pruebas extendidas"],
         badgeStyle: diccionarioTipos[2]
 
@@ -86,7 +86,7 @@ const subscriptions = [
     {
         tipo: "Deluxe",
         duracion: 12,
-        precio: 71500,
+        precio: 66000,
         caracteristicas: ["Beneficios de Extra", "Clásicos", "Pruebas extendidas"],
         badgeStyle: diccionarioTipos[2]
 
