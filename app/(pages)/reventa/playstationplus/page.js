@@ -13,7 +13,7 @@ const subscriptions = [
     {
         tipo: "Essential",
         duracion: 1,
-        precio: 8800,
+        precio: 8000,
         caracteristicas: ["Juegos mensuales", "Multijugador online", "Descuentos exclusivos"],
         badgeStyle: diccionarioTipos[0]
 
@@ -21,7 +21,7 @@ const subscriptions = [
     {
         tipo: "Essential",
         duracion: 3,
-        precio: 16500,
+        precio: 14000,
         caracteristicas: ["Juegos mensuales", "Multijugador online", "Descuentos exclusivos"],
         badgeStyle: diccionarioTipos[0]
 
@@ -29,7 +29,7 @@ const subscriptions = [
     {
         tipo: "Essential",
         duracion: 12,
-        precio: 38500,
+        precio: 35000,
         caracteristicas: ["Juegos mensuales", "Multijugador online", "Descuentos exclusivos"],
         badgeStyle: diccionarioTipos[0]
 
@@ -37,7 +37,7 @@ const subscriptions = [
     {
         tipo: "Extra",
         duracion: 1,
-        precio: 11500,
+        precio: 10500,
         caracteristicas: ["Beneficios de Essential", "Catálogo de juegos", "Pruebas de juegos"],
         badgeStyle: diccionarioTipos[1]
 
@@ -45,7 +45,7 @@ const subscriptions = [
     {
         tipo: "Extra",
         duracion: 3,
-        precio: 27500,
+        precio: 24000,
         caracteristicas: ["Beneficios de Essential", "Catálogo de juegos", "Pruebas de juegos"],
         badgeStyle: diccionarioTipos[1]
 
@@ -53,7 +53,7 @@ const subscriptions = [
     {
         tipo: "Extra",
         duracion: 12,
-        precio: 55000,
+        precio: 45000,
         caracteristicas: ["Beneficios de Essential", "Catálogo de juegos", "Pruebas de juegos"],
         badgeStyle: diccionarioTipos[1]
 
@@ -61,7 +61,7 @@ const subscriptions = [
     {
         tipo: "Deluxe",
         duracion: 1,
-        precio: 14800,
+        precio: 13500,
         caracteristicas: ["Beneficios de Extra", "Clásicos", "Pruebas extendidas"],
         badgeStyle: diccionarioTipos[2]
 
@@ -69,7 +69,7 @@ const subscriptions = [
     {
         tipo: "Deluxe",
         duracion: 3,
-        precio: 33000,
+        precio: 28000,
         caracteristicas: ["Beneficios de Extra", "Clásicos", "Pruebas extendidas"],
         badgeStyle: diccionarioTipos[2]
 
@@ -77,7 +77,7 @@ const subscriptions = [
     {
         tipo: "Deluxe",
         duracion: 12,
-        precio: 71500,
+        precio: 60000,
         caracteristicas: ["Beneficios de Extra", "Clásicos", "Pruebas extendidas"],
         badgeStyle: diccionarioTipos[2]
 
