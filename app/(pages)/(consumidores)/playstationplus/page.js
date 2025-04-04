@@ -31,6 +31,7 @@ const subscriptions = [
         tipo: "Essential",
         duracion: 3,
         precio: 15400,
+        precioCuotas: 15400 + (15400 * 0.2),
         caracteristicas: ["Juegos mensuales", "Multijugador online"],
         badgeStyle: diccionarioTipos[0]
 
@@ -39,6 +40,7 @@ const subscriptions = [
         tipo: "Essential",
         duracion: 12,
         precio: 38500,
+        precioCuotas: 38500 + (38500 * 0.2),
         caracteristicas: ["Juegos mensuales", "Multijugador online"],
         badgeStyle: diccionarioTipos[0]
 
@@ -47,6 +49,7 @@ const subscriptions = [
         tipo: "Extra",
         duracion: 1,
         precio: 11500,
+        precioCuotas: 11500 + (11500 * 0.2),
         caracteristicas: ["Beneficios de Essential", "Catálogo de juegos", "Pruebas de juegos"],
         badgeStyle: diccionarioTipos[1]
 
@@ -55,6 +58,7 @@ const subscriptions = [
         tipo: "Extra",
         duracion: 3,
         precio: 26400,
+        precioCuotas: 26400 + (26400 * 0.2),
         caracteristicas: ["Beneficios de Essential", "Catálogo de juegos", "Pruebas de juegos"],
         badgeStyle: diccionarioTipos[1]
 
@@ -63,6 +67,7 @@ const subscriptions = [
         tipo: "Extra",
         duracion: 12,
         precio: 49500,
+        precioCuotas: 49500 + (49500 * 0.2),
         caracteristicas: ["Beneficios de Essential", "Catálogo de juegos", "Pruebas de juegos"],
         badgeStyle: diccionarioTipos[1]
 
@@ -71,6 +76,7 @@ const subscriptions = [
         tipo: "Deluxe",
         duracion: 1,
         precio: 14800,
+        precioCuotas: 14800 + (14800 * 0.2),
         caracteristicas: ["Beneficios de Extra", "Clásicos", "Pruebas extendidas"],
         badgeStyle: diccionarioTipos[2]
 
@@ -79,6 +85,7 @@ const subscriptions = [
         tipo: "Deluxe",
         duracion: 3,
         precio: 30800,
+        precioCuotas: 30800 + (30800 * 0.2),
         caracteristicas: ["Beneficios de Extra", "Clásicos", "Pruebas extendidas"],
         badgeStyle: diccionarioTipos[2]
 
@@ -87,6 +94,7 @@ const subscriptions = [
         tipo: "Deluxe",
         duracion: 12,
         precio: 66000,
+        precioCuotas: 66000 + (66000 * 0.2),
         caracteristicas: ["Beneficios de Extra", "Clásicos", "Pruebas extendidas"],
         badgeStyle: diccionarioTipos[2]
 
