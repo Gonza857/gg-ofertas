@@ -112,7 +112,7 @@ const SubscripcionCard = ({sub}) => {
                             {sub.tipo}
                         </div>
                         <div className="text-3xl font-bold">
-                            ${sub.precio.toFixed(0)} / {sub.duracion} {sub.duracion === 1 ? "mes" : "meses"}
+                            ${sub.precioCuotas.toFixed(0)} / {sub.duracion} {sub.duracion === 1 ? "mes" : "meses"}
                         </div>
                         <div className="space-y-2 text-sm">
                             <p>
