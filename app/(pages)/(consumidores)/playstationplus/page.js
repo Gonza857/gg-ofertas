@@ -1,12 +1,15 @@
 import React from "react";
-import Image from "next/image";
-import {AiFillCreditCard} from "react-icons/ai";
-import {Card, CardContent} from "@/components/ui/card";
+import {Card, CardContent, CardFooter, CardHeader, CardTitle} from "@/components/ui/card";
 import {Badge} from "@/components/ui/badge";
-import {Box, Check, Clock, Gamepad2, Info, Scroll} from "lucide-react";
+import {BadgePercent, Box, Check, Clock, Gamepad2, Info, Scroll} from "lucide-react";
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
 import {FaWhatsapp} from "react-icons/fa";
+import {playstationplus} from "@/static-data/item.playstationplus";
+import PlayStationPlus from "@/components/personalized-ui/item.playstationplus";
+import PsnPlusTiers from "@/components/page-components/consumidores/playstationplus/PsnPlusTiers";
+import PaymentInfoBanner from "@/components/personalized-ui/PaymentInfoBanner";
+import PsnPlusCustomerInfo from "@/components/page-components/consumidores/playstationplus/PsnPlusCustomerInfo";
 
 const diccionarioTipos = {
     0: "bg-gray-300 text-black",
@@ -25,7 +28,6 @@ const subscriptions = [
         precioCuotas: 8800 + (8800 * 0.2),
         caracteristicas: ["Juegos mensuales", "Multijugador online"],
         badgeStyle: diccionarioTipos[0]
-
     },
     {
         tipo: "Essential",
@@ -34,7 +36,6 @@ const subscriptions = [
         precioCuotas: 15400 + (15400 * 0.2),
         caracteristicas: ["Juegos mensuales", "Multijugador online"],
         badgeStyle: diccionarioTipos[0]
-
     },
     {
         tipo: "Essential",
@@ -43,7 +44,6 @@ const subscriptions = [
         precioCuotas: 38500 + (38500 * 0.2),
         caracteristicas: ["Juegos mensuales", "Multijugador online"],
         badgeStyle: diccionarioTipos[0]
-
     },
     {
         tipo: "Extra",
@@ -52,7 +52,6 @@ const subscriptions = [
         precioCuotas: 11500 + (11500 * 0.2),
         caracteristicas: ["Beneficios de Essential", "Catálogo de juegos", "Pruebas de juegos"],
         badgeStyle: diccionarioTipos[1]
-
     },
     {
         tipo: "Extra",
@@ -61,7 +60,6 @@ const subscriptions = [
         precioCuotas: 26400 + (26400 * 0.2),
         caracteristicas: ["Beneficios de Essential", "Catálogo de juegos", "Pruebas de juegos"],
         badgeStyle: diccionarioTipos[1]
-
     },
     {
         tipo: "Extra",
@@ -70,7 +68,6 @@ const subscriptions = [
         precioCuotas: 49500 + (49500 * 0.2),
         caracteristicas: ["Beneficios de Essential", "Catálogo de juegos", "Pruebas de juegos"],
         badgeStyle: diccionarioTipos[1]
-
     },
     {
         tipo: "Deluxe",
@@ -79,7 +76,6 @@ const subscriptions = [
         precioCuotas: 14800 + (14800 * 0.2),
         caracteristicas: ["Beneficios de Extra", "Clásicos", "Pruebas extendidas"],
         badgeStyle: diccionarioTipos[2]
-
     },
     {
         tipo: "Deluxe",
@@ -88,7 +84,6 @@ const subscriptions = [
         precioCuotas: 30800 + (30800 * 0.2),
         caracteristicas: ["Beneficios de Extra", "Clásicos", "Pruebas extendidas"],
         badgeStyle: diccionarioTipos[2]
-
     },
     {
         tipo: "Deluxe",
@@ -97,7 +92,6 @@ const subscriptions = [
         precioCuotas: 66000 + (66000 * 0.2),
         caracteristicas: ["Beneficios de Extra", "Clásicos", "Pruebas extendidas"],
         badgeStyle: diccionarioTipos[2]
-
     },
 ]
 
@@ -161,97 +155,34 @@ const SubscripcionCard = ({sub}) => {
 
 const PlayStationPlusSSS = () => {
     return (
-        <main className="styledMain py-8 px-4">
-            <article className={"w-full sm:w-11/12 md:w-10/12 lg:w-9/12 mx-auto"}>
+        <main className="styledMain">
+            <PaymentInfoBanner/>
+            <article className={"w-full sm:w-11/12 md:w-10/12 lg:w-9/12 mx-auto py-8 px-4"}>
                 <h1 className="text-4xl font-bold text-center mb-8">Subscripciones PlayStation Plus</h1>
-                <div className="w-full bg-white shadow-xl rounded-xl border p-6 mb-8 max-w-4xl mx-auto">
-                    <h2 className="text-xl italic font-semibold mb-4 text-center">Información Importante</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm md:text-base">
-                        <div className="flex items-start">
-                            <Gamepad2 className="w-6 h-6 mr-2 text-blue-500 flex-shrink-0 mt-1"/>
-                            <div>
-                                <h3 className="font-semibold mb-2">Compatibilidad</h3>
-                                <p className="text-gray-600">
-                                    Las membresías son compatibles con PS4 y PS5 originales (sin
-                                    chipear/desbloquear).
-                                </p>
-                            </div>
-                        </div>
-                        <div className="flex items-start">
-                            <Clock className="w-6 h-6 mr-2 text-yellow-500 flex-shrink-0 mt-1"/>
-                            <div>
-                                <h3 className="font-semibold mb-2">Tiempo de Entrega</h3>
-                                <p className="text-gray-600">
-                                    Las entregas se realizan de 08:00 a 17:30. Compras realizadas fuera de este
-                                    horario se entregan al día siguiente.
-                                </p>
-                            </div>
-                        </div>
-                        <div className="flex items-start">
-                            <Box className="w-6 h-6 mr-2 text-purple-500 flex-shrink-0 mt-1"/>
-                            <div>
-                                <h3 className="font-semibold mb-2">Envío</h3>
-                                <p className="text-gray-600">
-                                    Se envía un usuario y contraseña junto con el instructivo de instalación para
-                                    seguir los pasos y poder activar la membresía en la consola.
-                                </p>
-                            </div>
-                        </div>
-                        <div className="flex items-start">
-                            <Scroll className="w-6 h-6 mr-2 text-green-500 flex-shrink-0 mt-1"/>
-                            <div>
-                                <h3 className="font-semibold mb-2">Garantía</h3>
-                                <p className="text-gray-600">
-                                    Nuestros productos son 100% originales y con licencias oficiales. La garantía
-                                    abarca el tiempo adquirido y garantiza el acceso al usuario.
-                                </p>
-                            </div>
-                        </div>
+                <PsnPlusCustomerInfo/>
+
+                <div className={"py-8 border-b border-slate-200"}>
+                    <h2 className="text-2xl font-bold mb-6">Membresías PlayStation Plus</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {/*{subscriptions.map((sub, index) => (*/}
+                        {/*    <SubscripcionCard sub={sub} key={index}/>*/}
+                        {/*))}*/}
+                        {playstationplus.map((sub, index) => (
+                            <PlayStationPlus product={sub} key={index}/>
+                        ))}
                     </div>
-                    <p className={"mt-4 text-sm text-neutral-500 dark:text-neutral-400 text-center"}>Atentamente, Garret
-                        Games</p>
+                    <div className="pt-8 text-center">
+                        <Badge variant="outline" className="text-sm px-4 py-2">
+                            PlayStation Plus - Precios actualizados. Abril 2025.
+                        </Badge>
+                    </div>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {subscriptions.map((sub, index) => (
-                        <SubscripcionCard sub={sub} key={index}/>
-                    ))}
-                </div>
-                <div className="mt-12 text-center">
-                    <Badge variant="outline" className="text-sm px-4 py-2">
-                        Todos los planes incluyen acceso a PlayStation Plus
-                    </Badge>
-                </div>
+
+
+                <PsnPlusTiers/>
             </article>
         </main>
     )
 }
 
 export default PlayStationPlusSSS;
-
-
-const PlusTr = ({data}) => {
-    const {id, title, bt_price, cc_price} = data;
-
-    let bg;
-    if (title.toLowerCase().includes("essential")) bg = "bg-gray-200 text-black"
-    if (title.toLowerCase().includes("extra")) bg = "bg-yellow-500 text-black"
-    if (title.toLowerCase().includes("deluxe")) bg = "bg-black text-white"
-
-    return (<>
-        <tr
-            className="border-b border-gray-200"
-            key={id}
-        >
-            <td className={`text-sm py-2 px-2 md:py-2 md:px-4 ${bg}`}>
-                {title}
-            </td>
-            <td className={`text-sm py-2 px-2 md:py-2 md:px-4 text-black text-center ${bg}`}>
-                ${cc_price.toFixed(0)}
-            </td>
-            <td className={`text-sm py-2 px-2 md:py-2 md:px-4 text-black text-center ${bg}`}>
-                ${bt_price}
-            </td>
-        </tr>
-    </>)
-}
-

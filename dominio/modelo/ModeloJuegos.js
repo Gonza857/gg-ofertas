@@ -35,9 +35,15 @@ class ModeloJuegos {
         }
     }
 
-    async obtenerJuegosStock() {
+    async obtenerJuegosStock(consoleSearched = null) {
         const juegos = await this.repositorioJuegos.obtenerTodosLosJuegosStock()
-        return juegos.sort((a, b) => a.nombre.localeCompare(b.nombre));
+        console.log(`Juegos en stock ${juegos.length}`)
+        console.log("Consola buscada", consoleSearched)
+        let filtrados;
+        if (consoleSearched) {
+            filtrados = juegos.filter(j => j.consola.includes(consoleSearched.toUpperCase()))
+        }
+        return consoleSearched ? filtrados : juegos.sort((a, b) => a.nombre.localeCompare(b.nombre));
     }
 
     async obtenerJuegosOfertaReventa() {

@@ -769,78 +769,6 @@ const PREGUNTAS_Y_RESPUESTAS = [
 // NAVEGACION
 
 let id = 0;
-const opcionesNavbarConsumidor = [
-    {
-        id: id++,
-        nombre: "Ofertas",
-        ruta: "/"
-    },
-    {
-        id: id++,
-        nombre: "Stock",
-        ruta: "/stock"
-    },
-    {
-        id: id++,
-        nombre: "PlayStation Plus",
-        ruta: "/playstationplus"
-    },
-    {
-        id: id++,
-        nombre: "Tarjetas de regalo",
-        ruta: "/tarjetas-de-regalo"
-    },
-    {
-        id: id++,
-        nombre: "Formas de Pago",
-        ruta: "/formas-de-pago"
-    },
-]
-
-const opcionesMenuLateralConsumidor = [
-    {
-        name: "Juegos en oferta",
-        icon: <RiDiscountPercentLine className="mr-2 h-6 w-6"/>,
-        href: "/"
-    },
-    {
-        name: "Juegos en stock",
-        icon: <Gamepad2 className="mr-2 h-6 w-6"/>,
-        href: "/stock"
-    },
-    {
-        name: "PlayStation Plus",
-        icon: <PsplusLogo/>,
-        href: "/playstationplus"
-    },
-    {
-        name: "Preguntas frecuentes",
-        icon: <MessageCircleQuestion className="mr-2 h-6 w-6"/>,
-        href: "/preguntas-frecuentes"
-    },
-    {
-        name: "Instructivos",
-        icon: <FileText className="mr-2 h-6 w-6"/>,
-        href: "/instructivos"
-    },
-    {
-        name: "PlayStation Network Gift Cards",
-        icon: <BsPlaystation className="mr-2 h-6 w-6"/>,
-        href: "/tarjetas-de-regalo/playstation"
-    },
-    {
-        name: "Steam Gift Cards",
-        icon: <SiSteam className="mr-2 h-6 w-6"/>,
-        href: "/tarjetas-de-regalo/steam"
-    },
-    {
-        name: "Formas de pago",
-        icon: <Banknote className="mr-2 h-6 w-6"/>,
-        href: "/formas-de-pago"
-    },
-]
-
-id = 0;
 const opcionesNavbarReventa = [
     {
         id: id++,
@@ -912,8 +840,6 @@ export {
     insPriPs4,
     insSecPs4,
     PREGUNTAS_Y_RESPUESTAS,
-    opcionesNavbarConsumidor,
-    opcionesMenuLateralConsumidor,
     opcionesNavbarReventa,
     opcionesMenuLateralReventa
 }

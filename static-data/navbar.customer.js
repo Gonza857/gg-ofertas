@@ -1,0 +1,96 @@
+import {
+    BadgePercent,
+    Banknote,
+    CircleHelp,
+    FileText,
+    Gamepad2,
+    Joystick,
+    MessageCircleQuestion,
+    Store
+} from "lucide-react";
+import {SiPlaystation4, SiPlaystation5, SiSteam} from "react-icons/si";
+import {RiDiscountPercentLine} from "react-icons/ri";
+import {PsplusLogo} from "@/components/personalized-ui/logos";
+import {BsPlaystation} from "react-icons/bs";
+import React from "react";
+import {TbGiftCard} from "react-icons/tb";
+
+export const navbarOptions = [
+    {
+        icon: Joystick,
+        label: "Juegos",
+        href: "#",
+        hasSubmenu: true,
+        submenu: [
+            {icon: BadgePercent, label: "Ofertas de pascua", href: "/juegos/ofertas"},
+            {icon: SiPlaystation5, label: "Juegos PS5", href: "/juegos/stock?console=ps5"},
+            {icon: SiPlaystation4, label: "Juegos PS4", href: "/juegos/stock?console=ps5"},
+        ],
+    },
+    {
+        icon: null,
+        label: "PlayStation Plus",
+        href: "/playstationplus",
+        hasSubmenu: false,
+    },
+    {
+        icon: null,
+        label: "Tarjetas de regalo",
+        href: "/tarjetas-de-regalo",
+        hasSubmenu: false,
+    },
+    {
+        icon: Store,
+        label: "Sobre nosotros",
+        href: "#",
+        hasSubmenu: true,
+        submenu: [
+            {icon: CircleHelp, label: "Preguntas frecuentes", href: "/preguntas-frecuentes"},
+            {icon: Banknote, label: "Métodos de pago", href: "/formas-de-pago"},
+            {icon: FileText, label: "Instructivos", href: "/instructivos"},
+        ],
+    },
+]
+
+export const sideNavbarOptions = [
+    {
+        name: "Juegos en oferta",
+        icon: <BadgePercent className="mr-2 h-6 w-6"/>,
+        href: "/juegos/ofertas"
+    },
+    {
+        name: "Juegos PS4",
+        icon: <SiPlaystation4 className="mr-2 h-6 w-6"/>,
+        href: "/juegos/stock?console=ps4"
+    },
+    {
+        name: "Juegos PS5",
+        icon: <SiPlaystation5 className="mr-2 h-6 w-6"/>,
+        href: "/juegos/stock?console=ps5"
+    },
+    {
+        name: "PlayStation Plus",
+        icon: <PsplusLogo/>,
+        href: "/playstationplus"
+    },
+    {
+        name: "Preguntas frecuentes",
+        icon: <MessageCircleQuestion className="mr-2 h-6 w-6"/>,
+        href: "/preguntas-frecuentes"
+    },
+    {
+        name: "Instructivos",
+        icon: <FileText className="mr-2 h-6 w-6"/>,
+        href: "/instructivos"
+    },
+    {
+        name: "Tarjetas de regalo",
+        icon: <TbGiftCard  className="mr-2 h-6 w-6"/>,
+        href: "/tarjetas-de-regalo"
+    },
+    {
+        name: "Formas de pago",
+        icon: <Banknote className="mr-2 h-6 w-6"/>,
+        href: "/formas-de-pago"
+    },
+]

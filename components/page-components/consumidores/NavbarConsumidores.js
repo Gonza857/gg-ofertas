@@ -4,18 +4,34 @@ import Image from "next/image";
 import Link from "next/link";
 import React, {useState} from "react";
 import {Button} from "@/components/ui/button";
-import {Banknote, FileText, Gamepad2, Menu, PlusCircle, X} from "lucide-react";
-import {opcionesMenuLateralConsumidor, opcionesNavbarConsumidor} from "@/static-data/data";
+import {
+    Menu,
+    X,
+    ChevronDown,
+} from "lucide-react"
+import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from "@/components/ui/dropdown-menu"
+import {navbarOptions, sideNavbarOptions} from "@/static-data/navbar.customer";
+import {dmSans} from "@/app/layout";
 
 const NavbarConsumidores = () => {
     const [estaAbierto, setEstaAbierto] = useState(false);
+    const [openSubmenu, setOpenSubmenu] = useState(null)
+    const [isOpen, setIsOpen] = useState(false)
 
     const manejarNav = () => setEstaAbierto(!estaAbierto);
+
+    const toggleSubmenu = (label) => {
+        if (openSubmenu === label) {
+            setOpenSubmenu(null)
+        } else {
+            setOpenSubmenu(label)
+        }
+    }
 
     return (
         <header className="flex items-center w-full h-20 bg-cyan-900 px-2 lg:px-8 relative">
             {/* WRAPPER */}
-            <div className={"flex items-center justify-between w-full md:w-11/12 lg:w-5/6 mx-auto"}>
+            <div className={"flex items-center justify-between w-full md:w-11/12 xl:w-10/12 mx-auto"}>
                 <aside
                     className={`mt-20 fixed inset-0 z-30 flex items-start transition-opacity duration-300
                 ${estaAbierto ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}
@@ -32,7 +48,7 @@ const NavbarConsumidores = () => {
                         className={`relative p-4 w-10/12 max-w-sm bg-white h-full shadow-2xl transform transition-transform duration-300 ease-in-out
                     ${estaAbierto ? 'translate-x-0' : '-translate-x-full'}`}
                     >
-                        {opcionesMenuLateralConsumidor.map(item => (
+                        {sideNavbarOptions.map(item => (
                             <Link
                                 onClick={() => manejarNav()}
                                 key={item.name}
@@ -48,23 +64,68 @@ const NavbarConsumidores = () => {
                     </div>
                 </aside>
                 <div className="md:w-full flex justify-between items-center">
-                    <Link href={"/"} className="rounded-full overflow-hidden">
-                        <Image
-                            src={"/images/logo-nuevo.png"}
-                            width={60}
-                            height={60}
-                            alt="Logo Garret Games"
-                        />
+                    <Link href={"/"} className=" overflow-hidden">
+                        <div className={"flex gap-4 items-center"}>
+                            <Image
+                                src={"/images/logo-nuevo.png"}
+                                width={60}
+                                height={60}
+                                alt="Logo Garret Games"
+                                className={"rounded-full"}
+                            />
+                            <h1 className={`text-white ${dmSans.className} font-bold text-xl`}>GARRET GAMES</h1>
+                        </div>
                     </Link>
-                    <nav className={"hidden md:block"}>
-                        <ul className="flex gap-5 flex-wrap text-white">
-                            {
-                                opcionesNavbarConsumidor.map((o) => (
-                                    <Link href={o.ruta} key={o.id}>{o.nombre}</Link>
-                                ))
-                            }
-                        </ul>
-                    </nav>
+
+
+                    {/* Desktop Navigation */}
+                    <div className="hidden md:flex md:items-center gap-5 md:gap-2">
+                        {navbarOptions.map((item) =>
+                            item.hasSubmenu ? (
+                                <DropdownMenu key={item.label}>
+                                    <DropdownMenuTrigger asChild>
+                                        <button
+                                            className="text-white hover:text-orange-500 outline-0 py-2 rounded-md font-medium flex items-center gap-1.5"
+                                        >
+                                            {item.icon && <item.icon className="h-4 w-4"/>}
+                                            {item.label}
+                                            <ChevronDown className="h-4 w-4 ml-0.5"/>
+                                        </button>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent align="center" className="w-56">
+                                        {item.submenu.map((subItem) => (
+                                            <DropdownMenuItem key={subItem.label} asChild>
+                                                <a href={subItem.href}
+                                                   className="flex items-center gap-2 cursor-pointer">
+                                                    <subItem.icon className="w-6 h-6"/>
+                                                    <span>{subItem.label}</span>
+                                                </a>
+                                            </DropdownMenuItem>
+                                        ))}
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
+                            ) : (
+                                <Link
+                                    key={item.label}
+                                    href={item.href}
+                                    className="text-white hover:text-orange-500 px-3 py-2 rounded-md font-medium flex items-center gap-1.5"
+                                >
+                                    {item.icon && <item.icon className="h-4 w-4"/>}
+                                    {item.label}
+                                </Link>
+                            ),
+                        )}
+                    </div>
+
+                    {/*<nav className={"hidden md:block"}>*/}
+                    {/*    <ul className="flex gap-5 flex-wrap text-white">*/}
+                    {/*        {*/}
+                    {/*            opcionesNavbarConsumidor.map((o) => (*/}
+                    {/*                <Link href={o.ruta} key={o.id}>{o.nombre}</Link>*/}
+                    {/*            ))*/}
+                    {/*        }*/}
+                    {/*    </ul>*/}
+                    {/*</nav>*/}
                 </div>
                 <BotonMenu estaAbierto={estaAbierto} manejarNav={manejarNav}/>
             </div>

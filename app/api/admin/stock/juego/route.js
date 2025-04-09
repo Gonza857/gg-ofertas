@@ -24,8 +24,10 @@ export async function POST(req, res) {
 }
 
 export async function GET(req, res) {
+    const { searchParams } = new URL(req.url);
+    let c = searchParams.get('consola');
     try {
-        const resultado = await modeloJuegos.obtenerJuegosStock()
+        const resultado = await modeloJuegos.obtenerJuegosStock(c)
         return NextResponse.json(
             resultado
         )

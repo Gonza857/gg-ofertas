@@ -21,12 +21,12 @@ export async function subirOfertas(ofertas) {
 
 
 
-export async function obtenerJuegosStock() {
+export async function obtenerJuegosStock(console) {
     const fetchParams = {
         method: 'GET',
         cache: "no-store"
     }
-    return Fetcher.request(`/admin/stock/juego`, fetchParams)
+    return Fetcher.request(`/admin/stock/juego?console=${console}`, fetchParams)
 }
 
 

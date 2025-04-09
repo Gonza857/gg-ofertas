@@ -9,6 +9,7 @@ import {Label} from "@/components/ui/label";
 import {Input} from "@/components/ui/input";
 import {Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
 import ordenador from "@/lib/ordenamiento";
+import {useRouter, useSearchParams} from "next/navigation";
 
 function TablaJuegosStock({juegos: s, cliente = false}) {
     const [juegos, setJuegos] = useState(s || [])
@@ -20,6 +21,16 @@ function TablaJuegosStock({juegos: s, cliente = false}) {
         estaBuscando: false
     });
 
+
+    useEffect(() => {
+        if (filtros.tipo.length === 0 && filtros.consola.length === 0) {
+            setStockFiltrado([])
+        } else {
+            setStockFiltrado(filtrarJuegos())
+        }
+    }, [filtros]);
+
+
     // Manejar selección de filtros
     const handleFilterChange = (category, value) => {
         setFiltros((prev) => {
@@ -30,13 +41,6 @@ function TablaJuegosStock({juegos: s, cliente = false}) {
         });
     };
 
-    useEffect(() => {
-        if (filtros.tipo.length === 0 && filtros.consola.length === 0) {
-            setStockFiltrado([])
-        } else {
-            setStockFiltrado(filtrarJuegos())
-        }
-    }, [filtros]);
 
     // Filtrar juegos según los filtros seleccionados
     const filtrarJuegos = () => {
@@ -118,26 +122,28 @@ function TablaJuegosStock({juegos: s, cliente = false}) {
                     </div>
                 </div>
 
-                <div className="lg:mb-2 sm:border-r pe-2 md:pe-4">
-                    <h3 className="text-sm font-semibold pb-2">Consola</h3>
-                    <div className="flex gap-2">
-                        <Label className="flex items-center space-x-2">
-                            <Checkbox
-                                checked={filtros.consola.includes("ps4")}
-                                onCheckedChange={() => handleFilterChange("consola", "ps4")}
-                            />
-                            <span>PS4</span>
-                        </Label>
-                        <Label className="flex items-center space-x-2">
-                            <Checkbox
-                                checked={filtros.consola.includes("ps5")}
-                                onCheckedChange={() => handleFilterChange("consola", "ps5")}
-                            />
-                            <span>PS5</span>
-                        </Label>
-                    </div>
-                </div>
+                {/*<div className="lg:mb-2 sm:border-r pe-2 md:pe-4">*/}
+                {/*    <h3 className="text-sm font-semibold pb-2">Consola</h3>*/}
+                {/*    <div className="flex gap-2">*/}
+                {/*        <Label className="flex items-center space-x-2">*/}
+                {/*            <Checkbox*/}
+                {/*                checked={filtros.consola.includes("ps4")}*/}
+                {/*                onCheckedChange={() => handleFilterChange("consola", "ps4")}*/}
+                {/*            />*/}
+                {/*            <span>PS4</span>*/}
+                {/*        </Label>*/}
+                {/*        <Label className="flex items-center space-x-2">*/}
+                {/*            <Checkbox*/}
+                {/*                checked={filtros.consola.includes("ps5")}*/}
+                {/*                onCheckedChange={() => handleFilterChange("consola", "ps5")}*/}
+                {/*            />*/}
+                {/*            <span>PS5</span>*/}
+                {/*        </Label>*/}
+                {/*    </div>*/}
+                {/*</div>*/}
+
             </div>
+
             {juegoBuscado &&
                 <p className={"py-3 text-sm text-gray-600"}>Se muestran resultados para: {juegoBuscado}</p>}
             <Tabla {...tablaProps}/>
