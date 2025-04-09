@@ -23,8 +23,8 @@ export const navbarOptions = [
         hasSubmenu: true,
         submenu: [
             {icon: BadgePercent, label: "Ofertas de pascua", href: "/juegos/ofertas"},
-            {icon: SiPlaystation5, label: "Juegos PS5", href: "/juegos/stock?console=ps5"},
-            {icon: SiPlaystation4, label: "Juegos PS4", href: "/juegos/stock?console=ps5"},
+            {icon: SiPlaystation5, label: "Juegos PS5", href: "/juegos/stock/ps5"},
+            {icon: SiPlaystation4, label: "Juegos PS4", href: "/juegos/stock/ps4"},
         ],
     },
     {
@@ -61,12 +61,12 @@ export const sideNavbarOptions = [
     {
         name: "Juegos PS4",
         icon: <SiPlaystation4 className="mr-2 h-6 w-6"/>,
-        href: "/juegos/stock?console=ps4"
+        href: "/juegos/stock/ps4"
     },
     {
         name: "Juegos PS5",
         icon: <SiPlaystation5 className="mr-2 h-6 w-6"/>,
-        href: "/juegos/stock?console=ps5"
+        href: "/juegos/stock/ps5"
     },
     {
         name: "PlayStation Plus",
