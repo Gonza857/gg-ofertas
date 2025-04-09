@@ -1,4 +1,4 @@
-import {psplustiers} from "@/static-data/item.playstationplustiers";
+import {psplustiers} from "@/static-data/item.cliente.playstationplustiers";
 import PlayStationPlusTier from "@/components/personalized-ui/item.playstationplustier";
 
 function PsnPlusTiers () {

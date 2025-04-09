@@ -56,7 +56,7 @@ function PlayStationPlus({product}) {
                     <span className="block text-sm font-normal text-muted-foreground mt-1">{product.consola}</span>
                 </CardTitle>
             </CardHeader>
-            <CardContent className="p-4 pt-0 space-y-3">
+            <CardContent className="p-1 md:p-4 pt-0 space-y-3">
                 {/* Selector de tiempo */}
                 <Tabs defaultValue="1" value={selectedPeriod} onValueChange={setSelectedPeriod} className="w-full">
                     <TabsList className="grid grid-cols-3 w-full">
@@ -79,13 +79,13 @@ function PlayStationPlus({product}) {
                             <BanknoteIcon className="h-4 w-4 text-green-600"/>
                             <p className="text-sm font-medium text-green-700">Transferencia bancaria:</p>
                         </div>
-                        <Badge variant="outline" className="bg-green-100 text-green-800 border-green-200">
+                        <Badge variant="outline" className="text-center bg-green-100 text-green-800 border-green-200">
                             20% OFF
                         </Badge>
                     </div>
-                    <div className="flex items-center justify-between">
-                        <p className="text-sm text-green-600">Ahorrás: ${ahorro.toLocaleString()}</p>
-                        <p className="text-lg sm:text-xl font-bold text-green-700">${precioTransferencia.toLocaleString()}</p>
+                    <div className="flex items-center justify-end md:justify-between">
+                        <p className="text-sm text-green-600 hidden md:block">Ahorrás: ${ahorro.toLocaleString()}</p>
+                        <p className="text-lg sm:text-xl font-bold text-green-700 self-end">${precioTransferencia.toLocaleString()}</p>
                     </div>
                 </div>
 
@@ -95,10 +95,10 @@ function PlayStationPlus({product}) {
                         <CreditCard className="h-4 w-4 text-red-600"/>
                         <p className="text-sm font-medium text-red-700">3 cuotas de:</p>
                     </div>
-                    <p className="text-lg sm:text-xl font-bold text-red-700">${precioPorCuota.toLocaleString()}</p>
+                    <p className="sm:text-lg md:text-xl font-bold text-red-700">${precioPorCuota.toLocaleString()}</p>
                 </div>
             </CardContent>
-            <CardFooter className="p-4 pt-0">
+            <CardFooter className="p-1 md:p-4 pt-0">
                 <Link href={`https://wa.me/5491132001372?text=${mensaje}`} className="w-full" target="_blank">
                     <Button className="w-full flex items-center gap-2">
                         <FaWhatsapp className="h-4 w-4"/>
