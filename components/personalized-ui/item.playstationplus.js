@@ -7,8 +7,8 @@ import {Button} from "@/components/ui/button";
 import {FaWhatsapp} from "react-icons/fa";
 import React, {useState} from "react";
 import {BadgePercent, BanknoteIcon, CreditCard} from "lucide-react";
-import {Tabs, TabsList, TabsTrigger} from "@/components/ui/tabs";
 import {Badge} from "@/components/ui/badge";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 function PlayStationPlus({product}) {
     console.log(product);
@@ -34,6 +34,13 @@ function PlayStationPlus({product}) {
     // Calcular el ahorro en pesos
     const ahorro = precioLista[selectedPeriod] * 0.2
 
+    // Opciones de período
+    const periodos = [
+        { value: "1", label: "1 Mes" },
+        { value: "3", label: "3 Meses" },
+        { value: "12", label: "12 Meses" },
+    ]
+
     // Crear mensaje para WhatsApp
     const mensaje = encodeURIComponent(
         `Hola, estoy interesado en ${product.title} ${product.tipo} para ${product.consola} por ${selectedPeriod} ${selectedPeriod === "1" ? "mes" : "meses"}`,
@@ -57,14 +64,21 @@ function PlayStationPlus({product}) {
                 </CardTitle>
             </CardHeader>
             <CardContent className="p-1 md:p-4 pt-0 space-y-3">
-                {/* Selector de tiempo */}
-                <Tabs defaultValue="1" value={selectedPeriod} onValueChange={setSelectedPeriod} className="w-full">
-                    <TabsList className="grid grid-cols-3 w-full">
-                        <TabsTrigger value="1">1 Mes</TabsTrigger>
-                        <TabsTrigger value="3">3 Meses</TabsTrigger>
-                        <TabsTrigger value="12">12 Meses</TabsTrigger>
-                    </TabsList>
-                </Tabs>
+                {/* Selector de tiempo con Select */}
+                <div className="w-full">
+                    <Select defaultValue="1" value={selectedPeriod} onValueChange={setSelectedPeriod}>
+                        <SelectTrigger className="w-full">
+                            <SelectValue placeholder="Seleccionar período" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            {periodos.map((periodo) => (
+                                <SelectItem key={periodo.value} value={periodo.value}>
+                                    {periodo.label}
+                                </SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
+                </div>
 
                 {/* Precio normal */}
                 <div className="flex items-center justify-between">
@@ -79,7 +93,7 @@ function PlayStationPlus({product}) {
                             <BanknoteIcon className="h-4 w-4 text-green-600"/>
                             <p className="text-sm font-medium text-green-700">Transferencia bancaria:</p>
                         </div>
-                        <Badge variant="outline" className="text-center bg-green-100 text-green-800 border-green-200">
+                        <Badge variant="outline" className="hidden md:block text-center bg-green-100 text-green-800 border-green-200">
                             20% OFF
                         </Badge>
                     </div>

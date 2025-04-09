@@ -6,12 +6,12 @@ function BusinessFeatures () {
         {
             path: "/images/home-features/ps4.png",
             cta: "Ver juegos",
-            href: "/juegos/stock?console=ps4",
+            href: "/juegos/stock/ps4",
         },
         {
             path: "/images/home-features/ps5.png",
             cta: "Ver juegos",
-            href: "/juegos/stock?console=ps5",
+            href: "/juegos/stock/ps5",
         },
     ]
 

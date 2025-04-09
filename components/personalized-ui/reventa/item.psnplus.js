@@ -41,11 +41,6 @@ function PlayStationPlusReventa ({product}) {
 
     return (
         <Card className="flex flex-col h-full hover:shadow-md transition-shadow relative">
-            {/* Badge de Revendedor */}
-            <div className="absolute top-3 right-3 z-10">
-                <div className="bg-purple-600 text-white text-xs font-bold px-2 py-1 rounded-full">REVENDEDOR</div>
-            </div>
-
             <CardHeader className="flex-grow p-4">
                 <div className="aspect-square relative mb-2">
                     <Image
@@ -65,9 +60,9 @@ function PlayStationPlusReventa ({product}) {
                 {/* Selector de tiempo */}
                 <Tabs defaultValue="1" value={selectedPeriod} onValueChange={setSelectedPeriod} className="w-full">
                     <TabsList className="grid grid-cols-3 w-full">
-                        <TabsTrigger value="1">1 Mes</TabsTrigger>
-                        <TabsTrigger value="3">3 Meses</TabsTrigger>
-                        <TabsTrigger value="12">12 Meses</TabsTrigger>
+                        <TabsTrigger value="1">1M</TabsTrigger>
+                        <TabsTrigger value="3">3M</TabsTrigger>
+                        <TabsTrigger value="12">12M</TabsTrigger>
                     </TabsList>
                 </Tabs>
 
@@ -80,7 +75,7 @@ function PlayStationPlusReventa ({product}) {
                     {/*<p className="text-xs text-center text-purple-600 mt-1">Descuentos especiales por volumen</p>*/}
                 </div>
             </CardContent>
-            <CardFooter className="p-1 md:p-4 pt-0 grid grid-cols-2 gap-2">
+            <CardFooter className="p-1 md:p-2 pt-0 grid grid-cols-2 gap-2">
                 <Link href={`https://wa.me/5491132001372?text=${mensaje}`} className="w-full" target="_blank">
                     <Button className="w-full flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700">
                         <FaWhatsapp className="h-8 w-8"/>
