@@ -111,7 +111,7 @@ export const tarjetasPsnTq = [
         imagen: ""
     },
     {
-        nombre: "PlayStation Gift Card 100 USD",
+        nombre: "PlayStation Gift Card 500 TL",
         region: "TQ",
         precioCliente: 0,
         precioReventa: 22000,
@@ -119,7 +119,7 @@ export const tarjetasPsnTq = [
         imagen: ""
     },
     {
-        nombre: "PlayStation Gift Card 100 USD",
+        nombre: "PlayStation Gift Card 1000 TL",
         region: "TQ",
         precioCliente: 0,
         precioReventa: 42000,
