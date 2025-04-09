@@ -12,6 +12,7 @@ export const metadata = {
 
 async function JuegosEnStock ({params}) {
     let consola = params.consola
+    console.log(`Busco por consola ${consola}`)
     const juegos = await obtenerJuegosStock(consola);
     return (
         <main className={"styledMain py-4"}>
