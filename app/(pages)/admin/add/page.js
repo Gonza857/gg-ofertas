@@ -233,8 +233,8 @@ function redondearCien(num) {
 }
 
 const Registro = ({juego}) => {
-    const precioLista = redondearCien(juego.price).toFixed(0)
-    const precioTransferencia = redondearCien((juego.price) * 1.2).toFixed(0)
+    const precioLista = redondearCien(juego.price * 1.25).toFixed(0)
+    const precioTransferencia = redondearCien(precioLista * 0.8).toFixed(0)
     const precioReventa = redondearCien((juego.price) * 0.95).toFixed(0)
 
     return (
