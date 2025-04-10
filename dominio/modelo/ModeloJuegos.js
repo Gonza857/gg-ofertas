@@ -5,6 +5,17 @@ class ModeloJuegos {
         this.repositorioJuegos = repositorioJuegos;
     }
 
+    obtenerArrayDeConsola (datosConsola)  {
+        const diccionario = {
+            "PS3": ["PS3"],
+            "PS4/PS5": ["PS4", "PS5"],
+            "PS4": ["PS4"],
+            "PS5": ["PS5"]
+        }
+        if (!diccionario[datosConsola]) return []
+        return diccionario[datosConsola]
+    }
+
     async guardarJuegoStock(juego) {
         if (!juego) throw new Error("No se pudo guardar el juego.")
         juego.precioCliente = Number(juego.precioCliente)
@@ -19,6 +30,8 @@ class ModeloJuegos {
 
     async actualizarJuegoStock(input) {
         if (!input || !input.id) throw new Error("No se pudo actualizar el juego")
+        input.consola = this.obtenerArrayDeConsola(input.consola)
+        console.log("voy a guardar", input)
         const resultado = await this.repositorioJuegos.actualizarJuegoEnStock(input, input.id)
         return {
             mensaje: "Juego actualizado correctamante",
@@ -37,13 +50,15 @@ class ModeloJuegos {
 
     async obtenerJuegosStock(consoleSearched = null) {
         const juegos = await this.repositorioJuegos.obtenerTodosLosJuegosStock()
-        console.log(`Juegos en stock ${juegos.length}`)
-        console.log("Consola buscada", consoleSearched)
         let filtrados;
-        if (consoleSearched) {
+        console.log("consoleSearched", consoleSearched)
+        if (consoleSearched !== "undefined" && consoleSearched != null) {
             filtrados = juegos.filter(j => j.consola.includes(consoleSearched.toUpperCase()))
+        } else {
+            juegos.sort((a, b) => a.nombre.localeCompare(b.nombre))
         }
-        return consoleSearched ? filtrados : juegos.sort((a, b) => a.nombre.localeCompare(b.nombre));
+
+        return consoleSearched !== "undefined" ? filtrados : juegos;
     }
 
     async obtenerJuegosOfertaReventa() {

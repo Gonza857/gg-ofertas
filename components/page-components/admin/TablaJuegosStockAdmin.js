@@ -3,7 +3,7 @@
 import {Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
 import {Check, Copy, Pen, Trash2} from "lucide-react";
 import ModalCustomizado from "@/components/personalized-ui/Modal";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Button} from "@/components/ui/button";
 import {Label} from "@/components/ui/label";
 import {toastError, toastSuccess} from "@/lib/Toast";
@@ -61,9 +61,21 @@ function TablaJuegosStockAdmin({juegos: j}) {
         return juegos.filter(s => s.id !== idJuego)
     }
 
+    const obtenerArrayDeConsola = (datosConsola) => {
+        const diccionario = {
+            "PS3": ["PS3"],
+            "PS4/PS5": ["PS4", "PS5"],
+            "PS4": ["PS4"],
+            "PS5": ["PS5"]
+        }
+        if (!diccionario[datosConsola]) return []
+        return diccionario[datosConsola]
+    }
+
     const actualizarLocal = (juegoActualizado) => {
-        const juegosActualizados = [...juegos].map((j)=>{
+        const juegosActualizados = [...juegos].map((j) => {
             if (j.id === juegoActualizado.id) {
+                juegoActualizado.consola = obtenerArrayDeConsola(juegoActualizado.consola)
                 return {
                     ...j,
                     ...juegoActualizado
@@ -73,7 +85,7 @@ function TablaJuegosStockAdmin({juegos: j}) {
         })
         setJuegos(juegosActualizados)
     }
-
+    
     const manejarEliminarJuego = async () => {
         if (!juegoSeleccionado.id) return toastError("No se pudo eliminar el PlayStation Plus")
         const {mensaje, exito} = await eliminarJuegoStock(juegoSeleccionado.id)
@@ -112,7 +124,8 @@ function TablaJuegosStockAdmin({juegos: j}) {
                 placeholder={"Buscar por nombre de juego"}
                 className={"w-full my-3"}
             />
-            {juegoBuscado && <p className={"py-3 text-sm text-gray-600"}>Se muestran resultados para: {juegoBuscado}</p>}
+            {juegoBuscado &&
+                <p className={"py-3 text-sm text-gray-600"}>Se muestran resultados para: {juegoBuscado}</p>}
             <Tabla {...tablaProps}/>
         </>)
 }
@@ -154,6 +167,7 @@ const ModalEditar = ({estaAbierto, manejarModalEditar, juegoSeleccionado = null,
 
     const enviarFormulario = async (e) => {
         e.preventDefault()
+        console.log(datosFormulario)
         const {mensaje, exito} = await actualizarJuegoStock({...juegoSeleccionado, ...datosFormulario});
         manejarModalEditar()
         actualizarLocal({...juegoSeleccionado, ...datosFormulario})

@@ -9,7 +9,8 @@ export async function POST(req, res) {
         const cuerpo = await req.json();
         const resultado = await modeloJuegos.guardarJuegoStock(cuerpo);
         revalidatePath("/reventa/juegos/stock")
-        revalidatePath("//stock")
+        revalidatePath("/juegos/stock/ps4")
+        revalidatePath("/juegos/stock/ps5")
         revalidatePath("/admin/stock/juegos")
         return NextResponse.json(
             resultado

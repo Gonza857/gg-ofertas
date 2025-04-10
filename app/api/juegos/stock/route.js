@@ -12,7 +12,7 @@ const revalidar = () => {
 
 export async function GET(req, res) {
     try {
-        const resultado = await modeloJuegos.obtenerJuegosStock()
+        const resultado = await modeloJuegos.obtenerJuegosStock("undefined")
         return NextResponse.json(
             resultado
         )
