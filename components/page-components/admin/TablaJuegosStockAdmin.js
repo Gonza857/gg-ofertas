@@ -62,6 +62,9 @@ function TablaJuegosStockAdmin({juegos: j}) {
     }
 
     const obtenerArrayDeConsola = (datosConsola) => {
+        if (Array.isArray(datosConsola)) {
+            return datosConsola
+        }
         const diccionario = {
             "PS3": ["PS3"],
             "PS4/PS5": ["PS4", "PS5"],
@@ -85,7 +88,7 @@ function TablaJuegosStockAdmin({juegos: j}) {
         })
         setJuegos(juegosActualizados)
     }
-    
+
     const manejarEliminarJuego = async () => {
         if (!juegoSeleccionado.id) return toastError("No se pudo eliminar el PlayStation Plus")
         const {mensaje, exito} = await eliminarJuegoStock(juegoSeleccionado.id)
