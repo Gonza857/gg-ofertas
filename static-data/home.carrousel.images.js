@@ -4,7 +4,7 @@ export const images = [
     {
         id: id++,
         alt: "Ofertas de pascua",
-        path: "/images/home-carousel/pascuas.png",
+        path: "/images/home-carousel/pascuas2.webp",
         urlTo: "/juegos/ofertas"
     },
     {
