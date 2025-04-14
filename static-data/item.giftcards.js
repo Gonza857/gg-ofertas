@@ -107,14 +107,14 @@ export const tarjetasSteam = [
     {
         nombre: "Steam Gift Card 75 USD",
         region: "USA/ARG",
-        precioCliente: 12000,
+        precioCliente: 120000,
         precioReventa: 112500,
         showToCustomer: true,
     },
     {
         nombre: "Steam Gift Card 100 USD",
         region: "USA/ARG",
-        precioCliente: 16000,
+        precioCliente: 160000,
         precioReventa: 150000,
         showToCustomer: true,
     }
