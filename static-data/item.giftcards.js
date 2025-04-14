@@ -1,49 +1,52 @@
+const usdPorCliente = 1300
+const usdPorReventa = 1200
+
 export const tarjetasPsn = [
     {
         nombre: "PlayStation Gift Card 10 USD",
         region: "USA",
-        precioCliente: 13000,
-        precioReventa: 12500,
+        precioCliente: 10 * usdPorCliente,
+        precioReventa: 10 * usdPorReventa,
         showToCustomer: true,
         imagen: "/images/psncard/psn10.jpeg"
     },
     {
         nombre: "PlayStation Gift Card 25 USD",
         region: "USA",
-        precioCliente: 32500,
-        precioReventa: 31250,
+        precioCliente: 25 * usdPorCliente,
+        precioReventa: 25 * usdPorReventa,
         showToCustomer: true,
         imagen: "/images/psncard/psn25.jpeg"
     },
     {
         nombre: "PlayStation Gift Card 50 USD",
         region: "USA",
-        precioCliente: 65000,
-        precioReventa: 62500,
+        precioCliente: 50 * usdPorCliente,
+        precioReventa: 50 * usdPorReventa,
         showToCustomer: true,
         imagen: "/images/psncard/psn50.jpeg"
     },
     {
         nombre: "PlayStation Gift Card 60 USD",
         region: "USA",
-        precioCliente: 78000,
-        precioReventa: 75000,
+        precioCliente: 60 * usdPorCliente,
+        precioReventa: 60 * usdPorReventa,
         showToCustomer: true,
         imagen: "/images/psncard/psn60.jpeg"
     },
     {
         nombre: "PlayStation Gift Card 75 USD",
         region: "USA",
-        precioCliente: 97500,
-        precioReventa: 93750,
+        precioCliente: 75 * usdPorCliente,
+        precioReventa: 75 * usdPorReventa,
         showToCustomer: true,
         imagen: "/images/psncard/psn75.jpeg"
     },
     {
         nombre: "PlayStation Gift Card 100 USD",
         region: "USA",
-        precioCliente: 130000,
-        precioReventa: 125000,
+        precioCliente: 100 * usdPorCliente,
+        precioReventa: 100 * usdPorReventa,
         showToCustomer: true,
         imagen: "/images/psncard/psn100.jpeg"
     }
@@ -106,7 +109,7 @@ export const tarjetasPsnTq = [
         nombre: "PlayStation Gift Card 250TL",
         region: "TQ",
         precioCliente: 0,
-        precioReventa: 12000,
+        precioReventa: 10500,
         showToCustomer: false,
         imagen: ""
     },
@@ -114,7 +117,7 @@ export const tarjetasPsnTq = [
         nombre: "PlayStation Gift Card 500 TL",
         region: "TQ",
         precioCliente: 0,
-        precioReventa: 22000,
+        precioReventa: 21500,
         showToCustomer: false,
         imagen: ""
     },
