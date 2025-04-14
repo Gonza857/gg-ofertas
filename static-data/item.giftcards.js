@@ -3,6 +3,22 @@ const usdPorReventa = 1200
 
 export const tarjetasPsn = [
     {
+        nombre: "PlayStation Gift Card 1 USD",
+        region: "USA",
+        precioCliente: 2700, // bsv * 1270 * 1.2 = resultado * 1.1
+        precioReventa: 2500, // bsv * 1270 * 1.2 = resultado
+        showToCustomer: true,
+        imagen: "/images/psncard/psn10.jpeg"
+    },
+    {
+        nombre: "PlayStation Gift Card 5 USD",
+        region: "USA",
+        precioCliente: 9700, // bsv * 1270 * 1.2 = resultado * 1.1
+        precioReventa: 8800, // bsv * 1270 * 1.2 = resultado
+        showToCustomer: true,
+        imagen: "/images/psncard/psn10.jpeg"
+    },
+    {
         nombre: "PlayStation Gift Card 10 USD",
         region: "USA",
         precioCliente: 10 * usdPorCliente,
