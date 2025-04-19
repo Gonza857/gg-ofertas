@@ -80,7 +80,7 @@ export const reventaPsnPlus = [
         title: "PlayStation Plus",
         tipo: "Deluxe",
         consola: "PS5",
-        precioReventa: [21000, 32000, 10000],
+        precioReventa: [21000, 32000, 100000],
         image: "/images/playstationplus/plus-ps5-deluxe.png",
     },
     // PS4 Essential
@@ -107,7 +107,7 @@ export const reventaPsnPlus = [
         title: "PlayStation Plus",
         tipo: "Deluxe",
         consola: "PS4",
-        precioReventa: [21000, 32000, 10000],
+        precioReventa: [21000, 32000, 100000],
         image: "/images/playstationplus/plus-ps4-deluxe.png",
     },
 ]
