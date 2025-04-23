@@ -8,9 +8,7 @@ export async function GET(req, res) {
     try {
         const juegos = await modeloJuegos.obtenerJuegosOfertaReventa();
         revalidar()
-        return NextResponse.json(
-            juegos
-        )
+        return NextResponse.json(juegos)
     } catch (e) {
         return NextResponse.json({
                 mensaje: e.message,

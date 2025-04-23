@@ -49,9 +49,9 @@ class ModeloJuegos {
     }
 
     async obtenerJuegosStock(consoleSearched = null) {
-        const juegos = await this.repositorioJuegos.obtenerTodosLosJuegosStock()
+        let juegos = await this.repositorioJuegos.obtenerTodosLosJuegosStock()
+        juegos = juegos.map((j)=>({...j, editado: j.editado ? new Date(j.editado.toDate()) : "-"}))
         let filtrados;
-        console.log("consoleSearched", consoleSearched)
         if (consoleSearched !== "undefined" && consoleSearched != null) {
             filtrados = juegos.filter(j => j.consola.includes(consoleSearched.toUpperCase()))
         } else {

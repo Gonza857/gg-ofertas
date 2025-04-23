@@ -12,6 +12,8 @@ import {Input} from "@/components/ui/input";
 import {CardDescription} from "@/components/ui/card";
 import {RadioGroup, RadioGroupItem} from "@/components/ui/radio-group";
 import {actualizarJuegoStock, eliminarJuegoStock} from "@/dominio/servicios/stock-juegos";
+import ModalEditarJuego from "@/components/page-components/admin/ModalEditarJuego";
+import TablaJuegosStock from "@/components/page-components/admin/TablaJuegosStock";
 
 function TablaJuegosStockAdmin({juegos: j}) {
     const [juegos, setJuegos] = useState(j)
@@ -75,7 +77,14 @@ function TablaJuegosStockAdmin({juegos: j}) {
         return diccionario[datosConsola]
     }
 
+    const formatearJuego = (juego) => {
+        juego.precioCliente = Number(juego.precioCliente)
+        juego.precioReventa = Number(juego.precioReventa)
+        juego.stock = Number(juego.stock)
+    }
+
     const actualizarLocal = (juegoActualizado) => {
+        formatearJuego(juegoActualizado)
         const juegosActualizados = [...juegos].map((j) => {
             if (j.id === juegoActualizado.id) {
                 juegoActualizado.consola = obtenerArrayDeConsola(juegoActualizado.consola)
@@ -121,7 +130,7 @@ function TablaJuegosStockAdmin({juegos: j}) {
     return (
         <>
             <ModalEliminar {...modalEliminarProps}/>
-            <ModalEditar {...modalEditarProps}/>
+            <ModalEditarJuego {...modalEditarProps}/>
             <Input
                 onChange={buscarJuego}
                 placeholder={"Buscar por nombre de juego"}
@@ -129,14 +138,8 @@ function TablaJuegosStockAdmin({juegos: j}) {
             />
             {juegoBuscado &&
                 <p className={"py-3 text-sm text-gray-600"}>Se muestran resultados para: {juegoBuscado}</p>}
-            <Tabla {...tablaProps}/>
+            <TablaJuegosStock {...tablaProps}/>
         </>)
-}
-
-const InputWrapper = ({children}) => {
-    return (
-        <div className={"space-y-2"}>{children}</div>
-    )
 }
 
 const ModalEliminar = ({estaAbierto, manejarEliminarJuego, manejarModalEliminar}) => {
@@ -163,240 +166,6 @@ const ModalEliminar = ({estaAbierto, manejarEliminarJuego, manejarModalEliminar}
     )
 }
 
-const ModalEditar = ({estaAbierto, manejarModalEditar, juegoSeleccionado = null, actualizarLocal}) => {
-    const [datosFormulario, setDatosFormulario] = useState({...juegoSeleccionado});
 
-    if (!juegoSeleccionado) return;
-
-    const enviarFormulario = async (e) => {
-        e.preventDefault()
-        console.log(datosFormulario)
-        const {mensaje, exito} = await actualizarJuegoStock({...juegoSeleccionado, ...datosFormulario});
-        manejarModalEditar()
-        actualizarLocal({...juegoSeleccionado, ...datosFormulario})
-        if (exito) return toastSuccess(mensaje);
-        return toastError(mensaje);
-    }
-
-    const manejarCampos = (e) => {
-        setDatosFormulario((prev) => ({...prev, [e.target.name]: e.target.value}));
-    }
-
-    const manejarSelect = (campo, valor) => setDatosFormulario((prev) => ({...prev, [campo]: valor}))
-
-    return (
-        <ModalCustomizado estaAbierto={estaAbierto}>
-            <ModalCustomizado.Titulo>Editando: {juegoSeleccionado.nombre}</ModalCustomizado.Titulo>
-            <form className={"space-y-4"} onSubmit={enviarFormulario}>
-                <div className={"space-y-2"}>
-                    <Label htmlFor={"nombre"}>Nombre del juego</Label>
-                    <Input
-                        name={"nombre"}
-                        type={"text"}
-                        onChange={manejarCampos}
-                        placeholder={"Nombre del juego"}
-                        defaultValue={juegoSeleccionado.nombre}
-                    />
-                </div>
-                <div className={"grid grid-cols-2 gap-4"}>
-                    <div className={"space-y-2"}>
-                        <Label htmlFor={"precioCliente"}>Precio Cliente</Label>
-                        <Input
-                            name={"precioCliente"}
-                            type={"number"}
-                            onChange={manejarCampos}
-                            defaultValue={juegoSeleccionado.precioCliente}
-                        />
-                    </div>
-                    <div className={"space-y-2"}>
-                        <Label htmlFor={"precioReventa"}>Precio Reventa</Label>
-                        <Input
-                            name={"precioReventa"}
-                            type={"number"}
-                            onChange={manejarCampos}
-                            defaultValue={juegoSeleccionado.precioReventa}
-                        />
-                    </div>
-                </div>
-                <div className={"grid grid-cols-2 items-start gap-4"}>
-                    <div className={"space-y-2"}>
-                        <Label htmlFor={"stock"}>Stock</Label>
-                        <Input
-                            name={"stock"}
-                            type={"number"}
-                            onChange={manejarCampos}
-                            defaultValue={juegoSeleccionado.stock}
-                        />
-                    </div>
-                    <InputWrapper>
-                        <Label>Mostrar Idioma</Label>
-                        <RadioGroup
-                            className={"flex gap-4"}
-                            defaultValue={juegoSeleccionado?.mostrarIdioma}
-                            onValueChange={(value) => manejarSelect("mostrarIdioma", value)}
-                        >
-                            <div className="flex items-center space-x-2">
-                                <RadioGroupItem value={true} id="si"/>
-                                <Label htmlFor="si">Sí</Label>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                                <RadioGroupItem value={false} id="no"/>
-                                <Label htmlFor="no">No</Label>
-                            </div>
-                        </RadioGroup>
-                    </InputWrapper>
-                </div>
-                <div>
-                    <Label>Selecciona consola</Label>
-                    <Select
-                        defaultValue={juegoSeleccionado?.consola.join("/")}
-                        onValueChange={(valor) => manejarSelect("consola", valor)}
-                        name="consola">
-                        <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Elige una opción"/>
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="PS3">PS3</SelectItem>
-                            <SelectItem value="PS4">PS4</SelectItem>
-                            <SelectItem value="PS5">PS5</SelectItem>
-                            <SelectItem value="PS4/PS5">PS4/PS5</SelectItem>
-                        </SelectContent>
-                    </Select>
-                </div>
-                <div>
-                    <Label>Selecciona tipo de cuenta</Label>
-                    <Select
-                        defaultValue={juegoSeleccionado.tipo}
-                        onValueChange={(valor) => manejarSelect("tipo", valor)}
-                        name="tipo">
-                        <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Elige una opción"/>
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="Primaria">Primaria</SelectItem>
-                            <SelectItem value="Secundaria">Secundaria</SelectItem>
-                        </SelectContent>
-                    </Select>
-                </div>
-                <div>
-                    <Label>Selecciona idioma del juego</Label>
-                    <Select
-                        defaultValue={juegoSeleccionado.idioma ?? "-"}
-                        onValueChange={(valor) => manejarSelect("idioma", valor)}
-                        name="idioma"
-                    >
-                        <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Elige una opción"/>
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="Español Latino">Español Latino</SelectItem>
-                            <SelectItem value="Español Gallego">Español Gallego</SelectItem>
-                            <SelectItem value="Inglés con subtitulos en español">Inglés con subtitulos en
-                                español</SelectItem>
-                            <SelectItem value="Inglés">Inglés</SelectItem>
-                            <SelectItem value={"-"}>Sin información</SelectItem>
-                        </SelectContent>
-                    </Select>
-                </div>
-                <div className={"w-full justify-end flex gap-4"}>
-                    <Button
-                        variant="destructive"
-                        type={"button"}
-                        onClick={() => manejarModalEditar()}
-                    >
-                        Cancelar
-                    </Button>
-                    <Button
-                        type={"submit"}
-                    >
-                        Enviar
-                    </Button>
-                </div>
-
-            </form>
-        </ModalCustomizado>
-    )
-}
-
-const Tabla = (props) => {
-    return (
-        <Table>
-            <TableCaption>Juegos en stock - Precios actualizados</TableCaption>
-            <Cabecera/>
-            <Cuerpo {...props}/>
-        </Table>
-    )
-}
-
-const Cabecera = () => {
-    return (
-        <TableHeader>
-            <TableRow>
-                <TableHead className={"w-3/12 px-2 md:px-4"}>Nombre</TableHead>
-                <TableHead className={"w-1/12 px-2 md:px-4 text-center"}>Stock</TableHead>
-                <TableHead className={"w-1/12 px-2 md:px-4 text-center"}>P.C</TableHead>
-                <TableHead className={"w-1/12 px-2 md:px-4 text-center"}>P.R</TableHead>
-                <TableHead className={"w-1/12 px-2 md:px-4 text-center"}>Consola</TableHead>
-                <TableHead className={"w-1/12 px-2 md:px-4 text-center"}>Tipo</TableHead>
-                <TableHead className={"w-1/12 px-2 md:px-4 text-center"}>M.I</TableHead>
-                <TableHead className={"w-1/12 px-2 md:px-4 text-center"}>Idioma</TableHead>
-                <TableHead className={"w-1/12 px-2 md:px-4 text-center"}>Editar</TableHead>
-                <TableHead className={"w-1/12 px-2 md:px-4 text-center"}>Eliminar</TableHead>
-            </TableRow>
-        </TableHeader>
-    )
-}
-
-const Cuerpo = ({juegos, editarJuego, eliminarJuego}) => {
-    return (
-        <TableBody>
-            {juegos.map(j => (
-                <Registro
-                    juego={j}
-                    key={j.id}
-                    editarJuego={editarJuego}
-                    eliminarJuego={eliminarJuego}
-                />))
-            }
-        </TableBody>
-    )
-}
-
-const Registro = ({juego: j, editarJuego, eliminarJuego}) => {
-    return (
-        <TableRow>
-            <TableCell className={"p-1 py-2"}>{j.nombre}</TableCell>
-            <TableCell className={"p-1 py-2 text-center"}>{j.stock}</TableCell>
-            <TableCell className={"p-1 py-2 text-center"}>${j.precioCliente.toLocaleString("es-AR")}</TableCell>
-            <TableCell className={"p-1 py-2 text-center"}>${j.precioReventa.toLocaleString("es-AR")}</TableCell>
-            <TableCell className={"p-1 py-2 text-center"}>{j.consola.join("/")}</TableCell>
-            <TableCell className={"p-1 py-2 text-center"}>{j.tipo}</TableCell>
-            <TableCell className={"p-1 py-2 text-center"}>{j.mostrarIdioma ? "Sí" : "No"}</TableCell>
-            <TableCell className={"p-1 py-2 text-center"}>{j.idioma ?? "-"}</TableCell>
-            <TableCell className={"p-1 text-center"}>
-                <Button
-                    variant={"outline"}
-                    size={"sm"}
-                    onClick={() => editarJuego(j)}
-                >
-                    <Pen
-                        className="h-4 w-4 mx-auto"
-                    />
-                </Button>
-            </TableCell>
-            <TableCell className={"p-1 text-center"}>
-                <Button
-                    variant={"outline"}
-                    size={"sm"}
-                    onClick={() => eliminarJuego(j)}
-                >
-                    <Trash2
-                        className="h-4 w-4 mx-auto"
-                    />
-                </Button>
-            </TableCell>
-        </TableRow>
-    )
-}
 
 export default TablaJuegosStockAdmin;

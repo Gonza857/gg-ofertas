@@ -1,3 +1,5 @@
+import { serverTimestamp } from "firebase/firestore";
+
 class RepositorioJuegos {
 
     COLECCION = "ofertas"
@@ -16,6 +18,7 @@ class RepositorioJuegos {
     }
 
     async actualizarJuegoEnStock(juego, id) {
+        juego.editado = serverTimestamp()
         return await this.BaseDeDatos.actualizar("stock-juegos", juego, id);
     }
 
