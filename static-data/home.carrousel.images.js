@@ -3,8 +3,8 @@ let id = 0;
 export const images = [
     {
         id: id++,
-        alt: "Ofertas de pascua",
-        path: "/images/home-carousel/pascuas2.webp",
+        alt: "Big Games, Big Deals",
+        path: "/images/home-carousel/biggamesbigdeals-0705.webp",
         urlTo: "/juegos/ofertas"
     },
     {
