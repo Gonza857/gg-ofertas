@@ -18,12 +18,13 @@ function ModalEditarJuego({estaAbierto, manejarModalEditar, juegoSeleccionado = 
 
     if (!juegoSeleccionado) return;
 
+    console.log("juego seleccionado", juegoSeleccionado)
+
     const enviarFormulario = async (e) => {
         e.preventDefault()
         const {mensaje, exito} = await actualizarJuegoStock({...juegoSeleccionado, ...datosFormulario});
         manejarModalEditar()
         actualizarLocal({...juegoSeleccionado, ...datosFormulario})
-        setDatosFormulario({})
         if (exito) return toastSuccess(mensaje);
         toastError(mensaje);
         setDatosFormulario({})

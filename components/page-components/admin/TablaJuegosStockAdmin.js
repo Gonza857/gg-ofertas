@@ -14,6 +14,7 @@ import {RadioGroup, RadioGroupItem} from "@/components/ui/radio-group";
 import {actualizarJuegoStock, eliminarJuegoStock} from "@/dominio/servicios/stock-juegos";
 import ModalEditarJuego from "@/components/page-components/admin/ModalEditarJuego";
 import TablaJuegosStock from "@/components/page-components/admin/TablaJuegosStock";
+import {formatearJuego} from "@/dominio/utils/juegos-stock/utils";
 
 function TablaJuegosStockAdmin({juegos: j}) {
     const [juegos, setJuegos] = useState(j)
@@ -63,31 +64,10 @@ function TablaJuegosStockAdmin({juegos: j}) {
         return juegos.filter(s => s.id !== idJuego)
     }
 
-    const obtenerArrayDeConsola = (datosConsola) => {
-        if (Array.isArray(datosConsola)) {
-            return datosConsola
-        }
-        const diccionario = {
-            "PS3": ["PS3"],
-            "PS4/PS5": ["PS4", "PS5"],
-            "PS4": ["PS4"],
-            "PS5": ["PS5"]
-        }
-        if (!diccionario[datosConsola]) return []
-        return diccionario[datosConsola]
-    }
-
-    const formatearJuego = (juego) => {
-        juego.precioCliente = Number(juego.precioCliente)
-        juego.precioReventa = Number(juego.precioReventa)
-        juego.stock = Number(juego.stock)
-    }
-
     const actualizarLocal = (juegoActualizado) => {
         formatearJuego(juegoActualizado)
         const juegosActualizados = [...juegos].map((j) => {
             if (j.id === juegoActualizado.id) {
-                juegoActualizado.consola = obtenerArrayDeConsola(juegoActualizado.consola)
                 return {
                     ...j,
                     ...juegoActualizado
