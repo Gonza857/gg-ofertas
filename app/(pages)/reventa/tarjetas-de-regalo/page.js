@@ -1,14 +1,19 @@
 import TablaTarjetasRegaloReventa from "@/components/page-components/reventa/TablaTarjetasRegaloReventa";
-import {tarjetasPsn, tarjetasPsnTq, tarjetasSteam} from "@/static-data/item.giftcards";
+import {obtenerTodasLasTarjetas} from "@/dominio/servicios/giftcards";
+import React from "react";
+import {cookies} from "next/headers";
+
+const token = cookies().get("access-token")?.value
 
 async function TarjetasDeRegaloReventa () {
-    const tarjetas = [...tarjetasPsn, ...tarjetasSteam,  ...tarjetasPsnTq]
+    const resultado = await obtenerTodasLasTarjetas("reseller", token)
+    if (!resultado.exito) return <>Error</>
 
     return (
         <main className={"styledMain px-2 pb-4"}>
             <h1 className={"text-2xl font-semibold text-center py-4 font-sans"}>Tarjetas de regalo</h1>
             <article className={"w-full sm:w-11/12 md:w-3/4 xl:w-1/2 mx-auto p-2 md:p-0"}>
-                <TablaTarjetasRegaloReventa tarjetas={tarjetas}/>
+                <TablaTarjetasRegaloReventa tarjetas={resultado.data}/>
             </article>
         </main>
     )

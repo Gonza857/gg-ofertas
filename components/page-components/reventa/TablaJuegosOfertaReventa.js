@@ -213,14 +213,14 @@ const Cuerpo = ({juegos = [], copiarJuego, juegoCopiado, busqueda = null}) => {
 }
 
 const Registro = ({juego, copiarJuego, juegoCopiado}) => {
-    const precioJuego = redondearCien((juego.price) * 0.95).toFixed(0)
     return (
         <TableRow>
             <TableCell className="font-medium p-1 py-2">{juego.name}</TableCell>
-            <TableCell className={"p-1 py-2"}>${precioJuego}</TableCell>
-            <TableCell className="text-right p-1 py-2">
+            <TableCell className={"p-1 py-2"}>${juego.price}</TableCell>
+            <TableCell className="p-1 py-2">
                 <div
-                    onClick={() => copiarJuego(`${juego.name} - $${precioJuego}`, juego.name)}
+                    className={"w-fit mx-auto flex justify-center"}
+                    onClick={() => copiarJuego(`${juego.name} - $${juego.price}`, juego.name)}
                 >
                     {juegoCopiado === juego.name ? <Check className="h-4 w-4"/> : <Copy className="h-4 w-4"/>}
                     <span className="sr-only">Copiar información del juego</span>

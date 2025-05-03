@@ -1,5 +1,6 @@
 import TablaJuegosOfertaReventa from "@/components/page-components/reventa/TablaJuegosOfertaReventa";
 import {obtenerJuegosOferta} from "@/dominio/servicios/juegos";
+import React from "react";
 
 export const dynamic = "force-dynamic";
 
@@ -9,11 +10,16 @@ export const metadata = {
 };
 
 async function JuegosOfertaReventa() {
-    const {juegos, termina, titulo} = await obtenerJuegosOferta()
+    const resultado = await obtenerJuegosOferta("reseller")
+    if (!resultado.exito) return <>Error</>
 
     return (
         <main className={"styledMain"}>
-            <TablaJuegosOfertaReventa juegos={juegos} fechaExpiracion={termina} titulo={titulo}/>
+            <TablaJuegosOfertaReventa
+                juegos={resultado.juegos}
+                fechaExpiracion={resultado.termina}
+                titulo={resultado.titulo}
+            />
         </main>
     )
 }

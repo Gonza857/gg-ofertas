@@ -1,10 +1,16 @@
-import { initializeApp, getApps } from "firebase/app";
+import {initializeApp, getApps} from "firebase/app";
 import ModeloTurquia from "@/dominio/modelo/ModeloTurquia";
 import ModeloJuegos from "@/dominio/modelo/ModeloJuegos";
 import MiFirebase from "@/infraestructura/Database";
 import RepositorioJuegos from "@/dominio/repositorio/RepositorioJuegos";
 import ModeloPlus from "@/dominio/modelo/ModeloPlus";
 import RepositorioPlus from "@/dominio/repositorio/RepositorioPlus";
+import ModeloUsuario from "@/dominio/modelo/ModeloUsuario";
+import RepositorioUsuario from "@/dominio/repositorio/RepositorioUsuario";
+import RepositorioTarjeta from "@/dominio/repositorio/RepositorioTarjeta";
+import ModeloTarjeta from "@/dominio/modelo/ModeloTarjeta";
+import Almacenamiento from "@/infraestructura/Storage";
+import RepositorioImagen from "@/dominio/repositorio/RepositorioImagen";
 
 class Container {
     constructor() {
@@ -31,9 +37,16 @@ class Container {
         }
 
         this.register('BaseDeDatos', new MiFirebase(APP_PRINCIPAL));
+        this.register('Almacenamiento', new Almacenamiento(APP_PRINCIPAL));
 
+        this.register("RepositorioImagen", new RepositorioImagen(
+            this.resolve("BaseDeDatos"),
+            this.resolve("Almacenamiento"),
+        ));
         this.register("RepositorioJuegos", new RepositorioJuegos(this.resolve("BaseDeDatos")));
         this.register("RepositorioPlus", new RepositorioPlus(this.resolve("BaseDeDatos")));
+        this.register("RepositorioUsuario", new RepositorioUsuario(this.resolve("BaseDeDatos")));
+        this.register("RepositorioTarjeta", new RepositorioTarjeta(this.resolve("BaseDeDatos")));
 
         this.register('ModeloTurquia', new ModeloTurquia());
         this.register('ModeloJuegos', new ModeloJuegos(
@@ -41,6 +54,13 @@ class Container {
         ));
         this.register('ModeloPlus', new ModeloPlus(
             this.resolve("RepositorioPlus")
+        ));
+        this.register('ModeloUsuario', new ModeloUsuario(
+            this.resolve("RepositorioUsuario")
+        ));
+        this.register('ModeloTarjeta', new ModeloTarjeta(
+            this.resolve("RepositorioTarjeta"),
+            this.resolve("RepositorioImagen")
         ));
 
 

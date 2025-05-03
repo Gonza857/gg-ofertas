@@ -26,6 +26,10 @@ class RepositorioJuegos {
         return await this.BaseDeDatos.obtenerTodos("stock-juegos")
     }
 
+    async actualizarJuegosOferta (ofertasObject) {
+        return await this.BaseDeDatos.actualizar("ofertas", ofertasObject, ofertasObject.id)
+    }
+
     async subirOfertas(ofertas) {
         return await this.BaseDeDatos.guardarConUID(this.COLECCION, {...ofertas, uid: "nbC1nBnbrJarc6vaCbOc"});
     }

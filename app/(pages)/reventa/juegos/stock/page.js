@@ -1,7 +1,9 @@
 import {Box, Clock, Gamepad2, Scroll} from "lucide-react";
 import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from "@/components/ui/accordion";
-import {obtenerJuegosStock} from "@/dominio/servicios/juegos";
-import TablaJuegosStock from "@/components/page-components/reventa/TablaJuegosStock";
+import TablaJuegosStock from "@/components/page-components/principales/stock/TablaJuegosStock";
+import {obtenerJuegosStock} from "@/dominio/servicios/stock-juegos";
+import {cookies} from "next/headers";
+import {redirect} from "next/navigation";
 
 export const dynamic = "force-dynamic";
 
@@ -11,15 +13,25 @@ export const metadata = {
 };
 
 async function StockJuegos() {
-    const juegos = await obtenerJuegosStock()
-        return (
+    const resultado = await obtenerJuegosStock()
+    if (!resultado.exito) {
+        if (resultado.status === 401) {
+            redirect("/")
+        } else {
+            return <>
+                Error al pedir los datos
+            </>
+        }
+    }
+
+    return (
         <main className={"styledMain py-4"}>
             <article className={"w-full sm:w-11/12 md:w-10/12 xl:w-3/4 mx-auto p-2 md:p-0"}>
                 <h1 className="text-xl md:text-3xl font-bold text-center mb-4">
                     Juegos en stock PS4 & PS5
                 </h1>
                 <Recordatorios/>
-                <TablaJuegosStock juegos={juegos} cliente={false}/>
+                <TablaJuegosStock juegos={resultado.data ?? []} cliente={false}/>
             </article>
         </main>
     )
@@ -78,7 +90,8 @@ const Recordatorios = () => {
                     </AccordionContent>
                 </AccordionItem>
             </Accordion>
-            <p className={"mt-4 text-sm text-neutral-500 dark:text-neutral-400 text-center"}>¡Podes copiar al portapeles el producto que desees y enviarnos un mensaje!</p>
+            <p className={"mt-4 text-sm text-neutral-500 dark:text-neutral-400 text-center"}>¡Podes copiar al portapeles
+                el producto que desees y enviarnos un mensaje!</p>
         </div>
     )
 }

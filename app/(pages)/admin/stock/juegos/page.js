@@ -2,13 +2,25 @@ import TablaJuegosStockAdmin from "@/components/page-components/admin/TablaJuego
 import {Button} from "@/components/ui/button";
 import {Plus} from "lucide-react";
 import Link from "next/link";
+import {redirect} from "next/navigation";
+import {cookies} from "next/headers";
 import {obtenerJuegosStock} from "@/dominio/servicios/stock-juegos";
 
 export const revalidate = 3600;
 export const dynamic = "force-dynamic";
 
 async function StockJuegos() {
-    const juegos = await obtenerJuegosStock()
+    const resultado = await obtenerJuegosStock(cookies().get("access-token")?.value)
+    if (!resultado.exito) {
+        if (resultado.status === 401) {
+            redirect("/")
+        } else {
+            return <>
+                Error al pedir los datos
+            </>
+        }
+    }
+
     return (
         <main className={"styledMain pt-4"}>
             <article className={"w-full lg:w-11/12 mx-auto sm:px-2"}>
@@ -23,7 +35,7 @@ async function StockJuegos() {
                         </Button>
                     </Link>
                 </div>
-                <TablaJuegosStockAdmin juegos={juegos}/>
+                <TablaJuegosStockAdmin juegos={resultado.data ?? []}/>
             </article>
         </main>
     )

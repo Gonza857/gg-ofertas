@@ -237,8 +237,8 @@ const Cuerpo = ({juegos, cliente}) => {
 
 const Registro = ({juego: j, cliente}) => {
     const {copiar, copiado} = useCopiarAlPortapapeles()
-    const textoParaCopiar = `${j.nombre} ${j.mostrarIdioma ? j.idioma : ""} | ${j.tipo} | ${j.consola} | $${j.precioReventa.toLocaleString("es-AR")}`;
     const precio = cliente ? j.precioCliente : j.precioReventa
+    const textoParaCopiar = `${j.nombre} ${j.mostrarIdioma ? j.idioma : ""} | ${j.tipo} | ${j.consola} | $${precio.toLocaleString("es-AR")}`;
 
     return (
         <TableRow onClick={() => copiar(textoParaCopiar, j.id)}>

@@ -1,49 +1,39 @@
 import Fetcher from "@/infraestructura/Fetcher";
 
-export async function obtenerJuegosOferta() {
+export async function obtenerJuegosOferta(tipoCliente = "customer", token) {
+    console.log("token para obtener", token)
     const fetchParams = {
         method: 'GET',
-        next: {
-            revalidate: 60
-        }
+        cache: 'no-cache',
+        headers: {
+            Cookie: `access-token=${token}`,
+        },
     }
-    return Fetcher.request(`/juegos/ofertas`, fetchParams)
+    return Fetcher.request(`/juegos/ofertas?cliente=${tipoCliente}`, fetchParams)
 }
 
-export async function subirOfertas(ofertas) {
+export async function subirOfertas(ofertas, token) {
     const fetchParams = {
         method: 'POST',
-        headers: { 'Content-type': 'application/json' },
+        headers: {
+            'Content-type': 'application/json',
+            Cookie: `access-token=${token}`,
+        },
         body: JSON.stringify(ofertas),
+    };
+    return Fetcher.request(`/juegos/ofertas`, fetchParams);
+}
+export async function actualizarOfertas(ofertasObject, token) {
+    const fetchParams = {
+        method: 'PATCH',
+        headers: {
+            'Content-type': 'application/json',
+            Cookie: `access-token=${token}`,
+        },
+        body: JSON.stringify(ofertasObject),
     };
     return Fetcher.request(`/juegos/ofertas`, fetchParams);
 }
 
 
 
-export async function obtenerJuegosStock(consola) {
-    const fetchParams = {
-        method: 'GET',
-        cache: "no-store"
-    }
-    return Fetcher.request(`/admin/stock/juego?consola=${consola}`, fetchParams)
-}
-
-
-
-export async function vaciarCarrito(idUsuario) {
-    const fetchParams = {
-        method: 'DELETE',
-    };
-    return Fetcher.request(`/carrito?id=${idUsuario}`, fetchParams);
-}
-
-export async function fusionarCarrito(carritoLocalStorage, idUsuario) {
-    const fetchParams = {
-        method: 'PATCH',
-        headers: { 'Content-type': 'application/json' },
-        body: JSON.stringify(carritoLocalStorage),
-
-    };
-    return Fetcher.request(`/carrito?id=${idUsuario}`, fetchParams);
-}

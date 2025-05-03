@@ -5,7 +5,7 @@ export const formatearJuego = (juego) => {
     juego.consola = obtenerArrayDeConsola(juego.consola)
 }
 
-const obtenerArrayDeConsola = (datosConsola) => {
+export const obtenerArrayDeConsola = (datosConsola) => {
     if (Array.isArray(datosConsola)) {
         return datosConsola
     }

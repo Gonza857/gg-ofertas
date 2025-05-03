@@ -54,17 +54,18 @@ const Cuerpo = ({tarjetas}) => {
 
 const Registro = ({o}) => {
     const {copiar, copiado} = useCopiarAlPortapapeles()
+    const textoParaCopiar = `${o.nombre} | ${o.region} | $${o.precio.toLocaleString("es-AR")}`
 
     return (
         <TableRow
-            onClick={() => copiar(`${o.nombre} | ${o.region} | ${o.precioReventa}`, o.nombre)}
+            onClick={() => copiar(textoParaCopiar, o.nombre)}
         >
             <TableCell className={"p-1 text-left"}>{o.nombre}</TableCell>
             <TableCell className={"p-1 text-center"}>{o.region}</TableCell>
-            <TableCell className={"p-1 text-center"}>${o.precioReventa.toLocaleString("es-AR")}</TableCell>
+            <TableCell className={"p-1 text-center"}>${o.precio.toLocaleString("es-AR")}</TableCell>
             <TableCell className="hidden md:table-cell p-2">
                 <div
-                    onClick={() => copiar(`${o.nombre} | ${o.region} | ${o.precioReventa}`, o.nombre)}
+                    onClick={() => copiar(textoParaCopiar, o.nombre)}
                     className={"flex justify-center items-center cursor-pointer"}>
                     {copiado === o.nombre ? <Check className="h-4 w-4"/> : <Copy className="h-4 w-4"/>}
                     <span className="sr-only">Copiar información del juego</span>

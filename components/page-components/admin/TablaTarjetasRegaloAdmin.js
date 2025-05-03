@@ -1,84 +1,95 @@
 "use client"
 
-import {Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
-import {Pen, Trash2} from "lucide-react";
+import {Plus} from "lucide-react";
+import {useState} from "react";
+import {actualizarTarjeta, agregarTarjeta as guardarTarjeta, eliminarTarjeta} from "@/dominio/servicios/giftcards";
+import {toastError, toastSuccess} from "@/lib/Toast";
+import {Button} from "@/components/ui/button";
+import TablaTarjetas from "@/components/page-components/admin/tarjetas/TablaTarjetas";
+import ModalAgregarTarjeta from "@/components/page-components/admin/tarjetas/ModalAgregarTarjeta";
+import Link from "next/link";
 
-function TablaTarjetasRegaloAdmin ({tarjetas}) {
+const transformarDatos = (actualizado) => {
+    return {
+        ...actualizado,
+        precioCliente: Number(actualizado.precioCliente),
+        precioReventa: Number(actualizado.precioReventa),
+    }
+}
+
+function TablaTarjetasRegaloAdmin({tarjetas: data}) {
+    const [tarjetas, setTarjetas] = useState(data.map(d => ({...d, modoEdicion: false})))
+    const [modalAgregarAbierto, setModalAgregarAbierto] = useState(false)
+
+    const handleModal = () => setModalAgregarAbierto(prev => !prev);
 
     const tablaProps = {
         tarjetas,
-        eliminar: (o) => console.log(`elimino ${o.nombre}`),
-        editar: (o) => console.log(`edito ${o.nombre}`),
+        eliminar: async (id) => {
+            const resultado = await eliminarTarjeta(id)
+            if (resultado.exito) {
+                toastSuccess("Tarjeta eliminada correctamante.")
+                setTarjetas(prev => prev.map(p => p.id !== id))
+            } else {
+                toastError("No se pudo actualizar.")
+            }
+        },
+        editar: (o) => {
+            setTarjetas(prev => prev.map(p => (p.id === o.id ? {...p, modoEdicion: true} : p)))
+        },
+        guardar: async (datosForm) => {
+            const tarjetaLista = transformarDatos(datosForm)
+            const resultado = await actualizarTarjeta(tarjetaLista)
+            if (resultado.exito) {
+                toastSuccess("Tarjeta actualizada correctamante.")
+                setTarjetas(prev =>
+                    prev.map(p => p.id === datosForm.id ? ({...p, ...tarjetaLista, modoEdicion: false}) : p))
+            } else {
+                toastError("No se pudo actualizar.")
+            }
+        },
+        cancelar: (id) => {
+            setTarjetas(prev => prev.map(p => (p.id === id ? {...p, modoEdicion: false} : p)))
+        },
+    }
+
+    const agregarTarjeta = async (datosForm) => {
+        const tarjetaLista = transformarDatos(datosForm)
+        const resultado = await guardarTarjeta(tarjetaLista)
+        if (resultado.exito) {
+            toastSuccess("Tarjeta guardada correctamante.")
+            setTarjetas(prev => ([...prev, {...datosForm, id: resultado.id, modoEdicion: false}]))
+        } else {
+            toastError("No se pudo guardar.")
+        }
+    }
+
+    const modalAgregarProps = {
+        agregar: agregarTarjeta,
+        estaAbierto: modalAgregarAbierto,
+        handleModal
     }
 
     return (
         <>
-            <Tabla {...tablaProps}/>
+            <div className={"flex justify-between items-center relative mb-4"}>
+                <h1 className="text-xl md:text-2xl font-bold text-center w-fit self-center">
+                    Tarjetas de regalo
+                </h1>
+                <Link href={"/admin/giftcards/agregar"} passHref>
+                    <Button asChild>
+                        Agregar
+                    </Button>
+                </Link>
+            </div>
+            <ModalAgregarTarjeta {...modalAgregarProps}/>
+            <div className={"w-full"}>
+                <TablaTarjetas {...tablaProps}/>
+            </div>
         </>
     )
 }
 
 export default TablaTarjetasRegaloAdmin
 
-const Tabla = (props) => {
-    return (
-        <Table>
-            <TableCaption>Tarjetas de regalo - Precios actualizados</TableCaption>
-            <Cabecera/>
-            <Cuerpo {...props}/>
-        </Table>
-    )
-}
 
-const Cabecera = () => {
-    return (
-        <TableHeader>
-            <TableRow>
-                <TableHead className={"w-4/12 px-2 md:px-4"}>Tarjeta de regalo</TableHead>
-                <TableHead className={"w-2/12 px-2 md:px-4 text-center"}>Región</TableHead>
-                <TableHead className={"w-2/12 px-2 md:px-4 text-center"}>P.C</TableHead>
-                <TableHead className={"w-2/12 px-2 md:px-4 text-center"}>P.R</TableHead>
-                <TableHead className={"w-2/12 px-2 md:px-4 text-center"}>Editar</TableHead>
-                <TableHead className={"w-2/12 px-2 md:px-4 text-center"}>Eliminar</TableHead>
-            </TableRow>
-        </TableHeader>
-    )
-}
-
-const Cuerpo = ({tarjetas, editar, eliminar}) => {
-    return (
-        <TableBody>
-            {tarjetas.map(p => (
-                <Registro
-                    o={p}
-                    key={p.id}
-                    editar={editar}
-                    eliminar={eliminar}
-                />))
-            }
-        </TableBody>
-    )
-}
-
-const Registro = ({o, eliminar, editar}) => {
-    return (
-        <TableRow>
-            <TableCell className={"p-1 text-left"}>{o.nombre}</TableCell>
-            <TableCell className={"p-1 text-center"}>{o.region}</TableCell>
-            <TableCell className={"p-1 text-center"}>${o.precioCliente.toLocaleString("es-AR")}</TableCell>
-            <TableCell className={"p-1 text-center"}>${o.precioReventa.toLocaleString("es-AR")}</TableCell>
-            <TableCell className={"p-1 text-center"}>
-                <Pen
-                    className="h-4 w-4 mx-auto"
-                    onClick={() => editar(o)}
-                />
-            </TableCell>
-            <TableCell className={"p-1 text-center"}>
-                <Trash2
-                    className="h-4 w-4 mx-auto"
-                    onClick={() => eliminar(o)}
-                />
-            </TableCell>
-        </TableRow>
-    )
-}

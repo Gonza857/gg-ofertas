@@ -206,18 +206,17 @@ const Cuerpo = ({juegos = [], busqueda = null}) => {
 
 const Registro = ({juego}) => {
     const {copiar, copiado} = useCopiarAlPortapapeles()
-    const precioLista = redondearCien(juego.price * 1.25).toFixed(0)
-    const precioTransferencia = redondearCien(precioLista * 0.8).toFixed(0)
+    console.log(juego)
 
     return (
         <TableRow
-            onClick={() => copiar(`${juego.name} - PL:$${precioLista} - T:${precioTransferencia}`, juego.name)}>
+            onClick={() => copiar(`${juego.name} - PL:$${juego.precioLista} - T:${juego.precioTransferencia}`, juego.name)}>
             <TableCell className="font-medium p-2">{juego.name}</TableCell>
-            <TableCell className={"p-2 text-center"}>${precioLista}</TableCell>
-            <TableCell className={"p-2 text-center"}>${precioTransferencia}</TableCell>
+            <TableCell className={"p-2 text-center"}>${juego.precioLista}</TableCell>
+            <TableCell className={"p-2 text-center"}>${juego.precioTransferencia}</TableCell>
             <TableCell className="hidden md:table-cell p-2">
                 <div
-                    onClick={() => copiar(`${juego.name} - PL:$${precioLista} - T:${precioTransferencia}`, juego.name)}
+                    onClick={() => copiar(`${juego.name} - PL:$${juego.precioLista} - T:${juego.precioTransferencia}`, juego.name)}
                     className={"flex justify-center items-center cursor-pointer"}>
                     {copiado === juego.name ? <Check className="h-4 w-4"/> : <Copy className="h-4 w-4"/>}
                     <span className="sr-only">Copiar información del juego</span>

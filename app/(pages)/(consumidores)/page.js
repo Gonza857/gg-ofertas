@@ -10,6 +10,8 @@ import MyCarousel from "@/components/personalized-ui/MyCarousel";
 import {tarjetasPsn, tarjetasSteam} from "@/static-data/item.giftcards";
 import Link from "next/link";
 import {Button} from "@/components/ui/button";
+import {obtenerTodasLasTarjetas} from "@/dominio/servicios/giftcards";
+import {cookies} from "next/headers";
 
 export const dynamic = "force-dynamic";
 
@@ -18,7 +20,12 @@ export const metadata = {
     description: "Tienda digital PlayStation Network",
 };
 
+const token = cookies().get("access-token")?.value
+
 async function Principal() {
+    const resultado = await obtenerTodasLasTarjetas(undefined, token)
+    if (!resultado.exito) return <>Error</>
+
     return (
         <main className={"styledMain w-full sm:w-11/12 md:w-10/12 mx-auto"}>
             <AutoCarousel images={images}/>
@@ -27,8 +34,8 @@ async function Principal() {
                 titulo={"Tarjetas de regalo"}
                 subtitulo={"¡Canjealas y comprá en tu cuenta!"}
                 textoBoton={"Ver todas"}
-                ruta={"XD"}
-                productos={[...tarjetasPsn, ...tarjetasSteam]}
+                ruta={"/tarjetas-de-regalo"}
+                productos={resultado.data}
             />
             <BusinessHighlights/>
             <PaymentMethods/>

@@ -23,9 +23,35 @@ class MiFirebase {
         this.BASE_DE_DATOS = getFirestore(appPrincipal);
     }
 
+    async eliminar(coleccion, id) {
+        try {
+            const referenciaParaEliminar = doc(
+                this.BASE_DE_DATOS,
+                coleccion,
+                id
+            );
+            await deleteDoc(referenciaParaEliminar);
+            return true;
+        } catch (e) {
+            throw new FirebaseError(e.message);
+        }
+    }
+
+
+    async obtenerTodos(coleccion) {
+        try {
+            const referenciaColeccion = collection(this.BASE_DE_DATOS, coleccion);
+            const snapshot = await getDocs(referenciaColeccion);
+            return snapshot.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data()
+            }));
+        } catch (e) {
+            throw new FirebaseError(e.message);
+        }
+    }
+
     async guardarConUID(coleccion, objeto) {
-        console.log('OBTJETO: ', objeto)
-        console.log('COLECCION: ', coleccion)
         try {
             const referenciaDocumento = doc(this.BASE_DE_DATOS, coleccion, objeto.uid)
             delete objeto.uid;
@@ -100,55 +126,8 @@ class MiFirebase {
         }
     }
 
-    async eliminar(coleccion, id) {
-        try {
-            const referenciaParaEliminar = doc(
-                this.BASE_DE_DATOS,
-                coleccion,
-                id
-            );
-            await deleteDoc(referenciaParaEliminar);
-            return true;
-        } catch (e) {
-            throw new FirebaseError(e.message);
-        }
-    }
 
 
-    async obtenerTodos(coleccion) {
-        try {
-            const referenciaColeccion = collection(this.BASE_DE_DATOS, coleccion);
-            const snapshot = await getDocs(referenciaColeccion);
-            return snapshot.docs.map((doc) => ({
-                id: doc.id,
-                ...doc.data()
-            }));
-        } catch (e) {
-            throw new FirebaseError(e.message);
-        }
-    }
-
-    async obtenerTodasLasCategorias(coleccion) {
-        try {
-
-
-            const referenciaParaBuscar = doc(
-                this.BASE_DE_DATOS,
-                coleccion,
-            );
-
-            const docSnapshot = await getDoc(referenciaParaBuscar);
-            if (docSnapshot.exists()) {
-                console.log("docSnapshot.data():", docSnapshot.data())
-                console.log("docSnapshot.data().categorias:", docSnapshot.data().categorias)
-                return docSnapshot.data().categorias || [];
-            } else {
-                throw new Error('Documento inexistente');
-            }
-        } catch (error) {
-
-        }
-    }
 
     async obtenerPorId(coleccion, id) {
         try {
@@ -158,64 +137,6 @@ class MiFirebase {
             return {...docSnapshot.data(), id: docSnapshot.id};
         } catch (e) {
             throw new FirebaseError(e.message);
-        }
-    }
-
-    async guardarCategoria(coleccion, documentoId, objeto) {
-        try {
-            const referenciaDocumento = doc(
-                this.BASE_DE_DATOS,
-                coleccion,
-                documentoId
-            );
-            await setDoc(referenciaDocumento, objeto);
-        } catch (e) {
-            throw new FirebaseError(e.message);
-        }
-    }
-
-    async obtenerDatosDocumentoCategorias(coleccion, documentoId) {
-        try {
-            const referenciaParaBuscar = doc(
-                this.BASE_DE_DATOS,
-                coleccion,
-                documentoId
-            );
-
-            const docSnapshot = await getDoc(referenciaParaBuscar);
-            if (docSnapshot.exists()) {
-                return docSnapshot.data().categorias || [];
-            } else {
-                throw new Error('Documento inexistente');
-            }
-        } catch (e) {
-            throw new FirebaseError(e.message);
-        }
-    }
-
-    async obtenerCategoriaPorId(coleccion, documentoId, idCategoria) {
-        try {
-            const docRef = doc(this.BASE_DE_DATOS, coleccion, documentoId);
-            const docSnap = await getDoc(docRef);
-
-            if (!docSnap.exists()) {
-                throw new Error('No existe el documento de categorías');
-            }
-
-            const categorias = docSnap.data().categorias || [];
-
-            const categoriaFiltrada = categorias.filter(categoria =>
-                Number(categoria.id) === Number(idCategoria)
-            );
-
-            if (categoriaFiltrada.length === 0) {
-                throw new Error('No se encontró la categoría especificada');
-            }
-
-            return categoriaFiltrada;
-        } catch (error) {
-            console.error('Error al obtener la categoría:', error);
-            throw error;
         }
     }
 
@@ -245,17 +166,6 @@ class MiFirebase {
             return resultados.docs.map((d) => ({...d.data(), id: d.id}));
         } catch (e) {
             throw new FirebaseError(e.message);
-        }
-    }
-
-    async actualizarEstadoProductos(coleccion, productosEnRevision) {
-        try {
-            const actualizarPromises = productosEnRevision.map(producto =>
-                updateDoc(doc(this.BASE_DE_DATOS, coleccion, producto.id), {estado: 'revision'})
-            );
-            return await Promise.all(actualizarPromises);
-        } catch (e) {
-            console.log(e)
         }
     }
 
@@ -295,55 +205,6 @@ class MiFirebase {
             throw new FirebaseError(e.message);
         }
     }
-
-
-    async filtrarProductosConDescuento(coleccion) {
-        try {
-            const referenciaDocumento = collection(this.BASE_DE_DATOS, coleccion);
-
-            const consulta = query(
-                referenciaDocumento,
-                where('descuento', '>', 0),
-                where('estado', '==', 'disponible'),
-                limit(10)
-            );
-
-            const resultados = await getDocs(consulta);
-
-            return resultados.docs.map((doc) => ({...doc.data(), id: doc.id}));
-        } catch (e) {
-            console.error('Error al filtrar productos con descuento:', e);
-            throw new FirebaseError("Error al filtrar productos con descuento", e);
-        }
-    }
-
-
-    async obtenerProductosRelacionados(coleccion, id, subcategoria) {
-        try {
-            const coleccionRef = collection(this.BASE_DE_DATOS, coleccion);
-
-            const consulta = query(
-                coleccionRef,
-                where("subcategoria", "==", subcategoria),
-                where("id", "!=", id),
-                where('estado', '==', 'disponible'),
-            );
-
-            const querySnapshot = await getDocs(consulta);
-
-            const productosRelacionados = [];
-            querySnapshot.forEach((doc) => {
-                productosRelacionados.push({id: doc.id, ...doc.data()});
-            });
-
-            return productosRelacionados;
-        } catch (error) {
-            console.error("Error al obtener productos relacionados: ", error);
-            throw new FirebaseError("Error al obtener productos relacionados");
-        }
-    }
-
-
 }
 
 export default MiFirebase;

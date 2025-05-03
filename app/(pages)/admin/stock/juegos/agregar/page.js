@@ -7,6 +7,7 @@ import {Button} from "@/components/ui/button";
 import {RadioGroup, RadioGroupItem} from "@/components/ui/radio-group";
 import {toastError, toastSuccess} from "@/lib/Toast";
 import {guardarJuegoStock} from "@/dominio/servicios/stock-juegos";
+import {obtenerArrayDeConsola} from "@/dominio/utils/juegos-stock/utils";
 
 function AgregarJuego() {
     const [datosFormulario, setDatosFormulario] = useState({
@@ -26,21 +27,11 @@ function AgregarJuego() {
         console.log(datosFormulario);
         const juegoParaGuardar = {
             ...datosFormulario,
-            consola: test(datosFormulario.consola),
+            consola: obtenerArrayDeConsola(datosFormulario.consola),
         }
         const {mensaje, exito} = await guardarJuegoStock(juegoParaGuardar)
         if (exito) return toastSuccess(mensaje)
         return toastError(mensaje)
-    }
-
-    const test = (datosConsola) => {
-        const diccionario = {
-            "PS4/PS5": ["PS4", "PS5"],
-            "PS4": ["PS4"],
-            "PS5": ["PS5"]
-        }
-        if (!diccionario[datosConsola]) return []
-        return diccionario[datosConsola]
     }
 
     const manejarCampos = (e) => {
