@@ -15,7 +15,7 @@ class CookieManager {
     static getDefaultCookieConfig () {
         return {
             httpOnly: true,
-            secure: false,
+            secure: process.env.APP_MODE === "production",
             sameSite: 'strict',
             maxAge: 60 * 60 * 24 * 7, // 1 hora
         }
