@@ -21,6 +21,11 @@ class CookieManager {
         }
     }
 
+    static verifyToken(token) {
+        let {payload: data} = jwt.verify(token, process.env.SECRET_JWT_KEY);
+        return data;
+    }
+
     static get (cookieStore, cookieName) {
         const token = cookieStore.get(cookieName)?.value;
         console.log("token obtenido", token)

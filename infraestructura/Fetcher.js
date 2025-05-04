@@ -1,7 +1,7 @@
 import {EndpointError} from "@/dominio/errors/EndpointError";
 
 export default class Fetcher {
-    static baseUrl = process.env.NEXT_PUBLIC_API_URL
+    static baseUrl = process.env.NEXT_PUBLIC_API_URL && process.env.APP_MODE === "production"
         ? `https://${process.env.NEXT_PUBLIC_API_URL}/api`
         : 'http://localhost:3000/api';
 
@@ -11,7 +11,6 @@ export default class Fetcher {
             const respuesta = await fetch(`${this.baseUrl}${endpoint}`, parametros);
             return await this.#manejarResultadoOk(respuesta);
         } catch (error) {
-            console.error(error)
             throw new EndpointError("Ocurrio un error al obtener los datos. Reintenta nuevamente más tarde")
         }
     }

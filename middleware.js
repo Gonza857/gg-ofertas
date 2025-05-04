@@ -1,25 +1,53 @@
-import {NextResponse} from 'next/server'
-import { jwtVerify } from 'jose'
-
-const key = new TextEncoder().encode(process.env.SECRET_JWT_KEY)
+import { NextResponse } from 'next/server'
 
 export async function middleware(req) {
-    // if (!token && request.nextUrl.pathname.startsWith('/dashboard')) {
-    //     return NextResponse.redirect(new URL('/login', request.url))
-    // }
-    const token = req.cookies.get('access-token')?.value
-    if (!token) return NextResponse.next()
-    try {
-        const {payload} = await jwtVerify(token, key)
-        const res = NextResponse.next()
-        return res;
-    } catch (error) {
-        console.error(error)
+    const { pathname } = req.nextUrl
+    console.log("pathname", pathname)
+
+    if (!pathname.startsWith('/admin')) {
+        return NextResponse.next()
     }
+
+    const token = req.cookies.get('access-token')?.value
+
+    if (!token) {
+        return NextResponse.redirect(new URL('/', req.url))
+    }
+
+    let host = process.env.NEXT_PUBLIC_API_URL
+
+    try {
+        const res = await fetch(`${host}/api/auth`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+        })
+
+        if (!res.ok) {
+            return NextResponse.redirect(new URL('/', req.url))
+        }
+
+        const data = await res.json()
+
+        console.log(data)
+
+        if (!data) {
+            return NextResponse.redirect(new URL('/', req.url))
+        }
+
+        return NextResponse.next()
+
+    } catch (e) {
+        console.error("Error en middleware:", e)
+        return NextResponse.redirect(new URL('/', req.url))
+    }
+
     return NextResponse.next()
 
 }
 
 export const config = {
-    matcher: ['/login', "/admin/stock/juegos"], // rutas donde se aplica
+    matcher: '/admin/:path*', // Coincide con todas las rutas que comienzan con /admin/
 }
