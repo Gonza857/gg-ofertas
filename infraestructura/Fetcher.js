@@ -1,5 +1,8 @@
 import {EndpointError} from "@/dominio/errors/EndpointError";
 
+const state = process.env.APP_MODE
+console.log("estado", state)
+
 export default class Fetcher {
     static baseUrl = process.env.APP_MODE === "production"
         ? `https://${process.env.NEXT_PUBLIC_API_URL}/api`
