@@ -1,7 +1,6 @@
 import Fetcher from "@/infraestructura/Fetcher";
 
 export async function obtenerJuegosOferta(tipoCliente = "customer", token) {
-    console.log("token para obtener", token)
     const fetchParams = {
         method: 'GET',
         cache: 'no-cache',

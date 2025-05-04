@@ -3,9 +3,8 @@ import GiftCard from "@/components/personalized-ui/item.giftcard";
 import {obtenerTodasLasTarjetas} from "@/dominio/servicios/giftcards";
 import {cookies} from "next/headers";
 
-const token = cookies().get("access-token")?.value
-
 async function TartejasDeRegalo() {
+    const token = cookies().get("access-token")?.value
     const resultado = await obtenerTodasLasTarjetas(undefined, token)
     if (!resultado.exito) return <>Error</>
 

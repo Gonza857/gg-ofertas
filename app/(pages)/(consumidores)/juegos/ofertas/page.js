@@ -1,9 +1,11 @@
 import {obtenerJuegosOferta} from "@/dominio/servicios/juegos";
 import React from "react";
 import TablaJuegosOfertaConsumidores from "@/components/page-components/consumidores/TablaJuegosOfertaConsumidores";
+import {cookies} from "next/headers";
 
 async function Ofertas() {
-    const resultado = await obtenerJuegosOferta()
+    const token = cookies().get("access-token")?.value
+    const resultado = await obtenerJuegosOferta("customer", token)
     if (!resultado.exito) return <>Error</>
 
     return (

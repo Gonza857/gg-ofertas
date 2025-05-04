@@ -20,9 +20,8 @@ export const metadata = {
     description: "Tienda digital PlayStation Network",
 };
 
-const token = cookies().get("access-token")?.value
-
 async function Principal() {
+    const token = cookies().get("access-token")?.value
     const resultado = await obtenerTodasLasTarjetas(undefined, token)
     if (!resultado.exito) return <>Error</>
 

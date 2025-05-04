@@ -2,9 +2,8 @@ import {obtenerJuegosOferta} from "@/dominio/servicios/juegos";
 import TablaJuegosOfertaAdmin from "@/components/page-components/admin/TablaJuegosOferta";
 import {cookies} from "next/headers";
 
-const cookie = cookies().get("access-token")?.value
-
 async function Ofertas() {
+    const cookie = cookies().get("access-token")?.value
     const resultado = await obtenerJuegosOferta("admin", cookie);
     if (!resultado.exito) return <>Error</>
 

@@ -2,9 +2,8 @@ import TablaTarjetasRegaloAdmin from "@/components/page-components/admin/TablaTa
 import {obtenerTodasLasTarjetas} from "@/dominio/servicios/giftcards";
 import {cookies} from "next/headers";
 
-const token = cookies().get("access-token")?.value
-
 async function TarjetasDeRegaloAdmin () {
+    const token = cookies().get("access-token")?.value
     const resultado = await obtenerTodasLasTarjetas("admin", token)
 
     return (

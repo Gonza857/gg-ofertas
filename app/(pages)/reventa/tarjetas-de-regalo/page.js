@@ -3,9 +3,8 @@ import {obtenerTodasLasTarjetas} from "@/dominio/servicios/giftcards";
 import React from "react";
 import {cookies} from "next/headers";
 
-const token = cookies().get("access-token")?.value
-
 async function TarjetasDeRegaloReventa () {
+    const token = cookies().get("access-token")?.value
     const resultado = await obtenerTodasLasTarjetas("reseller", token)
     if (!resultado.exito) return <>Error</>
 

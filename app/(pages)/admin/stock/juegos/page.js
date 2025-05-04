@@ -10,7 +10,8 @@ export const revalidate = 3600;
 export const dynamic = "force-dynamic";
 
 async function StockJuegos() {
-    const resultado = await obtenerJuegosStock(cookies().get("access-token")?.value)
+    const token = cookies().get("access-token")?.value
+    const resultado = await obtenerJuegosStock(token)
     if (!resultado.exito) {
         if (resultado.status === 401) {
             redirect("/")
