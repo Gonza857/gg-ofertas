@@ -1,8 +1,5 @@
 import {EndpointError} from "@/dominio/errors/EndpointError";
 
-const state = process.env.NEXT_PUBLIC_APP_MODE
-console.log("estado", state)
-
 export default class Fetcher {
     static baseUrl = process.env.NEXT_PUBLIC_APP_MODE === "production"
         ? `https://${process.env.NEXT_PUBLIC_API_URL}/api`
@@ -11,7 +8,6 @@ export default class Fetcher {
 
     static async request(endpoint, parametros = {}) {
         try {
-            console.log(`Fetch a ${this.baseUrl}${endpoint}`)
             const respuesta = await fetch(`${this.baseUrl}${endpoint}`, parametros);
             return await this.#manejarResultadoOk(respuesta);
         } catch (error) {

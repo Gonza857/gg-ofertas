@@ -14,10 +14,12 @@ export async function middleware(req) {
         return NextResponse.redirect(new URL('/', req.url))
     }
 
-    let host = process.env.NEXT_PUBLIC_API_URL
+    const baseUrl = process.env.NEXT_PUBLIC_APP_MODE === "production"
+        ? `https://${process.env.NEXT_PUBLIC_API_URL}/api`
+        : 'http://localhost:3000/api';
 
     try {
-        const res = await fetch(`${host}/api/auth`, {
+        const res = await fetch(`${baseUrl}/auth`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
