@@ -24,9 +24,13 @@ const convertirFormData_a_Object = (formData) => {
 
 const validarAdmin = async () => {
     const sessionUser = CookieManager.get(cookies(), "access-token")
+    console.log("Session userr", sessionUser)
     if (!sessionUser) return ManejadorRespuesta.CUSTOMER
+    console.log("El usuario tiene token")
     const usuario = await modeloUsuario.obtenerPorCorreo(sessionUser.email)
+    console.log("usuario encontrado", usuario)
     if (!usuario) return ManejadorRespuesta.NOT_AUTHORIZED
+    console.log("El usuario esta OK")
     return {exito: true, usuario}
 }
 
