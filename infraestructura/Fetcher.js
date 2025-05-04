@@ -1,10 +1,10 @@
 import {EndpointError} from "@/dominio/errors/EndpointError";
 
-const state = process.env.APP_MODE
+const state = process.env.NEXT_PUBLIC_APP_MODE
 console.log("estado", state)
 
 export default class Fetcher {
-    static baseUrl = process.env.APP_MODE === "production"
+    static baseUrl = process.env.NEXT_PUBLIC_APP_MODE === "production"
         ? `https://${process.env.NEXT_PUBLIC_API_URL}/api`
         : 'http://localhost:3000/api';
 
