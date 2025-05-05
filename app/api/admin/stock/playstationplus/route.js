@@ -43,6 +43,7 @@ export async function PATCH(req, res) {
 export async function GET(req, res) {
     try {
         const resultado = await modeloPlus.obtenerSubscripcionesEnStock()
+        console.log("Subs", resultado)
         return NextResponse.json(
             resultado
         )

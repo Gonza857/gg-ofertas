@@ -4,15 +4,15 @@ class ModeloPlus {
 
     repositorioPlus
     referenciaPrecios = [
-        {dias: 30, tipo: "essential", precio: 8800},
-        {dias: 90, tipo: "essential", precio: 16500},
-        {dias: 365, tipo: "essential", precio: 38500},
-        {dias: 30, tipo: "extra", precio: 11500},
-        {dias: 90, tipo: "extra", precio: 27500},
-        {dias: 365, tipo: "extra", precio: 55000},
-        {dias: 30, tipo: "deluxe", precio: 14800},
-        {dias: 90, tipo: "deluxe", precio: 33000},
-        {dias: 365, tipo: "deluxe", precio: 71500}
+        {dias: 30, tipo: "essential", precio: 14850},
+        {dias: 90, tipo: "essential", precio: 22950},
+        {dias: 365, tipo: "essential", precio: 67500},
+        {dias: 30, tipo: "extra", precio: 22950},
+        {dias: 90, tipo: "extra", precio: 37800},
+        {dias: 365, tipo: "extra", precio: 121500},
+        {dias: 30, tipo: "deluxe", precio: 28350},
+        {dias: 90, tipo: "deluxe", precio: 43200},
+        {dias: 365, tipo: "deluxe", precio: 135000}
     ];
 
     constructor(repositorio) {
@@ -60,14 +60,28 @@ class ModeloPlus {
     async obtenerSubscripcionesEnStock() {
         // TODO no mostrar las concluidas
         const subscripciones = await this.repositorioPlus.obtenerTodasStock()
-        console.log("MODELO PLUS: obtengo esto de la bd", subscripciones)
+
+        // Limpiar para procesar
+        subscripciones.forEach((sub) => {
+            sub.creado = this.#convertirFechaCreacion(sub.creado)
+            sub.diasRestantes = this.#obtenerDiasRestantes(sub)
+            delete sub.precio;
+        })
+
+        // Calcular costo y omitir las que ya vencieron
         return subscripciones.map((s) => {
             if (s.diasRestantes <= 0) return;
-            s.diasRestantes = this.#obtenerDiasRestantes(s);
-            delete s.precio;
             s.costo = this.#obtenerPrecioFinalSegunParametros(s.diasRestantes, s.tipo, s.duracion)
             return s;
         })
+    }
+
+    #convertirFechaCreacion(fechaString) {
+        if (!fechaString || typeof fechaString !== "string") throw new Error("Plus.Creado invalido")
+
+
+        const [dia, mes, anio] = String(fechaString).split("/");
+        return new Date(`${anio}-${mes}-${dia}`);
     }
 
     #obtenerFechaDeCreacion(subscripcion) {
@@ -77,8 +91,7 @@ class ModeloPlus {
     }
 
     #obtenerDiasRestantes(subscripcion) {
-        const fechaCreacion = new Date(parse(subscripcion.creado, 'dd/MM/yyyy', new Date()))
-        const fechaFin = addDays(fechaCreacion, subscripcion.duracion)
+        const fechaFin = addDays(subscripcion.creado, subscripcion.duracion)
         const hoy = new Date()
         const diasRestantes = differenceInDays(fechaFin, hoy) + 1
         return diasRestantes > 0 ? diasRestantes : 0;
@@ -90,7 +103,7 @@ class ModeloPlus {
         const ref = this.referenciaPrecios.find((ref) =>
             ref.tipo.toLowerCase() === tipo.toLowerCase() && Number(ref.dias) === duracion);
         const precioCalculado = this.#redondearCien((diasRestantes / ref.dias) * ref.precio)
-        if (diasRestantes !== duracion) return precioCalculado * 0.9
+        if (diasRestantes !== duracion) return this.#redondearCien(precioCalculado * 0.7)
         return precioCalculado;
     }
 
