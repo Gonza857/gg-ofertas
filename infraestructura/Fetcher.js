@@ -11,7 +11,7 @@ export default class Fetcher {
             const respuesta = await fetch(`${this.baseUrl}${endpoint}`, parametros);
             return await this.#manejarResultadoOk(respuesta);
         } catch (error) {
-            throw new EndpointError("Ocurrio un error al obtener los datos. Reintenta nuevamente más tarde")
+            throw new Error("Ocurrio un error al obtener los datos. Reintenta nuevamente más tarde.")
         }
     }
 
