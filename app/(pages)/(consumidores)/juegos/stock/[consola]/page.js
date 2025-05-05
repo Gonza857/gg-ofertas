@@ -1,6 +1,7 @@
 import TablaJuegosStock from "@/components/page-components/principales/stock/TablaJuegosStock";
 import {obtenerJuegosStock} from "@/dominio/servicios/stock-juegos";
 import Recordatorios from "@/components/page-components/consumidores/stock/Recordatorios";
+import {cookies} from "next/headers";
 
 export const dynamic = "force-dynamic";
 
@@ -11,7 +12,8 @@ export const metadata = {
 
 async function JuegosEnStock ({params}) {
     let consola = params.consola
-    const resultado = await obtenerJuegosStock(consola);
+    const token = cookies().get("access-token")?.value
+    const resultado = await obtenerJuegosStock(token, consola);
     return (
         <main className={"styledMain py-4"}>
             <article className={"w-full sm:w-11/12 md:w-10/12 xl:w-3/4 mx-auto p-2 md:p-0"}>

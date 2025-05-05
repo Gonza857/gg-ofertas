@@ -5,7 +5,7 @@ export async function obtenerJuegosStock(token, consola) {
         method: 'GET',
         cache: "no-store",
         headers: {
-            Cookie: `access-token=${token}`, // Pasás manualmente la cookie
+            Cookie: `access-token=${token}`,
         },
     }
     return Fetcher.request(`/juegos/stock?consola=${consola}`, fetchParams)
