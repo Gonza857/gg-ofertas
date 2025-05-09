@@ -74,7 +74,7 @@ function TablaJuegosOfertaConsumidores({juegos = [], fechaExpiracion, titulo = n
     return (
         <article className={"w-full py-4"}>
             <h2 className="text-2xl font-bold mb-2">
-                Juegos en oferta hasta el {fechaExpiracion} 19:00hs
+                Juegos en oferta hasta el {fechaExpiracion} 04:00hs
             </h2>
             <p className={"mt-2 text-sm text-neutral-500 dark:text-neutral-400"}>
                 Precio lista - Hasta 3 pagos con tarjeta de crédito/débito (
