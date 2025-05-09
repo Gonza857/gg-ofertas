@@ -32,8 +32,11 @@ export async function GET(req, res) {
     const todas = searchParams.get("todas");
     const quiereTodas = todas === "undefined" ? undefined : todas;
 
+    const nro = searchParams.get("nro");
+    const nroOferta = nro === "undefined" ? undefined : nro;
+
     try {
-        const ofertas = await modeloJuegos.obtenerJuegosOferta(tipoCliente, resultado.usuario, quiereTodas);
+        const ofertas = await modeloJuegos.obtenerJuegosOferta(tipoCliente, resultado.usuario, quiereTodas, nroOferta);
         return ManejadorRespuesta.ok({data: ofertas})
     } catch (e) {
         return ManejadorRespuesta.error(e.message)

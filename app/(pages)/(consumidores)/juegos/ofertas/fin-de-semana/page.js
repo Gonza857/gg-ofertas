@@ -1,19 +1,19 @@
 import {obtenerJuegosOferta} from "@/dominio/servicios/juegos";
-import React from "react";
 import TablaJuegosOfertaConsumidores from "@/components/page-components/consumidores/TablaJuegosOfertaConsumidores";
-import {cookies} from "next/headers";
+import React from "react";
 import Recordatorios from "@/components/page-components/consumidores/juegos/ofertas/Recordatorios";
+import {cookies} from "next/headers";
 
 export const dynamic = "force-dynamic";
 
 export const metadata = {
     title: "Garret Games",
-    description: "Listado de ofertas",
+    description: "Listado de ofertas de Fin de Semana",
 };
 
-async function Ofertas() {
+async function OfertasFinDeSemana() {
     const token = cookies().get("access-token")?.value
-    const resultado = await obtenerJuegosOferta("customer", token, undefined, undefined)
+    const resultado = await obtenerJuegosOferta("customer", token, false, 2)
     if (!resultado.exito) return <>Error</>
 
     return (
@@ -29,4 +29,4 @@ async function Ofertas() {
     )
 }
 
-export default Ofertas;
+export default OfertasFinDeSemana;

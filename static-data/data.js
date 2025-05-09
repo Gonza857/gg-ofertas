@@ -1,10 +1,20 @@
-import {Banknote, FileText, Gamepad2, MessageCircleQuestion, PlusCircle, Tag} from "lucide-react";
+import {
+    BadgePercent,
+    Banknote, CircleHelp,
+    FileText,
+    Gamepad2,
+    Joystick,
+    MessageCircleQuestion, Plus,
+    PlusCircle, Store,
+    Tag
+} from "lucide-react";
 import React from "react";
-import {SiSteam} from "react-icons/si";
+import {SiPlaystation4, SiPlaystation5, SiSteam} from "react-icons/si";
 import {BsPlaystation} from "react-icons/bs";
 import {RiDiscountPercentLine} from "react-icons/ri";
 import {PsplusLogo} from "@/components/personalized-ui/logos";
 import {TbGiftCard} from "react-icons/tb";
+import {FaPlaystation} from "react-icons/fa";
 
 const insPriPs5 = `🎮 ¡INSTRUCTIVO de instalación para CUENTA PRIMARIA PS5! 🎮
 
@@ -768,34 +778,6 @@ const PREGUNTAS_Y_RESPUESTAS = [
 
 // NAVEGACION
 
-let id = 0;
-const opcionesNavbarReventa = [
-    {
-        id: id++,
-        nombre: "Ofertas",
-        ruta: "/reventa"
-    },
-    {
-        id: id++,
-        nombre: "Stock",
-        ruta: "/reventa/juegos/stock"
-    },
-    {
-        id: id++,
-        nombre: "PlayStation Plus",
-        ruta: "/reventa/playstationplus"
-    },
-    {
-        id: id++,
-        nombre: "Tarjetas de regalo",
-        ruta: "/reventa/tarjetas-de-regalo"
-    },
-    {
-        id: id++,
-        nombre: "PS Plus Liquidación",
-        ruta: "/reventa/playstationplus-liquidacion"
-    },
-]
 
 const opcionesMenuLateralReventa = [
     {
@@ -840,6 +822,5 @@ export {
     insPriPs4,
     insSecPs4,
     PREGUNTAS_Y_RESPUESTAS,
-    opcionesNavbarReventa,
     opcionesMenuLateralReventa
 }

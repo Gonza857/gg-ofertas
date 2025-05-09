@@ -1,6 +1,6 @@
 import Fetcher from "@/infraestructura/Fetcher";
 
-export async function obtenerJuegosOferta(tipoCliente = "customer", token, todas = false) {
+export async function obtenerJuegosOferta(tipoCliente = "customer", token, todas = false, nro = 0) {
     const fetchParams = {
         method: 'GET',
         cache: 'no-cache',
@@ -8,7 +8,7 @@ export async function obtenerJuegosOferta(tipoCliente = "customer", token, todas
             Cookie: `access-token=${token}`,
         },
     }
-    return Fetcher.request(`/juegos/ofertas?cliente=${tipoCliente}&todas=${todas}`, fetchParams)
+    return Fetcher.request(`/juegos/ofertas?cliente=${tipoCliente}&todas=${todas}&nro=${nro}`, fetchParams)
 }
 
 export async function obtenerJuegosOfertaCliente(tipoCliente = "customer", todas = false) {

@@ -93,58 +93,16 @@ function TablaJuegosOfertaReventa({juegos = [], fechaExpiracion, titulo = null})
     }
 
     return (
-        <article className={"w-full sm:w-11/12 md:w-10/12 lg:w-8/12 mx-auto py-4"} ref={topRef}>
-            {titulo && <h2 className="text-2xl font-bold mb-2 text-center">{titulo}</h2>}
-            <div className="w-full bg-white shadow-xl rounded-xl border p-6 mb-8 max-w-4xl mx-auto">
-                <h2 className="text-xl italic font-semibold mb-4 text-center">Información Importante</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm md:text-base">
-                    <div className="flex items-start">
-                        <Info className="w-6 h-6 mr-2 text-blue-500 flex-shrink-0 mt-1"/>
-                        <div>
-                            <h3 className="font-semibold mb-2">Compatibilidad</h3>
-                            <p className="text-gray-600">
-                                Los juegos publicados son en cuenta PRIMARIA para PS4 & PS5. Consultar compatibilidad de
-                                juegos retro. Consultar disponibilidad en cuenta SECUNDARIA.
-                            </p>
-                        </div>
-                    </div>
-                    <div className="flex items-start">
-                        <Clock className="w-6 h-6 mr-2 text-yellow-500 flex-shrink-0 mt-1"/>
-                        <div>
-                            <h3 className="font-semibold mb-2">Tiempo de Entrega</h3>
-                            <p className="text-gray-600">
-                                Las entregas se realizan de 08:00 a 22:00. Compras realizadas fuera de este horario se
-                                entregan al día siguiente.
-                            </p>
-                        </div>
-                    </div>
-                    <div className="flex items-start">
-                        <Box className="w-6 h-6 mr-2 text-purple-500 flex-shrink-0 mt-1"/>
-                        <div>
-                            <h3 className="font-semibold mb-2">Envío</h3>
-                            <p className="text-gray-600">
-                                Se envía un usuario y contraseña junto con el instructivo de instalación para seguir los
-                                pasos y poder descargar el juego en la consola.
-                            </p>
-                        </div>
-                    </div>
-                    <div className="flex items-start">
-                        <Scroll className="w-6 h-6 mr-2 text-green-500 flex-shrink-0 mt-1"/>
-                        <div>
-                            <h3 className="font-semibold mb-2">Garantía</h3>
-                            <p className="text-gray-600">
-                                Nuestros productos son 100% originales y con licencias oficiales. La garantía abarca el
-                                tiempo adquirido y garantiza el acceso al usuario.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <p className={"mt-4 text-sm text-neutral-500 dark:text-neutral-400 text-center"}>Atentamente, Garret
-                    Games</p>
-            </div>
-            <h2 className="text-2xl font-bold mb-2 text-center px-2">
+        <article className={"w-full py-4"} ref={topRef}>
+            <h2 className="text-2xl font-bold mb-2">
                 Juegos en oferta hasta el {fechaExpiracion} 19:00hs
             </h2>
+            <p className={"mt-2 text-sm text-neutral-500 dark:text-neutral-400"}>
+                Transferencia - Precio abonando por transferencia bancaria CVU/CBU
+            </p>
+            <p className={"mt-2 text-sm text-neutral-500 dark:text-neutral-400 font-semibold"}>
+                El precio publicado es en cuenta primaria. Por secundaria consultar stock.
+            </p>
             <div className={"px-2 mt-2"}>
                 <Table className={"my-4 border rounded"}>
                     <TableBody>
@@ -154,10 +112,13 @@ function TablaJuegosOfertaReventa({juegos = [], fechaExpiracion, titulo = null})
                     </TableBody>
                 </Table>
             </div>
-            <div className={"flex flex-col md:flex-row md:justify-between gap-4 py-2 px-2"}>
+            <h2 className="text-2xl font-semibold mt-2">
+                Busca tu juego
+            </h2>
+            <div className={"flex flex-col md:flex-row md:justify-between gap-4 pb-2 mt-2"}>
                 <Input
                     onChange={buscarJuego}
-                    placeholder={"Buscar por nombre de juego"}
+                    placeholder={"Buscar por nombre de juego 🔎"}
                     className={"w-full md:w-3/4"}
                 />
                 <div className={"w-full md:w-1/4"}>
@@ -239,7 +200,7 @@ const Registro = ({juego, copiarJuego, juegoCopiado}) => {
             >
                 {juego.name}
             </TableCell>
-            <TableCell className={"p-1 py-2"}>${juego.price}</TableCell>
+            <TableCell className={"p-1 py-2 text-center"}>${juego.price}</TableCell>
             <TableCell className="p-2 text-center">
                 <div className={"flex gap-2"}>
                     <Link
@@ -277,7 +238,7 @@ const Cabecera = () => {
         <TableHeader>
             <TableRow>
                 <TableHead className={"px-2 md:px-4"}>Nombre del Juego</TableHead>
-                <TableHead className={"px-2 md:px-4"}>Precio</TableHead>
+                <TableHead className={"px-2 md:px-4 text-center"}>Precio</TableHead>
                 <TableHead className={"px-2 md:px-4 text-center"}>Contacto</TableHead>
             </TableRow>
         </TableHeader>

@@ -106,8 +106,6 @@ class MiFirebase {
                 transaction.update(referenciaDocumento, {
                     [campo]: !valorCampoActual
                 })
-
-                console.log("Valor de campo invertido")
             })
         } catch (e) {
             console.error("No se pudo realizar la operación para invertir el valor del campo")

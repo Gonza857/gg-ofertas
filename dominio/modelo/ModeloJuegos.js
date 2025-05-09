@@ -97,19 +97,23 @@ class ModeloJuegos {
         return await this.repositorioJuegos.obtenerJuegos()
     }
 
-    async obtenerJuegosOferta(tipoCliente, usuario, quiereTodas) {
+    async obtenerJuegosOferta(tipoCliente, usuario, quiereTodas, nroOferta) {
         tipoCliente = tipoCliente ?? "customer"
 
         if (tipoCliente === "admin" && !usuario) throw new Error("No autorizado.")
 
         let oferta;
 
-        if (tipoCliente === "customer") {
+        if (Number(nroOferta) === 2) {
+            oferta = await this.repositorioJuegos.obtenerOfertaPorAtributoValor("nro", Number(nroOferta))
+        } else {
             oferta = await this.repositorioJuegos.obtenerOfertaActual()
+        }
+
+        if (tipoCliente === "customer") {
             this.#formatearJuegosParaPresentar(tipoCliente, oferta.juegos)
 
         } else if (tipoCliente === "reseller") {
-            oferta = await this.repositorioJuegos.obtenerOfertaActual()
             this.#formatearJuegosParaPresentar(tipoCliente, oferta.juegos)
         } else {
             // Admin
@@ -122,7 +126,6 @@ class ModeloJuegos {
                 return oferta
             } else {
                 // quiere ver una en específico
-                oferta = await this.repositorioJuegos.obtenerOfertaActual()
                 this.#formatearJuegosParaPresentar(tipoCliente, oferta.juegos)
 
             }
@@ -170,7 +173,6 @@ class ModeloJuegos {
 
         if (ofertasObject.accion === 0) {
             // cambia destacado
-            console.log("Actualización de destacado")
             ofertasObject.juegos.forEach((j) => {
                 j.name = `${j.esDestacado ? "⭐" : "💎"} ${j.name.replace(/^(\⭐|💎)\s*/, '')}`
             })
@@ -211,7 +213,6 @@ class ModeloJuegos {
     async subirOfertas(ofertaNueva) {
         if (!ofertaNueva) throw new Error("No se recibieron los datos.")
 
-
         const {juegos} = ofertaNueva;
 
         ofertaNueva.estaActiva = false;
@@ -222,6 +223,7 @@ class ModeloJuegos {
             j.precioReventa = Number(this.#redondearCien((j.price) * 0.95).toFixed(0))
             j.precioClienteLista = Number(this.#redondearCien(j.price * 1.25).toFixed(0))
             j.precioClienteTransferencia = Number(this.#redondearCien(j.precioClienteLista * 0.8).toFixed(0));
+            j.esDestacado = false;
         })
 
         const resultado = await this.repositorioJuegos.guardarOferta(ofertaNueva)

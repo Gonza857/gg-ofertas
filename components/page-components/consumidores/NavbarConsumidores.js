@@ -29,7 +29,7 @@ const NavbarConsumidores = () => {
     }
 
     return (
-        <header className="flex items-center w-full h-20 bg-cyan-900 px-2 lg:px-8 relative">
+        <header className="flex items-center w-full h-20 bg-cyan-900 px-2 lg:px-8 fixed z-50">
             {/* WRAPPER */}
             <div className={"flex items-center justify-between w-full md:w-11/12 xl:w-10/12 mx-auto"}>
                 <aside

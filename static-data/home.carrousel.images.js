@@ -3,7 +3,13 @@ let id = 0;
 export const images = [
     {
         id: id++,
-        alt: "Big Games, Big Deals",
+        alt: "Fin de semana",
+        path: "/images/home-carousel/findesemana-1305.avif",
+        urlTo: "/juegos/ofertas/fin-de-semana"
+    },
+    {
+        id: id++,
+        alt: "Ahorros a otro nivel",
         path: "/images/home-carousel/ahorrosaotronivel-2105.webp",
         urlTo: "/juegos/ofertas"
     },

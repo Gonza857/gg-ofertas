@@ -4,8 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import React, {useState} from "react";
 import {Button} from "@/components/ui/button";
-import {FileText, Gamepad2, Menu, PlusCircle, X} from "lucide-react";
-import {opcionesMenuLateralReventa, opcionesNavbarReventa} from "@/static-data/data";
+import {ChevronDown, FileText, Gamepad2, Menu, PlusCircle, X} from "lucide-react";
+import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from "@/components/ui/dropdown-menu";
+import {opcionesNavbarReventa, opcionesMenuLateralReventa} from "@/static-data/navbar.reseller";
 
 const Navbar = () => {
     const [estaAbierto, setEstaAbierto] = useState(false);
@@ -13,7 +14,7 @@ const Navbar = () => {
     const manejarNav = () => setEstaAbierto(!estaAbierto);
 
     return (
-        <header className="flex items-center w-full h-20 bg-cyan-900 px-2 md:px-8 relative">
+        <header className="flex items-center w-full h-20 bg-cyan-900 px-2 md:px-8 fixed z-50">
             {/* WRAPPER */}
             <div className={"flex items-center justify-between w-full md:w-11/12 lg:w-5/6 mx-auto"}>
                 <aside
@@ -56,15 +57,45 @@ const Navbar = () => {
                             alt="Logo Garret Games"
                         />
                     </Link>
-                    <nav className={"hidden md:block"}>
-                        <ul className="flex gap-5 flex-wrap text-white">
-                            {
-                                opcionesNavbarReventa.map((o) => (
-                                    <Link href={o.ruta} key={o.id}>{o.nombre}</Link>
-                                ))
-                            }
-                        </ul>
-                    </nav>
+
+                    {/* Desktop Navigation */}
+                    <div className="hidden md:flex md:items-center gap-5 md:gap-2">
+                        {opcionesNavbarReventa.map((item) =>
+                            item.hasSubmenu ? (
+                                <DropdownMenu key={item.label}>
+                                    <DropdownMenuTrigger asChild>
+                                        <button
+                                            className="text-white hover:text-orange-500 outline-0 py-2 rounded-md font-medium flex items-center gap-1.5"
+                                        >
+                                            {item.icon && <item.icon className="h-4 w-4"/>}
+                                            {item.label}
+                                            <ChevronDown className="h-4 w-4 ml-0.5"/>
+                                        </button>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent align="center" className="w-56">
+                                        {item.submenu.map((subItem) => (
+                                            <DropdownMenuItem key={subItem.label} asChild>
+                                                <a href={subItem.href}
+                                                   className="flex items-center gap-2 cursor-pointer">
+                                                    <subItem.icon className="w-6 h-6"/>
+                                                    <span>{subItem.label}</span>
+                                                </a>
+                                            </DropdownMenuItem>
+                                        ))}
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
+                            ) : (
+                                <Link
+                                    key={item.label}
+                                    href={item.href}
+                                    className="text-white hover:text-orange-500 px-3 py-2 rounded-md font-medium flex items-center gap-1.5"
+                                >
+                                    {item.icon && <item.icon className="h-4 w-4"/>}
+                                    {item.label}
+                                </Link>
+                            ),
+                        )}
+                    </div>
                 </div>
                 <BotonMenu estaAbierto={estaAbierto} manejarNav={manejarNav}/>
             </div>

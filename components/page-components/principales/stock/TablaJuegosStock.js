@@ -3,13 +3,15 @@
 import {Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
 import {useCopiarAlPortapapeles} from "@/hooks/useCopyToClipboard";
 import {Check, Copy} from "lucide-react";
-import {useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {Checkbox} from "@/components/ui/checkbox";
 import {Label} from "@/components/ui/label";
 import {Input} from "@/components/ui/input";
 import {Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
 import ordenador from "@/lib/ordenamiento";
 import {useRouter, useSearchParams} from "next/navigation";
+import Link from "next/link";
+import {FaWhatsapp} from "react-icons/fa";
 
 function TablaJuegosStock({juegos: s, cliente = false}) {
     const [juegos, setJuegos] = useState(s || [])
@@ -95,12 +97,15 @@ function TablaJuegosStock({juegos: s, cliente = false}) {
 
     return (
         <>
+            <h2 className="text-2xl font-semibold mt-4">
+                Busca tu juego
+            </h2>
             <Buscar_Ordenar
                 buscarJuego={buscarJuego}
                 handleSortChange={handleSortChange}
                 juegoBuscado={juegoBuscado}
             />
-            <div className="p-2 lg:p-2 flex flex-col sm:flex-row gap-2 md:gap-4">
+            <div className="flex flex-col sm:flex-row gap-2 md:gap-4 mt-4">
                 {/* Filtros */}
                 <div className="lg:mb-2 sm:border-r pe-2 md:pe-4">
                     <h3 className="text-sm font-semibold pb-2">Tipo de Cuenta</h3>
@@ -153,7 +158,7 @@ function TablaJuegosStock({juegos: s, cliente = false}) {
 
 const Buscar_Ordenar = ({buscarJuego, handleSortChange}) => {
     return (
-        <div className={"flex flex-col md:flex-row md:justify-between gap-4 py-2 px-2"}>
+        <div className={"flex flex-col md:flex-row md:justify-between gap-4 mt-2"}>
             <Buscador buscarJuego={buscarJuego}/>
             <Ordenador handleSortChange={handleSortChange}/>
         </div>
@@ -164,7 +169,7 @@ const Buscador = ({buscarJuego}) => {
     return (
         <Input
             onChange={buscarJuego}
-            placeholder={"Buscar por nombre de juego"}
+            placeholder={"Buscar por nombre de juego 🔎"}
             className={"w-full"}
         />
     )
@@ -215,7 +220,7 @@ const Cabecera = () => {
                 <TableHead className={"w-1/12 px-2 md:px-4 text-center"}>Consola</TableHead>
                 <TableHead className={"w-1/12 px-2 md:px-4 text-center"}>Precio</TableHead>
                 <TableHead className={"w-1/12 px-2 md:px-4 text-center"}>Tipo</TableHead>
-                <TableHead className={"w-1/12 px-2 md:px-4 text-center hidden md:table-cell"}>Copiar</TableHead>
+                <TableHead className={"w-1/12 px-2 md:px-4 text-center hidden md:table-cell"}>Contacto</TableHead>
             </TableRow>
         </TableHeader>
     )
@@ -241,18 +246,23 @@ const Registro = ({juego: j, cliente}) => {
     const textoParaCopiar = `${j.nombre} ${j.mostrarIdioma ? j.idioma : ""} | ${j.tipo} | ${j.consola} | $${precio.toLocaleString("es-AR")}`;
 
     return (
-        <TableRow onClick={() => copiar(textoParaCopiar, j.id)}>
-            <TableCell className={"p-1 py-2"}>{j.nombre} {j.mostrarIdioma && j.idioma}</TableCell>
+        <TableRow>
+            <TableCell
+                className={"p-1 py-2"}
+                onClick={() => copiar(textoParaCopiar, j.id)}
+            >
+                {j.nombre} {j.mostrarIdioma && j.idioma}
+            </TableCell>
             <TableCell className={"p-1 py-2 text-center"}>{j.consola.join("/")}</TableCell>
             <TableCell className={"p-1 py-2 text-center"}>${precio.toLocaleString("es-AR")}</TableCell>
             <TableCell className={"p-1 py-2 text-center"}>{j.tipo}</TableCell>
-            <TableCell className="hidden md:table-cell p-1">
-                <div
-                    onClick={() => copiar(textoParaCopiar, j.id)}
-                    className={"flex justify-center items-center cursor-pointer w-fit mx-auto"}>
-                    {copiado === j.id ? <Check className="h-4 w-4"/> : <Copy className="h-4 w-4"/>}
-                    <span className="sr-only">Copiar información del Juego</span>
-                </div>
+            <TableCell className="p-2">
+                <Link
+                    href={`https://wa.me/5491132001372?text=${"Me interesa " + encodeURIComponent(textoParaCopiar)}`}
+                    className="mx-auto w-fit flex justify-center items-center text-center bg-green-500 p-1.5 rounded-full"
+                    target="_blank">
+                    <FaWhatsapp className="h-4 w-4 text-white"/>
+                </Link>
             </TableCell>
         </TableRow>
     )

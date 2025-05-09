@@ -1,7 +1,8 @@
 import TablaJuegosStock from "@/components/page-components/principales/stock/TablaJuegosStock";
 import {obtenerJuegosStock} from "@/dominio/servicios/stock-juegos";
-import Recordatorios from "@/components/page-components/consumidores/stock/Recordatorios";
+import Recordatorios from "@/components/page-components/consumidores/juegos/stock/Recordatorios";
 import {cookies} from "next/headers";
+import React from "react";
 
 export const dynamic = "force-dynamic";
 
@@ -20,6 +21,13 @@ async function JuegosEnStock () {
                     Juegos en stock PS4 & PS5
                 </h1>
                 <Recordatorios/>
+                <p className={"mt-2 text-sm text-neutral-500 dark:text-neutral-400"}>
+                    El precio publicado es abonando por transferencia bancaria CVU/CBU. Consultar financiacion en 3 o 6
+                    pagos.
+                </p>
+                <p className={"mt-2 text-sm text-neutral-500 dark:text-neutral-400"}>
+                    Si el juego esta de oferta. Se toma el precio de oferta.
+                </p>
                 <TablaJuegosStock juegos={resultado.data ?? []} cliente={true}/>
             </article>
         </main>

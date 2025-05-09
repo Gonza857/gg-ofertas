@@ -2,6 +2,7 @@ import TablaJuegosStock from "@/components/page-components/principales/stock/Tab
 import {obtenerJuegosStock} from "@/dominio/servicios/stock-juegos";
 import Recordatorios from "@/components/page-components/consumidores/stock/Recordatorios";
 import {cookies} from "next/headers";
+import React from "react";
 
 export const dynamic = "force-dynamic";
 
@@ -14,15 +15,20 @@ async function JuegosEnStock ({params}) {
     let consola = params.consola
     const token = cookies().get("access-token")?.value
     const resultado = await obtenerJuegosStock(token, consola);
-    console.log("RESULTADO DE API", resultado)
 
     return (
-        <main className={"styledMain py-4"}>
+        <main className={"styledMain"}>
             <article className={"w-full sm:w-11/12 md:w-10/12 xl:w-3/4 mx-auto p-2 md:p-0"}>
-                <h1 className="text-xl md:text-3xl font-bold text-center mb-4">
+                <h1 className="mt-4 text-2xl font-bold mb-2 text-center">
                     Juegos en stock {consola.toUpperCase()}
                 </h1>
                 <Recordatorios/>
+                <p className={"mt-2 text-sm text-neutral-500 dark:text-neutral-400"}>
+                    El precio publicado es abonando por transferencia bancaria CVU/CBU. Consultar financiacion en 3 o 6 pagos.
+                </p>
+                <p className={"mt-2 text-sm text-neutral-500 dark:text-neutral-400"}>
+                    Si el juego esta de oferta. Se toma el precio de oferta.
+                </p>
                 <TablaJuegosStock juegos={resultado.data ?? []} cliente={true}/>
             </article>
         </main>
