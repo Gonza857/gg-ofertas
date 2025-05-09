@@ -95,7 +95,7 @@ function TablaJuegosOfertaReventa({juegos = [], fechaExpiracion, titulo = null})
     return (
         <article className={"w-full py-4"} ref={topRef}>
             <h2 className="text-2xl font-bold mb-2">
-                Juegos en oferta hasta el {fechaExpiracion} 04:00hs
+                Juegos en oferta hasta el {fechaExpiracion}
             </h2>
             <p className={"mt-2 text-sm text-neutral-500 dark:text-neutral-400"}>
                 Transferencia - Precio abonando por transferencia bancaria CVU/CBU
