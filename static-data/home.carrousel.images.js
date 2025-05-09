@@ -4,7 +4,7 @@ export const images = [
     {
         id: id++,
         alt: "Big Games, Big Deals",
-        path: "/images/home-carousel/biggamesbigdeals-0705.webp",
+        path: "/images/home-carousel/ahorrosaotronivel-2105.webp",
         urlTo: "/juegos/ofertas"
     },
     {

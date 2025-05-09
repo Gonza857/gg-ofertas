@@ -227,48 +227,46 @@ const CamposEdicion = ({juego, cancelar, guardar, eliminar}) => {
         setDatosForm(prev => ({...prev, [e.target.name]: e.target.value}))
     }
 
+    const campos = [
+        {
+            tipo: "text",
+            name: "name",
+            defaultValue: juego.name
+        },
+        {
+            tipo: "text",
+            name: "price",
+            defaultValue: juego.price
+        },
+        {
+            tipo: "text",
+            name: "precioReventa",
+            defaultValue: juego.precioReventa
+        },
+        {
+            tipo: "text",
+            name: "precioClienteLista",
+            defaultValue: juego.precioClienteLista
+        },
+        {
+            tipo: "text",
+            name: "precioClienteTransferencia",
+            defaultValue: juego.precioClienteTransferencia
+        },
+    ]
+
     return (
         <>
-            <TableCell>
-                <Input
-                    type={"text"}
-                    name={"name"}
-                    defaultValue={juego.name}
-                    onChange={(e) => realizarCambio(e)}
-                />
-            </TableCell>
-            <TableCell>
-                <Input
-                    type={"text"}
-                    name={"price"}
-                    defaultValue={juego.price}
-                    onChange={(e) => realizarCambio(e)}
-                />
-            </TableCell>
-            <TableCell>
-                <Input
-                    type={"text"}
-                    name={"precioReventa"}
-                    defaultValue={juego.precioReventa}
-                    onChange={(e) => realizarCambio(e)}
-                />
-            </TableCell>
-            <TableCell>
-                <Input
-                    type={"text"}
-                    name={"precioClienteLista"}
-                    defaultValue={juego.precioClienteLista}
-                    onChange={(e) => realizarCambio(e)}
-                />
-            </TableCell>
-            <TableCell>
-                <Input
-                    type={"text"}
-                    name={"precioClienteTransferencia"}
-                    defaultValue={juego.precioClienteTransferencia}
-                    onChange={(e) => realizarCambio(e)}
-                />
-            </TableCell>
+            {campos.map((campo, index) => (
+                <TableCell key={index}>
+                    <Input
+                        type={campo.tipo}
+                        name={campo.name}
+                        defaultValue={campo.defaultValue}
+                        onChange={(e) => realizarCambio(e)}
+                    />
+                </TableCell>
+            ))}
             <TableCell>
                 <div className={"flex gap-4"}>
                     <Button size={"sm"} variant={"outline"} onClick={() => guardar(datosForm)}>
