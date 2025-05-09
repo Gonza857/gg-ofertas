@@ -62,7 +62,6 @@ export default function Home() {
             return toastSuccess(mensaje)
         }
         return toastError(mensaje)
-
     }
 
     const filterProducts = (param) => {
@@ -114,18 +113,6 @@ export default function Home() {
 
     return (
         <>
-            <header className="flex w-full h-20 bg-cyan-900">
-                <div className="w-10/12 mx-auto flex justify-between items-center">
-                    <h1 className="text-2xl font-semibold">Garret Games</h1>
-                    <nav>
-                        <ul>
-                            <Link href={"/"}>
-                                <li>Ofertas</li>
-                            </Link>
-                        </ul>
-                    </nav>
-                </div>
-            </header>
             <main className="w-full min-h-screen flex flex-col">
                 <div className={"d-flex gap-4"}>
                     <button className="px-4 py-2 bg-red-500 rounded-lg"

@@ -189,12 +189,11 @@ class MiFirebase {
             );
             const consulta = query(
                 referenciaDocumento,
-                where(atributo.toString(), '==', dato.toString()),
+                where(atributo.toString(), '==', dato),
                 limit(1)
             );
 
             const resultado = await getDocs(consulta);
-
             if (!resultado.empty) {
                 const doc = resultado.docs[0];
                 return {...doc.data(), id: doc.id};

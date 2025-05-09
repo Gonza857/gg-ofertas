@@ -1,13 +1,19 @@
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 
 export default function useModoEdicionPorFila(dataInicial, claveId = 'id') {
     const [items, setItems] = useState(
         dataInicial.map(item => ({...item, modoEdicion: false}))
     );
 
-    useEffect(() => {
-        console.log("actualizados los items", items)
-    }, [items])
+    const reemplazarTodos = (arrayNuevos) => {
+        setItems(arrayNuevos.map(item => ({...item, modoEdicion: false})));
+    }
+
+    const agregarItem = (item) => {
+        const itemsActualizados = [...items, item];
+        setItems(itemsActualizados);
+        return itemsActualizados;
+    }
 
     const editar = (item) => {
         setItems(prev =>
@@ -27,7 +33,9 @@ export default function useModoEdicionPorFila(dataInicial, claveId = 'id') {
     }
 
     const eliminarItem = (id) => {
-        setItems(prev => prev.filter(p => (p.id !== id)));
+        const itemsActualizados = [...items].filter(p => (p.id !== id))
+        setItems(itemsActualizados);
+        return itemsActualizados;
     }
 
     const cancelar = (id) => {
@@ -53,11 +61,13 @@ export default function useModoEdicionPorFila(dataInicial, claveId = 'id') {
 
     return {
         items,
+        reemplazarTodos,
         eliminarItem,
         editar,
         cancelar,
         actualizarItem,
         cambiarModoEdicionItem,
+        agregarItem,
         setItems, // opcional, por si querés modificar manualmente
     };
 }

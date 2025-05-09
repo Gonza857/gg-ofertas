@@ -1,12 +1,15 @@
 "use client"
 
 import {toast} from "@/hooks/use-toast";
-import {useRef, useState} from "react";
+import React, {useRef, useState} from "react";
 import {Box, Check, Clock, Copy, Info, Scroll} from "lucide-react";
 import {Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
 import {Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
 import {Input} from "@/components/ui/input";
 import {useCopiarAlPortapapeles} from "@/hooks/useCopyToClipboard";
+import {Button} from "@/components/ui/button";
+import {FaWhatsapp} from "react-icons/fa";
+import Link from "next/link";
 
 function redondearCien(num) {
     const resto = num % 100;
@@ -68,18 +71,32 @@ function TablaJuegosOfertaConsumidores({juegos = [], fechaExpiracion, titulo = n
 
 
     return (
-        <article className={"w-full sm:w-11/12 md:w-10/12 lg:w-8/12 mx-auto py-4"}>
+        <article className={"w-full sm:w-11/12 md:w-10/12 lg:w-9/12 mx-auto py-4"}>
             {(titulo && !busqueda) && <h2 className="text-2xl font-bold mb-2 text-center">{titulo}</h2>}
             <InformacionPsPlus/>
             <h2 className="text-2xl font-bold mb-2 text-center">Juegos en oferta hasta
                 el {fechaExpiracion} 19:00hs</h2>
             <p className={"mt-2 text-sm text-neutral-500 dark:text-neutral-400 text-center"}>
-                Precio lista - Hasta 3 pagos con tarjeta de crédito/débito (Ver formas de pago)
+                Precio lista - Hasta 3 pagos con tarjeta de crédito/débito (
+                <Link href={"/formas-de-pago"} className={"hover:underline transition-all"}>
+                    Ver formas de pago
+                </Link>
+
+                )
             </p>
             <p className={"mt-2 text-sm text-neutral-500 dark:text-neutral-400 text-center"}>
                 Transferencia - Precio abonando por transferencia bancaria CVU/CBU
             </p>
-            <div className={"flex flex-col md:flex-row md:justify-between gap-4 py-2 px-2"}>
+            <div className={"px-2 mt-2"}>
+                <Table className={"my-4 border rounded"}>
+                    <TableBody>
+                        <TableRow>
+                            <TableCell>⭐ Juego destacado/popular</TableCell>
+                        </TableRow>
+                    </TableBody>
+                </Table>
+            </div>
+            <div className={"flex flex-col md:flex-row md:justify-between gap-4 pb-2 px-2 mt-2"}>
                 <Input
                     onChange={buscarJuego}
                     placeholder={"Buscar por nombre de juego"}
@@ -112,7 +129,7 @@ export default TablaJuegosOfertaConsumidores;
 const InformacionPsPlus = () => {
     return (
         <div className="w-full bg-white shadow-xl rounded-xl border p-6 mb-8 mx-auto">
-        <h2 className="text-xl italic font-semibold mb-4 text-center">Información Importante</h2>
+            <h2 className="text-xl italic font-semibold mb-4 text-center">Información Importante</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm md:text-base">
                 <div className="flex items-start">
                     <Info className="w-6 h-6 mr-2 text-blue-500 flex-shrink-0 mt-1"/>
@@ -175,11 +192,14 @@ const TablaOfertas = (props) => {
                     ""
                 }
             </p>
-            <Table>
-                <TableCaption>Juegos en oferta - Precios actualizados</TableCaption>
-                <Cabecera/>
-                <Cuerpo {...props}/>
-            </Table>
+            <div className={"overflow-x-auto"}>
+                <Table className={"w-full"}>
+                    <TableCaption>Juegos en oferta - Precios actualizados</TableCaption>
+                    <Cabecera/>
+                    <Cuerpo {...props}/>
+                </Table>
+            </div>
+
         </>
     )
 }
@@ -206,21 +226,24 @@ const Cuerpo = ({juegos = [], busqueda = null}) => {
 
 const Registro = ({juego}) => {
     const {copiar, copiado} = useCopiarAlPortapapeles()
-    console.log(juego)
-
+    const mensaje = `${juego.name} | Precio Lista: $${juego.precioLista} | Transferencia: $${juego.precioTransferencia}`
     return (
-        <TableRow
-            onClick={() => copiar(`${juego.name} - PL:$${juego.precioLista} - T:${juego.precioTransferencia}`, juego.name)}>
-            <TableCell className="font-medium p-2">{juego.name}</TableCell>
+        <TableRow>
+            <TableCell
+                className="font-medium p-2"
+                onClick={() => copiar(mensaje, juego.name)}
+            >
+                {juego.name}
+            </TableCell>
             <TableCell className={"p-2 text-center"}>${juego.precioLista}</TableCell>
             <TableCell className={"p-2 text-center"}>${juego.precioTransferencia}</TableCell>
-            <TableCell className="hidden md:table-cell p-2">
-                <div
-                    onClick={() => copiar(`${juego.name} - PL:$${juego.precioLista} - T:${juego.precioTransferencia}`, juego.name)}
-                    className={"flex justify-center items-center cursor-pointer"}>
-                    {copiado === juego.name ? <Check className="h-4 w-4"/> : <Copy className="h-4 w-4"/>}
-                    <span className="sr-only">Copiar información del juego</span>
-                </div>
+            <TableCell className="p-2 text-center">
+                <Link
+                    href={`https://wa.me/5491132001372?text=${"Me interesa " + encodeURIComponent(mensaje)}`}
+                    className="w-fit flex justify-center items-center text-center bg-green-500 p-1.5 rounded-full"
+                    target="_blank">
+                    <FaWhatsapp className="h-4 w-4 text-white"/>
+                </Link>
             </TableCell>
         </TableRow>
     )
@@ -233,7 +256,7 @@ const Cabecera = () => {
                 <TableHead className={"w-1/2 p-2 text-center"}>Nombre del Juego</TableHead>
                 <TableHead className={"w-2/12 p-2 text-center"}>Precio Lista</TableHead>
                 <TableHead className={"w-2/12 p-2 text-center"}>Transferencia</TableHead>
-                <TableHead className={"w-1/12 p-2 hidden md:table-cell text-center"}>Copiar</TableHead>
+                <TableHead className={"w-1/12 p-2 hidden md:table-cell text-center"}>Acción</TableHead>
             </TableRow>
         </TableHeader>
     )

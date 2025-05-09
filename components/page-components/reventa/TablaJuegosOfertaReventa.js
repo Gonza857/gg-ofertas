@@ -1,11 +1,16 @@
 "use client"
 
-import {useRef, useState} from "react";
+import React, {useRef, useState} from "react";
 import {toast} from "@/hooks/use-toast";
 import {Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
 import {Box, Check, Clock, Copy, Info, Scroll} from "lucide-react";
 import {Input} from "@/components/ui/input";
 import {Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
+import {useCopiarAlPortapapeles} from "@/hooks/useCopyToClipboard";
+import Link from "next/link";
+import {FaWhatsapp} from "react-icons/fa";
+import {Button} from "@/components/ui/button";
+import {FaTelegram} from "react-icons/fa6";
 
 function redondearCien(num) {
     const resto = num % 100;
@@ -83,7 +88,7 @@ function TablaJuegosOfertaReventa({juegos = [], fechaExpiracion, titulo = null})
 
         // Desplazar hacia la parte superior
         if (topRef.current) {
-            topRef.current.scrollIntoView({ behavior: "smooth" });
+            topRef.current.scrollIntoView({behavior: "smooth"});
         }
     }
 
@@ -137,7 +142,8 @@ function TablaJuegosOfertaReventa({juegos = [], fechaExpiracion, titulo = null})
                 <p className={"mt-4 text-sm text-neutral-500 dark:text-neutral-400 text-center"}>Atentamente, Garret
                     Games</p>
             </div>
-            <h2 className="text-2xl font-bold mb-2 text-center px-2">Juegos en oferta hasta el {fechaExpiracion} 19:00hs</h2>
+            <h2 className="text-2xl font-bold mb-2 text-center px-2">Juegos en oferta hasta
+                el {fechaExpiracion} 19:00hs</h2>
             <div className={"flex flex-col md:flex-row md:justify-between gap-4 py-2 px-2"}>
                 <Input
                     onChange={buscarJuego}
@@ -213,19 +219,45 @@ const Cuerpo = ({juegos = [], copiarJuego, juegoCopiado, busqueda = null}) => {
 }
 
 const Registro = ({juego, copiarJuego, juegoCopiado}) => {
+    const {copiar, copiado} = useCopiarAlPortapapeles()
+    const mensaje = `${juego.name} - $${juego.price}`
     return (
         <TableRow>
-            <TableCell className="font-medium p-1 py-2">{juego.name}</TableCell>
-            <TableCell className={"p-1 py-2"}>${juego.price}</TableCell>
-            <TableCell className="p-1 py-2">
-                <div
-                    className={"w-fit mx-auto flex justify-center"}
-                    onClick={() => copiarJuego(`${juego.name} - $${juego.price}`, juego.name)}
-                >
-                    {juegoCopiado === juego.name ? <Check className="h-4 w-4"/> : <Copy className="h-4 w-4"/>}
-                    <span className="sr-only">Copiar información del juego</span>
-                </div>
+            <TableCell
+                className="font-medium p-1 py-2"
+                onClick={() => copiar(mensaje, juego.name)}
+            >
+                {juego.name}
             </TableCell>
+            <TableCell className={"p-1 py-2"}>${juego.price}</TableCell>
+            <TableCell className="p-2 text-center">
+                <div className={"flex gap-2"}>
+                    <Link
+                        href={`https://wa.me/5491132001372?text=${"Me interesa " + encodeURIComponent(mensaje)}`}
+                        className="w-fit flex justify-center items-center text-center rounded-full"
+                        target="_blank">
+                        <FaWhatsapp className="h-7 w-7 text-green-500"/>
+
+                    </Link>
+                    <Link
+                        href={`https://t.me/garretg_psn?text=${"Me interesa " + encodeURIComponent(mensaje)}`}
+                        className="w-fit flex justify-center items-center text-center rounded-full"
+                        target="_blank"
+                    >
+                        <FaTelegram className="h-7 w-7 text-blue-500"/>
+                    </Link>
+                </div>
+
+            </TableCell>
+            {/*<TableCell className="p-1 py-2">*/}
+            {/*    <div*/}
+            {/*        className={"w-fit mx-auto flex justify-center"}*/}
+            {/*        onClick={() => copiarJuego(`${juego.name} - $${juego.price}`, juego.name)}*/}
+            {/*    >*/}
+            {/*        {juegoCopiado === juego.name ? <Check className="h-4 w-4"/> : <Copy className="h-4 w-4"/>}*/}
+            {/*        <span className="sr-only">Copiar información del juego</span>*/}
+            {/*    </div>*/}
+            {/*</TableCell>*/}
         </TableRow>
     )
 }
@@ -236,7 +268,7 @@ const Cabecera = () => {
             <TableRow>
                 <TableHead className={"px-2 md:px-4"}>Nombre del Juego</TableHead>
                 <TableHead className={"px-2 md:px-4"}>Precio</TableHead>
-                <TableHead className={"px-2 md:px-4"}>Copiar</TableHead>
+                <TableHead className={"px-2 md:px-4 text-center"}>Contacto</TableHead>
             </TableRow>
         </TableHeader>
     )

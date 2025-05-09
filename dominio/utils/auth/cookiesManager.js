@@ -28,11 +28,8 @@ class CookieManager {
 
     static get (cookieStore, cookieName) {
         const token = cookieStore.get(cookieName)?.value;
-        console.log("token obtenido", token)
         if (token === "undefined" || token === undefined) return null;
-        console.log("el token existe")
         let {payload: data} = jwt.verify(token, process.env.SECRET_JWT_KEY);
-        console.log("data del token", data)
         return data;
     }
 }

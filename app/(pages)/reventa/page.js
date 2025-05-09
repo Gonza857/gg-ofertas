@@ -14,11 +14,11 @@ async function JuegosOfertaReventa() {
     if (!resultado.exito) return <>Error</>
 
     return (
-        <main className={"styledMain"}>
+        <main className={"styledMain w-full sm:w-11/12 md:w-8/12 mx-auto"}>
             <TablaJuegosOfertaReventa
-                juegos={resultado.juegos}
-                fechaExpiracion={resultado.termina}
-                titulo={resultado.titulo}
+                juegos={resultado.data.juegos}
+                fechaExpiracion={resultado.data.termina}
+                titulo={resultado.data.titulo}
             />
         </main>
     )

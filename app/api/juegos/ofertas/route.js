@@ -23,16 +23,18 @@ const validarAdmin = async () => {
 
 export async function GET(req, res) {
     const resultado = await validarAdmin();
-    console.log("usuario", resultado)
     if (!resultado.exito) return resultado;
 
     const {searchParams} = new URL(req.url);
     const valor = searchParams.get("cliente");
     const tipoCliente = valor === "undefined" ? undefined : valor;
 
+    const todas = searchParams.get("todas");
+    const quiereTodas = todas === "undefined" ? undefined : todas;
+
     try {
-        const oferta = await modeloJuegos.obtenerJuegosOferta(tipoCliente, resultado.usuario);
-        return ManejadorRespuesta.ok(oferta)
+        const ofertas = await modeloJuegos.obtenerJuegosOferta(tipoCliente, resultado.usuario, quiereTodas);
+        return ManejadorRespuesta.ok({data: ofertas})
     } catch (e) {
         return ManejadorRespuesta.error(e.message)
     }
@@ -44,17 +46,11 @@ export async function POST(req, res) {
 
     try {
         const cuerpo = await req.json();
-        const resultado = await modeloJuegos.subirOfertas(cuerpo);
+        await modeloJuegos.subirOfertas(cuerpo);
         revalidar()
-        return NextResponse.json(
-            resultado
-        )
+        return ManejadorRespuesta.ok()
     } catch (e) {
-        return NextResponse.json({
-                mensaje: e.message,
-                exito: false,
-            }
-        )
+        return ManejadorRespuesta.error(e.message)
     }
 }
 
@@ -65,6 +61,21 @@ export async function PATCH(req, res) {
     try {
         const cuerpo = await req.json();
         await modeloJuegos.actualizarOfertas(cuerpo, resultado.usuario);
+        revalidar()
+        return ManejadorRespuesta.ok();
+    } catch (e) {
+        console.error(e)
+        return ManejadorRespuesta.error(e.message)
+    }
+}
+
+export async function DELETE(req, res) {
+    const resultado = await validarAdmin();
+    if (!resultado.exito) return resultado;
+
+    try {
+        const cuerpo = await req.json();
+        await modeloJuegos.eliminarJuegoDeOferta(cuerpo, resultado.usuario);
         revalidar()
         return ManejadorRespuesta.ok();
     } catch (e) {

@@ -13,6 +13,10 @@ class RepositorioJuegos {
         return await this.BaseDeDatos.obtenerPorId(this.COLECCION, "nbC1nBnbrJarc6vaCbOc");
     }
 
+    async obtenerTodasLasOfertas() {
+        return await this.BaseDeDatos.obtenerTodos(this.COLECCION);
+    }
+
     async eliminarJuegoEnStock(id) {
         return await this.BaseDeDatos.eliminar("stock-juegos", id)
     }
@@ -30,8 +34,16 @@ class RepositorioJuegos {
         return await this.BaseDeDatos.actualizar("ofertas", ofertasObject, ofertasObject.id)
     }
 
-    async subirOfertas(ofertas) {
-        return await this.BaseDeDatos.guardarConUID(this.COLECCION, {...ofertas, uid: "nbC1nBnbrJarc6vaCbOc"});
+    async guardarOferta(ofertas) {
+        return await this.BaseDeDatos.guardar(this.COLECCION, ofertas);
+    }
+
+    async obtenerOfertaActual () {
+        return await this.BaseDeDatos.buscarUnoPorAtributo(this.COLECCION, "estaActiva", true)
+    }
+
+    async obtenerOfertaPorId(id) {
+        return await this.BaseDeDatos.obtenerPorId(this.COLECCION, id);
     }
 
     async guardarJuegoStock (juego) {

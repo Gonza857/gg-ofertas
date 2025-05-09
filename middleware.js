@@ -2,7 +2,6 @@ import { NextResponse } from 'next/server'
 
 export async function middleware(req) {
     const { pathname } = req.nextUrl
-    console.log("pathname", pathname)
 
     if (!pathname.startsWith('/admin')) {
         return NextResponse.next()
@@ -33,8 +32,6 @@ export async function middleware(req) {
 
         const data = await res.json()
 
-        console.log(data)
-
         if (!data) {
             return NextResponse.redirect(new URL('/', req.url))
         }
@@ -42,12 +39,8 @@ export async function middleware(req) {
         return NextResponse.next()
 
     } catch (e) {
-        console.error("Error en middleware:", e)
         return NextResponse.redirect(new URL('/', req.url))
     }
-
-    return NextResponse.next()
-
 }
 
 export const config = {
