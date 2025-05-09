@@ -3,6 +3,7 @@ import container from "@/dominio/container";
 import {revalidatePath} from "next/cache";
 import {cookies} from "next/headers";
 import CookieManager from "@/dominio/utils/auth/cookiesManager";
+import ManejadorRespuesta from "@/infraestructura/ManejadorRespuesta";
 
 const modeloJuegos = container.resolve("ModeloJuegos");
 const modeloUsuario = container.resolve("ModeloUsuario");
@@ -36,9 +37,9 @@ export async function GET(req, res) {
 
     try {
         const juegos = await modeloJuegos.obtenerJuegosStock(consolaBuscada, resultado.usuario)
-        return SUCCESS({data: juegos})
+        return ManejadorRespuesta.ok({data: juegos})
     } catch (e) {
-        return ERROR(e.message);
+        return ManejadorRespuesta.error(e.message);
     }
 }
 

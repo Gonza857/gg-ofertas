@@ -74,7 +74,7 @@ class ModeloJuegos {
     async obtenerJuegosStock(consolaBuscada = null, usuario = null) {
         let juegos = await this.repositorioJuegos.obtenerTodosLosJuegosStock()
         juegos = this.#transformarFechaJuegos(juegos)
-        this.#ordenarAlfabeticamente(juegos)
+        juegos.sort((a, b) => a.nombre.localeCompare(b.nombre))
 
         let filtrados;
 
@@ -203,7 +203,7 @@ class ModeloJuegos {
         const oferta = await this.repositorioJuegos.obtenerOfertaPorId(id);
         if (!oferta) return null;
         this.#formatearJuegosParaPresentar("admin", oferta.juegos)
-        this.#ordenarAlfabeticamente(oferta.juegos);
+        this.#ordenarPorDestacadoAndTitulo(oferta.juegos)
         return oferta
 
     }
