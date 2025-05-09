@@ -4,7 +4,7 @@ import Link from "next/link";
 
 function Recordatorios () {
     return (
-        <div className="w-full bg-white shadow-lg border rounded-lg p-4 mb-2 lg:mb-6 lg:w-3/4 mx-auto">
+        <div className="w-full bg-white shadow-lg border rounded-lg p-4 mt-4 mb-2 lg:mb-6 lg:w-3/4 mx-auto">
             <Accordion type="single" collapsible className="w-full">
                 <AccordionItem value="item-1">
                     <AccordionTrigger className="text-xl font-semibold">Información Importante</AccordionTrigger>

@@ -1,5 +1,3 @@
-import {Box, Clock, Gamepad2, Scroll} from "lucide-react";
-import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from "@/components/ui/accordion";
 import TablaJuegosStock from "@/components/page-components/principales/stock/TablaJuegosStock";
 import {obtenerJuegosStock} from "@/dominio/servicios/stock-juegos";
 import {cookies} from "next/headers";
@@ -15,7 +13,8 @@ export const metadata = {
 };
 
 async function StockJuegos() {
-    const resultado = await obtenerJuegosStock()
+    const token = cookies().get("access-token")?.value
+    const resultado = await obtenerJuegosStock(token, undefined)
     if (!resultado.exito) {
         if (resultado.status === 401) {
             redirect("/")
@@ -27,9 +26,9 @@ async function StockJuegos() {
     }
 
     return (
-        <main className={"styledMain py-4"}>
+        <main className={"styledMain pt-20"}>
             <article className={"w-full sm:w-11/12 md:w-10/12 xl:w-3/4 mx-auto p-2 md:p-0"}>
-                <h2 className="text-xl md:text-3xl font-bold text-center mb-4">
+                <h2 className="text-xl md:text-3xl font-bold text-center mt-4">
                     Juegos en stock PS4 & PS5
                 </h2>
                 <Recordatorios/>

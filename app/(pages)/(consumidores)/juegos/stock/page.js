@@ -15,11 +15,11 @@ async function JuegosEnStock () {
     const token = cookies().get("access-token")?.value
     const resultado = await obtenerJuegosStock(token, undefined)
     return (
-        <main className={"styledMain py-4"}>
+        <main className={"styledMain pt-20"}>
             <article className={"w-full sm:w-11/12 md:w-10/12 xl:w-3/4 mx-auto p-2 md:p-0"}>
-                <h1 className="text-xl md:text-3xl font-bold text-center mb-4">
+                <h2 className="text-xl md:text-3xl font-bold text-center mt-4">
                     Juegos en stock PS4 & PS5
-                </h1>
+                </h2>
                 <Recordatorios/>
                 <p className={"mt-2 text-sm text-neutral-500 dark:text-neutral-400"}>
                     El precio publicado es abonando por transferencia bancaria CVU/CBU. Consultar financiacion en 3 o 6
