@@ -26,7 +26,7 @@ async function Principal() {
     if (!resultado.exito) return <>Error</>
 
     return (
-        <main className={"styledMain w-full sm:w-11/12 md:w-10/12 mx-auto"}>
+        <main className={"styledMain w-full sm:w-11/12 md:w-10/12 mx-auto pt-20"}>
             <AutoCarousel images={images}/>
             <BusinessFeatures/>
             <GiftCardsSwiper

@@ -4,7 +4,7 @@ import {PREGUNTAS_Y_RESPUESTAS} from "@/static-data/data";
 
 function PreguntasFrecuentes () {
     return (
-        <main className={"styledMain py-4 pb-6"}>
+        <main className={"styledMain pt-20"}>
             <section className="w-full max-w-3xl mx-auto px-4 font-sans">
                 <h2 className="text-3xl font-bold text-center mb-8 text-primary">Preguntas Frecuentes</h2>
                 <Accordion type="single" collapsible className="w-full space-y-6">

@@ -9,7 +9,7 @@ export const dynamic = "force-dynamic";
 async function StockPlayStationPlus() {
     const subscripciones = await obtenerPlusStock()
     return (
-        <main className={"styledMain py-4"}>
+        <main className={"styledMain pt-20"}>
             <article className={"w-full sm:w-11/12 md:w-3/4 xl:w-1/2 mx-auto p-2 md:p-0"}>
                 <h1 className="text-xl md:text-3xl font-bold text-center mb-4">
                     PlayStation Plus En Liquidación PS4 & PS5

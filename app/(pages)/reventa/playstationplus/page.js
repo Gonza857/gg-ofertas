@@ -6,7 +6,7 @@ import React from "react";
 
 function SubscripcionPlus() {
     return (
-        <main className={"styledMain pt-4"}>
+        <main className={"styledMain pt-20"}>
             <article className={"w-full p-1 md:p-0 md:w-10/12 lg:w-8/12 mx-auto"}>
                 <h1 className="text-xl md:text-3xl font-bold text-center mb-4">Subscripciones PlayStation Plus
                     PS4 & PS5</h1>

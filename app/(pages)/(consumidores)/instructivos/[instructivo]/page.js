@@ -20,7 +20,7 @@ function InstructivoEspecifico({params}) {
     }
 
     return (
-        <main className={"styledMain w-full px-2 pb-4"}>
+        <main className={"styledMain w-full px-2 pt-20"}>
             <article className={"w-full sm:w-10/12 md:w-7/12 lg:w-1/2 mx-auto"}>
                 {diccionario[params.instructivo]}
             </article>

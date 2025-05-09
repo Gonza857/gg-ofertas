@@ -9,7 +9,7 @@ async function TarjetasDeRegaloReventa () {
     if (!resultado.exito) return <>Error</>
 
     return (
-        <main className={"styledMain px-2 pb-4"}>
+        <main className={"styledMain px-2 pt-20"}>
             <h1 className={"text-2xl font-semibold text-center py-4 font-sans"}>Tarjetas de regalo</h1>
             <article className={"w-full sm:w-11/12 md:w-3/4 xl:w-1/2 mx-auto p-2 md:p-0"}>
                 <TablaTarjetasRegaloReventa tarjetas={resultado.data}/>

@@ -48,7 +48,7 @@ const instructivosData = [
 
 function Instructivos() {
     return (
-        <main className={"styledMain px-2 pb-4"}>
+        <main className={"styledMain px-2 pt-20"}>
             <h1 className={"text-2xl font-semibold text-center py-4 font-sans"}>Instructivos de instalacion</h1>
             <article className={"w-3/4 md:w-7/12 xl:w-5/12 mx-auto grid grid-cols-1 sm:grid-cols-2 gap-2"}>
                 {instructivosData.map((e) => (
