@@ -34,7 +34,7 @@ const Footer = () => {
                 <hr/>
                 <a
                     className="w-full text-center pt-4 text-sm"
-                    href={"https://www.linkedin.com/in/gonzaloramos-webdev/"}
+                    href={"mailto:gonzaloalexramos@gmail.com"}
                     rel="noopener noreferrer"
                     target={"_blank"}
                 >
