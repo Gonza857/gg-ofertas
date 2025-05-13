@@ -195,7 +195,7 @@ function AdminLayout({children}) {
                 </aside>
 
                 {/* Contenido principal */}
-                <main className="flex-1 overflow-y-auto bg-gray-50">
+                <main className="w-full flex flex-col overflow-y-auto bg-gray-50 styledAdminMain">
                     {/* Header de escritorio */}
                     <header className="hidden lg:flex items-center justify-between p-4 bg-white border-b">
                         <h1 className="text-xl font-bold">Dashboard</h1>

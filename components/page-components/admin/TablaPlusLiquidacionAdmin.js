@@ -82,7 +82,7 @@ function TablaPlusLiquidacionAdmin({subscripciones: s}) {
             <ModalEliminar {...modalEliminarProps}/>
             <ModalEditar {...modalEditarProps}/>
             <Tabla {...tablaProps}/>
-            <Link href={"/admin/stock/playstationplus-liquidacion/agregar"}>
+            <Link href={"/admin/playstationplus/liquidacion/agregar"}>
                 <Button className={"w-full mt-2"} variant={"outline"}>
                     Agregar
                 </Button>
@@ -123,11 +123,15 @@ const ModalEliminar = ({estaAbierto, manejarEliminarPlus, manejarModalEliminar})
 const ModalEditar = ({estaAbierto, manejarModalEditar, plusSeleccionado = null}) => {
     const [datosFormulario, setDatosFormulario] = useState({...plusSeleccionado});
 
+    console.log("plus seleccionado", plusSeleccionado)
+
     if (!plusSeleccionado) return;
 
     const enviarFormulario = async (e) => {
         e.preventDefault()
-        const {mensaje, exito} = await actualizarPlus({...plusSeleccionado, ...datosFormulario});
+        console.log("esto mando al back", {...plusSeleccionado, ...datosFormulario})
+        const data = await actualizarPlus({...plusSeleccionado, ...datosFormulario});
+        const {mensaje, exito} = data;
         manejarModalEditar()
         if (exito) return toastSuccess(mensaje);
         return toastError(mensaje);

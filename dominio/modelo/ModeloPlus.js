@@ -19,9 +19,14 @@ class ModeloPlus {
         this.repositorioPlus = repositorio;
     }
 
-    async actualizar(plus) {
+    async actualizar(plus, usuario) {
+        if (!usuario) throw new Error("No autorizado")
         if (!plus) throw new Error("No se pudo actualizar.")
+
         delete plus.diasRestantes;
+        plus.slotsPs4 = Number(plus.slotsPs4)
+        plus.slotsPs5 = Number(plus.slotsPs5)
+
         const resultado = await this.repositorioPlus.actualizar(plus)
         return {
             exito: resultado,
@@ -29,7 +34,8 @@ class ModeloPlus {
         }
     }
 
-    async eliminar(idPlus) {
+    async eliminar(idPlus, usuario) {
+        if (!usuario) throw new Error("No autorizado")
         if (!idPlus) throw new Error("No se pudo actualizar el PlayStation Plus")
         const resultado = await this.repositorioPlus.eliminar(idPlus)
         return {
@@ -47,6 +53,7 @@ class ModeloPlus {
         } else {
             subscripcion.creado = formatDate(new Date(), "dd/MM/yyyy");
         }
+
         subscripcion.costo = Number(subscripcion.costo)
         subscripcion.duracion = Number(subscripcion.duracion)
         subscripcion.slotsPs4 = Number(subscripcion.slotsPs4)
@@ -62,32 +69,22 @@ class ModeloPlus {
         }
     }
 
-    async obtenerSubscripcionesEnStock() {
+    async obtenerSubscripcionesEnStock(cliente = "customer") {
         // TODO no mostrar las concluidas
         const subscripciones = await this.repositorioPlus.obtenerTodasStock()
 
         // Limpiar para procesar
         subscripciones.forEach((sub) => {
-            sub.creado = this.#convertirFechaCreacion(sub.creado)
             sub.diasRestantes = this.#obtenerDiasRestantes(sub)
             delete sub.precio;
+            sub.costo = this.#obtenerPrecioFinalSegunParametros(sub.diasRestantes, sub.tipo, sub.duracion)
         })
 
-        // Calcular costo y omitir las que ya vencieron
-        return subscripciones
-            .filter(s => s.diasRestantes > 0)
-            .map((s) => {
-            s.costo = this.#obtenerPrecioFinalSegunParametros(s.diasRestantes, s.tipo, s.duracion)
-            return s;
-        })
-    }
+        if (cliente === "admin") {
+            return subscripciones
+        }
 
-    #convertirFechaCreacion(fechaString) {
-        if (!fechaString || typeof fechaString !== "string") throw new Error("Plus.Creado invalido")
-
-
-        const [dia, mes, anio] = String(fechaString).split("/");
-        return new Date(`${anio}-${mes}-${dia}`);
+        return subscripciones.filter(s => s.diasRestantes > 0)
     }
 
     #obtenerFechaDeCreacion(subscripcion) {
@@ -97,7 +94,11 @@ class ModeloPlus {
     }
 
     #obtenerDiasRestantes(subscripcion) {
-        const fechaFin = addDays(subscripcion.creado, subscripcion.duracion)
+        if (!subscripcion.creado || typeof subscripcion.creado !== "string") throw new Error("Plus.Creado invalido")
+
+        const [dia, mes, anio] = String(subscripcion.creado).split("/");
+        const fechaCreada = new Date(`${anio}-${mes}-${dia}`);
+        const fechaFin = addDays(fechaCreada, subscripcion.duracion)
         const hoy = new Date()
         const diasRestantes = differenceInDays(fechaFin, hoy) + 1
         return diasRestantes > 0 ? diasRestantes : 0;

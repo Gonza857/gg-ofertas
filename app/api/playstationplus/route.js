@@ -6,8 +6,6 @@ import ManejadorRespuesta from "@/infraestructura/ManejadorRespuesta";
 const modeloPlus = container.resolve("ModeloPlus");
 const validadorRol = container.resolve("ValidadorRol");
 
-console.log("modeloPlus", modeloPlus);
-console.log("validadorRol", validadorRol)
 
 const revalidar = () => {
     revalidatePath("/playstationplus", "page")
@@ -22,9 +20,9 @@ export async function POST(req, res) {
     if (!resultado.exito) return resultado;
     try {
         const cuerpo = await req.json();
-        const resultado = await modeloPlus.guardarSubscripcion(cuerpo, resultado.usuario);
+        const resultadoGuardar = await modeloPlus.guardarSubscripcion(cuerpo, resultado.usuario);
         revalidar()
-        return ManejadorRespuesta.ok({data: resultado})
+        return ManejadorRespuesta.ok({data: resultadoGuardar})
     } catch (e) {
         return ManejadorRespuesta.error(e.message)
     }
@@ -35,19 +33,23 @@ export async function PATCH(req, res) {
     if (!resultado.exito) return resultado;
     try {
         const cuerpo = await req.json();
-        const resultado = await modeloPlus.actualizar(cuerpo, resultado.usuario);
+        const resultadoActualizar = await modeloPlus.actualizar(cuerpo, resultado.usuario);
         revalidar()
-        return ManejadorRespuesta.ok({data: resultado})
+        return ManejadorRespuesta.ok({data: resultadoActualizar})
     } catch (e) {
         return ManejadorRespuesta.error(e.message)
     }
 }
 
 export async function GET(req, res) {
+    const { searchParams } = new URL(req.url);
+    let cliente = searchParams.get('cliente') === "undefined" ? undefined : searchParams.get('cliente');
+
     try {
-        const resultado = await modeloPlus.obtenerSubscripcionesEnStock()
-        return ManejadorRespuesta.ok({data: resultado})
+        const resultadoObtener = await modeloPlus.obtenerSubscripcionesEnStock(cliente)
+        return ManejadorRespuesta.ok({data: resultadoObtener})
     } catch (e) {
+        console.error(e.message)
         return ManejadorRespuesta.error(e.message)
     }
 }
@@ -58,9 +60,9 @@ export async function DELETE(req) {
 
     const idPlus = new URL(req.url).searchParams.get('id')
     try {
-        const resultado = await modeloPlus.eliminar(idPlus, resultado.usuario);
+        const resultadoEliminar = await modeloPlus.eliminar(idPlus, resultado.usuario);
         revalidar()
-        return ManejadorRespuesta.ok({data: resultado})
+        return ManejadorRespuesta.ok({data: resultadoEliminar})
     } catch (e) {
         return ManejadorRespuesta.error(e.message)
     }

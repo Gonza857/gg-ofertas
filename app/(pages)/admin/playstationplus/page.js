@@ -1,6 +1,6 @@
 function PlayStationPlus () {
     return (
-        <>PlayStationPlus</>
+        <>PlayStationPlus en desarrollo.</>
     )
 }
 
