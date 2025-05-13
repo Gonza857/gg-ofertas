@@ -1,12 +1,12 @@
 let id = 0;
 
 export const images = [
-    {
-        id: id++,
-        alt: "Fin de semana",
-        path: "/images/home-carousel/findesemana-1305.avif",
-        urlTo: "/juegos/ofertas/fin-de-semana"
-    },
+    // {
+    //     id: id++,
+    //     alt: "Fin de semana",
+    //     path: "/images/home-carousel/findesemana-1305.avif",
+    //     urlTo: "/juegos/ofertas/fin-de-semana"
+    // },
     {
         id: id++,
         alt: "Ahorros a otro nivel",

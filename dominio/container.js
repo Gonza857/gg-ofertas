@@ -32,10 +32,8 @@ class Container {
 
         // Verificar si está inicializado
         if (getApps().length > 0) {
-            console.log("Firebase se inicializó correctamente");
         } else {
             throw new Error("No inicializado.")
-
         }
 
         this.register('BaseDeDatos', new MiFirebase(APP_PRINCIPAL));

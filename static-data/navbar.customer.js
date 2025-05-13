@@ -23,7 +23,7 @@ export const navbarOptions = [
         hasSubmenu: true,
         submenu: [
             {icon: BadgePercent, label: `${"Ofertas"} 'Ahorros de otro nivel'`, href: "/juegos/ofertas"},
-            {icon: BadgePercent, label: `${"Ofertas"} de 'Fin de semana'`, href: "/juegos/ofertas/fin-de-semana"},
+            // {icon: BadgePercent, label: `${"Ofertas"} de 'Fin de semana'`, href: "/juegos/ofertas/fin-de-semana"},
             {icon: SiPlaystation5, label: "Juegos PS5", href: "/juegos/stock/ps5"},
             {icon: SiPlaystation4, label: "Juegos PS4", href: "/juegos/stock/ps4"},
         ],
@@ -59,11 +59,11 @@ export const sideNavbarOptions = [
         icon: <BadgePercent className="mr-2 h-6 w-6"/>,
         href: "/juegos/ofertas"
     },
-    {
-        name: "Ofertas de 'Fin de Semana'",
-        icon: <BadgePercent className="mr-2 h-6 w-6"/>,
-        href: "/juegos/ofertas/fin-de-semana"
-    },
+    // {
+    //     name: "Ofertas de 'Fin de Semana'",
+    //     icon: <BadgePercent className="mr-2 h-6 w-6"/>,
+    //     href: "/juegos/ofertas/fin-de-semana"
+    // },
     {
         name: "Juegos PS4",
         icon: <SiPlaystation4 className="mr-2 h-6 w-6"/>,
