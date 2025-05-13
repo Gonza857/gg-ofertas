@@ -19,38 +19,20 @@ const saberDuracion = {
     365: "12 meses"
 }
 
-
-const copiarTodos = (datos) => {
-    const textoCompleto = datos
+function TablaPlusLiquidacion({subscripciones}) {
+    const {copiado, copiar} = useCopiarAlPortapapeles()
+    const textoCompleto = subscripciones
         .map(plus =>
             `PlayStation Plus ${plus.tipo} | ${plus.diasRestantes} días | ${plus.slotsPs4 > 0 ? "PS4" : ""}${(plus.slotsPs4 > 0 && plus.slotsPs5 > 0) ? "/" : ""}${plus.slotsPs5 > 0 ? "PS5" : ""} | $${plus.costo}`
         )
-        .join("\n"); // Une cada registro en una nueva línea
+        .join("\n");
 
-    navigator.clipboard.writeText(textoCompleto)
-        .then(() => {
-            toast({
-                title: "Copiado al portapapeles",
-                description: "Todos los registros han sido copiados.",
-            });
-        })
-        .catch((err) => {
-            console.error("Error al copiar: ", err);
-            toast({
-                title: "Error",
-                description: "No se pudo copiar al portapapeles.",
-                variant: "destructive",
-            });
-        });
-};
-
-function TablaPlusLiquidacion({subscripciones}) {
     return (
         <>
             <Tabla subscripciones={subscripciones}/>
             <Button
                 variant={"outline"}
-                onClick={() => copiarTodos(subscripciones)}
+                onClick={() => copiar(textoCompleto)}
                 className={"w-full mt-4"}
             >
                 Copiar todos

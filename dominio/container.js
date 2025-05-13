@@ -11,6 +11,8 @@ import RepositorioTarjeta from "@/dominio/repositorio/RepositorioTarjeta";
 import ModeloTarjeta from "@/dominio/modelo/ModeloTarjeta";
 import Almacenamiento from "@/infraestructura/Storage";
 import RepositorioImagen from "@/dominio/repositorio/RepositorioImagen";
+import CookieManager from "@/dominio/utils/auth/cookiesManager";
+import ValidadorRol from "@/app/helpers/ValidadorRol";
 
 class Container {
     constructor() {
@@ -63,6 +65,11 @@ class Container {
             this.resolve("RepositorioImagen")
         ));
 
+        this.register("CookieManager", CookieManager)
+        this.register("ValidadorRol", new ValidadorRol(
+            this.resolve("CookieManager"),
+            this.resolve("ModeloUsuario")
+        ))
 
     }
 

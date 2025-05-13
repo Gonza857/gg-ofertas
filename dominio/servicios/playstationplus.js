@@ -30,5 +30,5 @@ export async function obtenerPlusStock() {
         method: 'GET',
         cache: "no-store"
     };
-    return Fetcher.request(`/admin/stock/playstationplus`, fetchParams);
+    return Fetcher.request(`/playstationplus`, fetchParams);
 }

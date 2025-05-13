@@ -71,5 +71,6 @@ body {
 
 .styledMain,
 .styledPerfilNAvigation {
-    min-height: calc(100vh - 80px);
+    padding-top: 6rem;
+    min-height: calc(100dvh);
 }

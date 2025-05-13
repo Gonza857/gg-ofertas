@@ -3,19 +3,20 @@ import {obtenerPlusStock} from "@/dominio/servicios/playstationplus";
 import TablaPlusLiquidacion from "@/components/page-components/reventa/TablaPlusLiquidacion";
 import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from "@/components/ui/accordion";
 
-export const revalidate = 0;
 export const dynamic = "force-dynamic";
 
 async function StockPlayStationPlus() {
-    const subscripciones = await obtenerPlusStock()
+    const {exito, data} = await obtenerPlusStock()
+    if (!exito) return <>Error</>
+
     return (
-        <main className={"styledMain pt-20"}>
+        <main className={"styledMain"}>
             <article className={"w-full sm:w-11/12 md:w-3/4 xl:w-1/2 mx-auto p-2 md:p-0"}>
                 <h1 className="text-xl md:text-3xl font-bold text-center mb-4">
                     PlayStation Plus En Liquidación PS4 & PS5
                 </h1>
                 <Recordatorios/>
-                <TablaPlusLiquidacion subscripciones={subscripciones}/>
+                <TablaPlusLiquidacion subscripciones={data}/>
             </article>
         </main>
     )

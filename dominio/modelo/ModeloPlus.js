@@ -38,7 +38,10 @@ class ModeloPlus {
         }
     }
 
-    async guardarSubscripcion(subscripcion) {
+    async guardarSubscripcion(subscripcion, usuario) {
+        if (!usuario) throw new Error("No autorizado")
+        if (!subscripcion) throw new Error ("No se pudo guardar la membresía.")
+
         if (subscripcion.estado.toLowerCase() === "liquidacion") {
             subscripcion.creado = this.#obtenerFechaDeCreacion(subscripcion)
         } else {
@@ -49,7 +52,9 @@ class ModeloPlus {
         subscripcion.slotsPs4 = Number(subscripcion.slotsPs4)
         subscripcion.slotsPs5 = Number(subscripcion.slotsPs5)
         delete subscripcion.diasRestantes;
+
         const resultado = await this.repositorioPlus.guardar(subscripcion);
+
         if (!resultado) throw new Error("No se pudo guardar la membresía.")
         return {
             exito: true,
@@ -69,8 +74,9 @@ class ModeloPlus {
         })
 
         // Calcular costo y omitir las que ya vencieron
-        return subscripciones.map((s) => {
-            if (s.diasRestantes <= 0) return;
+        return subscripciones
+            .filter(s => s.diasRestantes > 0)
+            .map((s) => {
             s.costo = this.#obtenerPrecioFinalSegunParametros(s.diasRestantes, s.tipo, s.duracion)
             return s;
         })
