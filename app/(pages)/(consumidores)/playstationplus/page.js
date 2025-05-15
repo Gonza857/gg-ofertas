@@ -8,7 +8,7 @@ import PsnPlusCustomerInfo from "@/components/page-components/consumidores/plays
 
 const PlayStationPlusSSS = () => {
     return (
-        <main className="styledMain pt-20">
+        <main className="styledMain">
             <PaymentInfoBanner/>
             <article className={"w-full sm:w-11/12 md:w-10/12 lg:w-9/12 mx-auto py-8 px-2 md:px-4"}>
                 <h1 className="text-4xl font-bold text-center mb-8">Subscripciones PlayStation Plus</h1>

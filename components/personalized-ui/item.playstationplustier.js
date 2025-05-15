@@ -22,7 +22,7 @@ function PlayStationPlusTier  ({tier}) {
                         {tier.additionalPoints.map((p, index) =>
                             <li key={index} className="flex items-start gap-2">
                                 <IoMdInformationCircleOutline  className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0"/>
-                                <Link href={p.link} className={"hover:underline transition-200"}>
+                                <Link href={p.link} className={"hover:underline transition-200"} target={"_blank"}>
                                     {p.titulo}
                                 </Link>
                             </li>
