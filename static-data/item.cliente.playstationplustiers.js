@@ -10,7 +10,7 @@ export const psplustiers = [
     },
     {
         name: "Extra",
-        headerClass: "bg-amber-400 text-black", // Fondo amarillo/dorado, texto negro
+        headerClass: "plusExtra text-black", // Fondo amarillo/dorado, texto negro
         borderClass: "border-amber-500",
         features: [
             "Todo lo de Essential",
@@ -18,10 +18,17 @@ export const psplustiers = [
             "Juegos de Ubisoft+",
             "Versiones de prueba de juegos",
         ],
+        hasAdditionalPoints: true,
+        additionalPoints: [
+            {
+                titulo: "Ver catálogo",
+                link: "https://www.playstation.com/es-ar/ps-plus/games/?category=GAME_CATALOG#plus-container"
+            }
+        ]
     },
     {
         name: "Deluxe",
-        headerClass: "bg-black text-amber-400", // Fondo negro, texto amarillo/dorado
+        headerClass: "bg-black plusDeluxe", // Fondo negro, texto amarillo/dorado
         borderClass: "border-black",
         features: [
             "Todo lo de Essential y Extra",
@@ -29,5 +36,12 @@ export const psplustiers = [
             "Versiones remasterizadas",
             "Pruebas de juegos por tiempo limitado",
         ],
+        hasAdditionalPoints: true,
+        additionalPoints: [
+            {
+                titulo: "Ver catálogo clásicos",
+                link: "https://www.playstation.com/es-ar/ps-plus/games/?category=CLASSICS_CATALOG#plus-container"
+            }
+        ]
     },
 ]

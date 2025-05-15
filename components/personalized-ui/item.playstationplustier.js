@@ -1,5 +1,7 @@
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import {Check} from "lucide-react";
+import Link from "next/link";
+import {IoMdInformationCircleOutline} from "react-icons/io";
 
 function PlayStationPlusTier  ({tier}) {
     return (
@@ -15,6 +17,19 @@ function PlayStationPlusTier  ({tier}) {
                             <span>{feature}</span>
                         </li>
                     ))}
+                    {tier.hasAdditionalPoints &&
+                        <>
+                        {tier.additionalPoints.map((p, index) =>
+                            <li key={index} className="flex items-start gap-2">
+                                <IoMdInformationCircleOutline  className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0"/>
+                                <Link href={p.link} className={"hover:underline transition-200"}>
+                                    {p.titulo}
+                                </Link>
+                            </li>
+                        )}
+                        </>
+
+                    }
                 </ul>
             </CardContent>
         </Card>

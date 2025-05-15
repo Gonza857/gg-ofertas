@@ -78,3 +78,11 @@ body {
 .styledAdminMain {
     min-height: calc(100dvh);
 }
+
+.plusExtra {
+    background-color: #FBCD08;
+}
+
+.plusDeluxe {
+    color: #F1D321
+}

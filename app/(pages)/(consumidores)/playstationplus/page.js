@@ -26,7 +26,7 @@ const PlayStationPlusSSS = () => {
                     </div>
                     <div className="pt-8 text-center">
                         <Badge variant="outline" className="text-sm px-4 py-2">
-                            PlayStation Plus - Precios actualizados. Abril 2025.
+                            PlayStation Plus - Precios actualizados. Mayo 2025.
                         </Badge>
                     </div>
                 </div>
