@@ -55,7 +55,7 @@ export const navbarOptions = [
 
 export const sideNavbarOptions = [
     {
-        name: "Ofertas 'Ahorros a otro nivel'",
+        name: "Ofertas",
         icon: <BadgePercent className="mr-2 h-6 w-6"/>,
         href: "/juegos/ofertas"
     },
