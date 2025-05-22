@@ -9,6 +9,7 @@ class ModeloJuegos {
     }
 
     obtenerArrayDeConsola(datosConsola) {
+        if (Array.isArray(datosConsola)) return datosConsola;
         const diccionario = {
             "PS3": ["PS3"],
             "PS4/PS5": ["PS4", "PS5"],
@@ -132,7 +133,6 @@ class ModeloJuegos {
         }
 
         this.#ordenarPorDestacadoAndTitulo(oferta.juegos)
-        console.log("mando al front estas ofertas", oferta)
         return oferta;
     }
 
@@ -164,7 +164,6 @@ class ModeloJuegos {
             return;
         }
 
-        console.log("Customer")
         arrayJuegos.forEach((j) => {
             j.precioLista = this.#redondearCien(Number(j.precioClienteLista)).toFixed(0);
             j.precioTransferencia = this.#redondearCien(Number(j.precioClienteTransferencia)).toFixed(0);

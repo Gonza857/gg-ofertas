@@ -15,9 +15,10 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {Bell, ChevronDown, ChevronRight, LogOut, Menu, X} from "lucide-react";
 import {adminMenuItems} from "@/static-data/navbar.admin";
 import Link from "next/link";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {usePathname} from "next/navigation";
 import AdminHeader from "@/components/page-components/admin/navbar/Header";
+import {dmSans} from "@/app/layout";
 
 function AdminLayout({children}) {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -61,7 +62,7 @@ function AdminLayout({children}) {
                         onClick={(e) => e.stopPropagation()}
                     >
                         <div className="flex items-center justify-between p-4 border-b">
-                            <h2 className="font-bold text-lg">Game Store Admin</h2>
+                            <h1 className={`text-black ${dmSans.className} font-bold text-xl`}>GARRET GAMES</h1>
                             <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(false)}>
                                 <X className="h-5 w-5"/>
                                 <span className="sr-only">Cerrar menú</span>
@@ -134,7 +135,7 @@ function AdminLayout({children}) {
                 {/* Menú lateral para escritorio (fijo) */}
                 <aside className="hidden lg:block w-64 border-r bg-white overflow-y-auto">
                     <div className="p-4 border-b">
-                        <h2 className="font-bold text-lg">Game Store Admin</h2>
+                        <h1 className={`text-black ${dmSans.className} font-bold text-xl`}>GARRET GAMES</h1>
                     </div>
                     <nav className="p-2">
                         {adminMenuItems.map((item, index) => (

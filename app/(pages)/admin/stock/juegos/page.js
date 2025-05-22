@@ -23,7 +23,7 @@ async function StockJuegos() {
     }
 
     return (
-        <main className={"styledMain pt-4"}>
+        <main className={"styledAdminMain"}>
             <article className={"w-full lg:w-11/12 mx-auto sm:px-2"}>
                 <div className={"flex justify-center items-center relative mb-4"}>
                     <h1 className="text-xl md:text-2xl font-bold text-center w-fit self-center">

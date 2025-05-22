@@ -8,6 +8,8 @@ import {
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
+import {dmSans} from "@/app/layout";
+import React from "react";
 
 function AdminHeader ({action}) {
     return (
@@ -16,7 +18,7 @@ function AdminHeader ({action}) {
                 <Menu className="h-6 w-6"/>
                 <span className="sr-only">Abrir menú</span>
             </Button>
-            <h1 className="text-xl font-bold">Game Store Admin</h1>
+            <h1 className={`text-black ${dmSans.className} font-bold text-xl`}>GARRET GAMES</h1>
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                     <Button variant="ghost" size="icon" className="rounded-full">

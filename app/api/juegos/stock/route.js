@@ -88,14 +88,8 @@ export async function PATCH(req, res) {
         const cuerpo = await req.json();
         const resultado = await modeloJuegos.actualizarJuegoStock(cuerpo)
         revalidar()
-        return NextResponse.json(
-            resultado
-        )
+        return ManejadorRespuesta.ok({data: resultado})
     } catch (e) {
-        return NextResponse.json({
-                mensaje: e.message,
-                exito: false,
-            }
-        )
+        return ManejadorRespuesta.error(e.message);
     }
 }
