@@ -22,7 +22,7 @@ export const navbarOptions = [
         href: "#",
         hasSubmenu: true,
         submenu: [
-            {icon: BadgePercent, label: `${"Ofertas"} 'Ahorros de otro nivel'`, href: "/juegos/ofertas"},
+            {icon: BadgePercent, label: `Juegos en oferta`, href: "/juegos/ofertas"},
             // {icon: BadgePercent, label: `${"Ofertas"} de 'Fin de semana'`, href: "/juegos/ofertas/fin-de-semana"},
             {icon: SiPlaystation5, label: "Juegos PS5", href: "/juegos/stock/ps5"},
             {icon: SiPlaystation4, label: "Juegos PS4", href: "/juegos/stock/ps4"},

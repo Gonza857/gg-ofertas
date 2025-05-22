@@ -9,8 +9,8 @@ export const images = [
     // },
     {
         id: id++,
-        alt: "Ahorros a otro nivel",
-        path: "/images/home-carousel/ahorrosaotronivel-2105.webp",
+        alt: "Ofertas multiverso de juegos",
+        path: "/images/home-carousel/multiverse-of-games-0406.avif",
         urlTo: "/juegos/ofertas"
     },
     {

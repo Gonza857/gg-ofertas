@@ -161,8 +161,8 @@ class ModeloJuegos {
             })
         }
         arrayJuegos.forEach((j) => {
-            j.precioLista = this.#redondearCien(j.price * 1.25).toFixed(0);
-            j.precioTransferencia = this.#redondearCien(j.precioLista * 0.8).toFixed(0);
+            j.precioLista = this.#redondearCien(Number(j.precioLista)).toFixed(0);
+            j.precioTransferencia = this.#redondearCien(Number(j.precioTransferencia)).toFixed(0);
         })
     }
 

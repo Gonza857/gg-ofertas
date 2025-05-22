@@ -13,7 +13,7 @@ export const opcionesNavbarReventa = [
         href: "#",
         hasSubmenu: true,
         submenu: [
-            {icon: BadgePercent, label: `${"Ofertas"} 'Ahorros de otro nivel'`, href: "/reventa"},
+            {icon: BadgePercent, label: `Juegos en oferta`, href: "/reventa"},
             // {
             //     icon: BadgePercent,
             //     label: `${"Ofertas"} de 'Fin de semana'`,
