@@ -132,6 +132,7 @@ class ModeloJuegos {
         }
 
         this.#ordenarPorDestacadoAndTitulo(oferta.juegos)
+        console.log("mando al front estas ofertas", oferta)
         return oferta;
     }
 
@@ -155,14 +156,22 @@ class ModeloJuegos {
                 j.modoEdicion = false;
                 j.id = i;
             })
+            return;
         } else if (cliente === "reseller") {
             arrayJuegos.forEach((j) => {
                 j.price = this.#redondearCien((j.price) * 0.95).toFixed(0)
             })
+            return;
         }
+
+        console.log("Customer")
         arrayJuegos.forEach((j) => {
-            j.precioLista = this.#redondearCien(Number(j.precioLista)).toFixed(0);
-            j.precioTransferencia = this.#redondearCien(Number(j.precioTransferencia)).toFixed(0);
+            j.precioLista = this.#redondearCien(Number(j.precioClienteLista)).toFixed(0);
+            j.precioTransferencia = this.#redondearCien(Number(j.precioClienteTransferencia)).toFixed(0);
+            delete j.price
+            delete j.precioClienteLista
+            delete j.precioReventa
+            delete j.precioClienteTransferencia
         })
     }
 
