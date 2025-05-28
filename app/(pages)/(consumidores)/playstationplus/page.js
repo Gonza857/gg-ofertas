@@ -5,13 +5,13 @@ import PlayStationPlus from "@/components/personalized-ui/item.playstationplus";
 import PsnPlusTiers from "@/components/page-components/consumidores/playstationplus/PsnPlusTiers";
 import PaymentInfoBanner from "@/components/personalized-ui/PaymentInfoBanner";
 import PsnPlusCustomerInfo from "@/components/page-components/consumidores/playstationplus/PsnPlusCustomerInfo";
-import PlayStationPlusOnSale from "@/components/personalized-ui/customer/playstationplus/PaymentInfoBanner";
+import PlusOfertaBanner from "@/components/personalized-ui/shared/PlusOfertaBanner";
 
 const PlayStationPlusSSS = () => {
     return (
         <main className="styledMain">
             <PaymentInfoBanner/>
-            <PlayStationPlusOnSale/>
+            <PlusOfertaBanner/>
             <article className={"w-full sm:w-11/12 md:w-10/12 lg:w-9/12 mx-auto py-8 px-2 md:px-4"}>
                 <h1 className="text-4xl font-bold text-center mb-8">Subscripciones PlayStation Plus</h1>
                 <PsnPlusCustomerInfo/>
@@ -32,8 +32,6 @@ const PlayStationPlusSSS = () => {
                         </Badge>
                     </div>
                 </div>
-
-
                 <PsnPlusTiers/>
             </article>
         </main>
