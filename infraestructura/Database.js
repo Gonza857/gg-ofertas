@@ -167,6 +167,35 @@ class MiFirebase {
         }
     }
 
+    async buscarUnoPorAtributos(coleccion, filtros) {
+        try {
+            const referenciaDocumento = collection(
+                this.BASE_DE_DATOS,
+                coleccion
+            );
+
+            // Convertir los filtros a una lista de condiciones where
+            const condiciones = filtros.map(filtro =>
+                where(filtro.atributo, '==', filtro.valor)
+            );
+
+            // Agregar un limit (opcional)
+            condiciones.push(limit(1));
+
+            const consulta = query(referenciaDocumento, ...condiciones);
+
+            const resultado = await getDocs(consulta);
+            if (!resultado.empty) {
+                const doc = resultado.docs[0];
+                return {...doc.data(), id: doc.id};
+            } else {
+                return null;
+            }
+        } catch (e) {
+            throw new FirebaseError(e.message);
+        }
+    }
+
     async buscarUnoPorAtributo(coleccion, atributo, dato) {
         /*  OPERADORES
             < menos que

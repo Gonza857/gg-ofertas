@@ -38,9 +38,10 @@ class RepositorioJuegos {
         return await this.BaseDeDatos.guardar(this.COLECCION, ofertas);
     }
 
-    async obtenerOfertaActual () {
-        return await this.BaseDeDatos.buscarUnoPorAtributo(this.COLECCION, "estaActiva", true)
+    async obtenerOfertaActual (filtros) {
+        return await this.BaseDeDatos.buscarUnoPorAtributos(this.COLECCION, filtros)
     }
+
 
     async obtenerOfertaPorAtributoValor (atributo, valor) {
         return await this.BaseDeDatos.buscarUnoPorAtributo(this.COLECCION, atributo, valor)

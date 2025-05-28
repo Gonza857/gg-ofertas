@@ -106,9 +106,17 @@ class ModeloJuegos {
         let oferta;
 
         if (Number(nroOferta) === 2) {
-            oferta = await this.repositorioJuegos.obtenerOfertaPorAtributoValor("nro", Number(nroOferta))
+            const filtros = [
+                {atributo: "nro", valor: Number(nroOferta)},
+                {atributo: "estaActiva", valor: true}
+            ]
+            oferta = await this.repositorioJuegos.obtenerOfertaActual(filtros)
         } else {
-            oferta = await this.repositorioJuegos.obtenerOfertaActual()
+            const filtros = [
+                {atributo: "nro", valor: 0},
+                {atributo: "estaActiva", valor: true}
+            ]
+            oferta = await this.repositorioJuegos.obtenerOfertaActual(filtros)
         }
 
         if (tipoCliente === "customer") {
