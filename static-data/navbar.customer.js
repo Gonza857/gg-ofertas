@@ -24,7 +24,7 @@ export const navbarOptions = [
         submenu: [
             {icon: BadgePercent, label: `Juegos en oferta`, href: "/juegos/ofertas"},
             // {icon: BadgePercent, label: `${"Ofertas"} de 'Fin de semana'`, href: "/juegos/ofertas/fin-de-semana"},
-            {icon: BadgePercent, label: `Ofertas 'Days of Play`, href: "/juegos/ofertas/days-of-play"},
+            {icon: BadgePercent, label: `Ofertas 'Days of Play'`, href: "/juegos/ofertas/days-of-play"},
             {icon: SiPlaystation5, label: "Juegos PS5", href: "/juegos/stock/ps5"},
             {icon: SiPlaystation4, label: "Juegos PS4", href: "/juegos/stock/ps4"},
         ],
