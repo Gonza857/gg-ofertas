@@ -19,6 +19,11 @@ export const opcionesNavbarReventa = [
             //     label: `${"Ofertas"} de 'Fin de semana'`,
             //     href: "/reventa/juegos/ofertas/fin-de-semana"
             // },
+            {
+                icon: BadgePercent,
+                label: `Ofertas 'Days Of Plays'`,
+                href: "/reventa/juegos/ofertas/days-of-play"
+            },
             {icon: FaPlaystation, label: "Juegos en stock PS4/PS5", href: "/reventa/juegos/stock"},
         ],
     },
@@ -51,6 +56,11 @@ export const opcionesMenuLateralReventa = [
     //     icon: <RiDiscountPercentLine className="mr-2 h-6 w-6"/>,
     //     href: "/reventa/juegos/ofertas/fin-de-semana"
     // },
+    {
+        name: "Ofertas 'Days of Play'",
+        icon: <RiDiscountPercentLine className="mr-2 h-6 w-6"/>,
+        href: "/reventa/juegos/ofertas/days-of-play"
+    },
     {
         name: "Juegos en stock PS4/PS5",
         icon: <Gamepad2 className="mr-2 h-6 w-6"/>,

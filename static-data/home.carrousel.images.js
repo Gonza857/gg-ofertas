@@ -9,6 +9,12 @@ export const images = [
     // },
     {
         id: id++,
+        alt: "Days of Play",
+        path: "/images/home-carousel/daysofplay-2805.png",
+        urlTo: "/juegos/ofertas/days-of-play"
+    },
+    {
+        id: id++,
         alt: "Ofertas multiverso de juegos",
         path: "/images/home-carousel/multiverse-of-games-0406.avif",
         urlTo: "/juegos/ofertas"
