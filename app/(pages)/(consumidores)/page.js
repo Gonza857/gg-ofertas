@@ -12,6 +12,7 @@ import Link from "next/link";
 import {Button} from "@/components/ui/button";
 import {obtenerTodasLasTarjetas} from "@/dominio/servicios/giftcards";
 import {cookies} from "next/headers";
+import PlusOfertaBannerCuotas from "@/components/personalized-ui/shared/PlusOfertaBannerCuotas";
 
 export const dynamic = "force-dynamic";
 
@@ -26,18 +27,21 @@ async function Principal() {
     if (!resultado.exito) return <>Error</>
 
     return (
-        <main className={"styledMain w-full sm:w-11/12 md:w-10/12 mx-auto pt-20"}>
-            <AutoCarousel images={images}/>
-            <BusinessFeatures/>
-            <GiftCardsSwiper
-                titulo={"Tarjetas de regalo"}
-                subtitulo={"¡Canjealas y comprá en tu cuenta!"}
-                textoBoton={"Ver todas"}
-                ruta={"/tarjetas-de-regalo"}
-                productos={resultado.data}
-            />
-            <BusinessHighlights/>
-            <PaymentMethods/>
+        <main className={"styledMain"}>
+            <PlusOfertaBannerCuotas/>
+            <article className={"w-full sm:w-11/12 md:w-9/12 mx-auto"}>
+                <AutoCarousel images={images}/>
+                <BusinessFeatures/>
+                <GiftCardsSwiper
+                    titulo={"Tarjetas de regalo"}
+                    subtitulo={"¡Canjealas y comprá en tu cuenta!"}
+                    textoBoton={"Ver todas"}
+                    ruta={"/tarjetas-de-regalo"}
+                    productos={resultado.data}
+                />
+                <BusinessHighlights/>
+                <PaymentMethods/>
+            </article>
         </main>
     )
 }

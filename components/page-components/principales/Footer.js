@@ -5,11 +5,15 @@ import React from "react";
 const seccionesItems = [
     {
         nombre: "Juegos en oferta",
-        ruta: "/"
+        ruta: "/juegos/ofertas"
     },
     {
-        nombre: "Juegos en stock",
-        ruta: "/stock"
+        nombre: "Juegos en stock PS4",
+        ruta: "/juegos/stock/ps4"
+    },
+    {
+        nombre: "Juegos en stock PS5",
+        ruta: "/juegos/stock/ps5"
     },
     {
         nombre: "PlayStation Plus",

@@ -113,7 +113,7 @@ function PlayStationPlus({product}) {
 
     return (
         <Card className="flex flex-col h-full hover:shadow-md transition-shadow">
-            <CardHeader className="flex-grow p-4 relative">
+            <CardHeader className="flex-grow p-2 px-2 relative">
                 {(product.tieneOferta && precioOferta !== 0) && (
                     <Badge
                         className="absolute top-2 right-2 bg-violet-500 hover:bg-violet-600 text-white flex items-center gap-1 z-20">
@@ -135,7 +135,7 @@ function PlayStationPlus({product}) {
                     <span className="block text-sm font-normal text-muted-foreground mt-1">{product.consola}</span>
                 </CardTitle>
             </CardHeader>
-            <CardContent className="p-1 md:p-4 pt-0 space-y-3">
+            <CardContent className="p-1 md:px-4 pt-0 space-y-3">
                 {/* Selector de tiempo con Select */}
                 <div className="w-full">
                     <Select defaultValue="1" value={selectedPeriod} onValueChange={setSelectedPeriod}>
@@ -170,30 +170,20 @@ function PlayStationPlus({product}) {
                 </div>
 
                 {/* Precio transferencia con descuento */}
-                <div className="bg-green-50 p-3 rounded-md border border-green-100">
-                    <div className="flex items-center justify-between mb-1">
-                        <div className="flex items-center gap-1.5">
-                            <BanknoteIcon className="h-4 w-4 text-green-600"/>
-                            <p className="text-sm font-medium text-green-700">Transferencia:</p>
-                        </div>
-                        {/*<Badge variant="outline" className="hidden md:block text-center bg-green-100 text-green-800 border-green-200">*/}
-                        {/*    20% OFF*/}
-                        {/*</Badge>*/}
+                <div className="flex items-center justify-between bg-green-50 p-1 px-2 rounded-md border border-green-100">
+                    <div className="flex items-center gap-1.5">
+                        <BanknoteIcon className="hidden sm:block h-4 w-4 text-green-600"/>
+                        <p className="text-sm font-medium text-green-700">Transferencia:</p>
                     </div>
-                    <div className="flex items-center justify-end md:justify-between">
-                        <p className="text-sm text-green-600 hidden md:block">
-                            Ahorrás: ${ahorro.toLocaleString()
-                        }</p>
-                        <p className="text-lg sm:text-xl font-bold text-green-700 self-end">
-                            ${precioTransferencia.toLocaleString()}
-                        </p>
-                    </div>
+                    <p className="text-sm sm:text-lg md:text-xl font-bold text-green-700">
+                        ${precioTransferencia.toLocaleString()}
+                    </p>
                 </div>
 
                 {/* Información de cuotas */}
-                <div className="flex items-center justify-between bg-red-50 p-2 rounded-md border border-red-100">
+                <div className="flex items-center justify-between bg-red-50 p-1 px2- rounded-md border border-red-100">
                     <div className="flex items-center gap-1.5">
-                        <CreditCard className="h-4 w-4 text-red-600"/>
+                        <CreditCard className="hidden sm:block h-4 w-4 text-red-600"/>
                         <p className="text-sm font-medium text-red-700">3 cuotas de:</p>
                     </div>
                     <p className="sm:text-lg md:text-xl font-bold text-red-700">${precioPorCuota.toLocaleString()}</p>

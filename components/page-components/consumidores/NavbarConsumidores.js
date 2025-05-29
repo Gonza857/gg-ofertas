@@ -7,11 +7,12 @@ import {Button} from "@/components/ui/button";
 import {
     Menu,
     X,
-    ChevronDown,
+    ChevronDown, Flame, Sparkles,
 } from "lucide-react"
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from "@/components/ui/dropdown-menu"
 import {navbarOptions, sideNavbarOptions} from "@/static-data/navbar.customer";
 import {dmSans} from "@/app/layout";
+import {Badge} from "@/components/ui/badge";
 
 const NavbarConsumidores = () => {
     const [estaAbierto, setEstaAbierto] = useState(false);
@@ -57,6 +58,20 @@ const NavbarConsumidores = () => {
                             >
                                 {item.icon}
                                 {item.name}
+                                {item?.tieneDestacado &&
+                                    <Badge
+                                        className="ms-4 bg-blue-500 hover:bg-blue-600 text-white flex items-center gap-1 z-20">
+                                        <Sparkles className="h-3 w-3"/>
+                                        {item.textoDestacado}
+                                    </Badge>
+                                }
+                                {item?.tieneOferta &&
+                                    <Badge
+                                        className="ms-4 bg-violet-500 hover:bg-violet-600 text-white flex items-center gap-1 z-20">
+                                        <Flame className="h-3 w-3"/>
+                                        {item.texto}
+                                    </Badge>
+                                }
                             </Link>
                         ))}
                         <p className={"absolute bottom-0 -left-2 w-full text-center italic font-thin"}>- Garret Games

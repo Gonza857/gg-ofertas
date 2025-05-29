@@ -66,9 +66,13 @@ export const sideNavbarOptions = [
     //     href: "/juegos/ofertas/fin-de-semana"
     // },
     {
-        name: "Ofertas Days of Play'",
+        name: "Ofertas 'Days of Play'",
         icon: <BadgePercent className="mr-2 h-6 w-6"/>,
-        href: "/juegos/ofertas/days-of-play"
+        href: "/juegos/ofertas/days-of-play",
+        tieneDestacado: true,
+        textoDestacado: "Nuevo",
+        tieneOferta: false,
+        texto: ""
     },
     {
         name: "Juegos PS4",
@@ -83,7 +87,9 @@ export const sideNavbarOptions = [
     {
         name: "PlayStation Plus",
         icon: <PsplusLogo/>,
-        href: "/playstationplus"
+        href: "/playstationplus",
+        tieneOferta: true,
+        texto: "En oferta"
     },
     {
         name: "Preguntas frecuentes",
