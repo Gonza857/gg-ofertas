@@ -15,8 +15,8 @@ export const images = [
     },
     {
         id: id++,
-        alt: "Ofertas multiverso de juegos",
-        path: "/images/home-carousel/multiverse-of-games-0406.avif",
+        alt: "Summer Game Fest",
+        path: "/images/home-carousel/summergamefest-1806.webp",
         urlTo: "/juegos/ofertas"
     },
     {
