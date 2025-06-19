@@ -28,7 +28,7 @@ async function Principal() {
 
     return (
         <main className={"styledMain"}>
-            <PlusOfertaBannerCuotas/>
+            {/*<PlusOfertaBannerCuotas/>*/}
             <article className={"w-full sm:w-11/12 md:w-9/12 mx-auto"}>
                 <AutoCarousel images={images}/>
                 <BusinessFeatures/>

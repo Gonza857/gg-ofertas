@@ -1,6 +1,7 @@
 import Fetcher from "@/infraestructura/Fetcher";
 
 export async function obtenerTodasLasTarjetas(tipoCliente = "customer", token) {
+    console.log("token que mando al back", token)
     const fetchParams = {
         method: 'GET',
         cache: 'no-cache',

@@ -5,7 +5,7 @@ export const playstationplus = [
         title: "PlayStation Plus",
         tipo: "Essential",
         consola: "PS5",
-        tieneOferta: true,
+        tieneOferta: false,
         precioOferta: [60000], // 48000
         mesesEnOferta: [12],
         precioLista: [14850, 22950, 67500],
@@ -17,7 +17,7 @@ export const playstationplus = [
         title: "PlayStation Plus",
         tipo: "Extra",
         consola: "PS5",
-        tieneOferta: true,
+        tieneOferta: false,
         precioOferta: [75000], // 60000
         mesesEnOferta: [12],
         precioLista: [22950, 37800, 121500],
@@ -29,7 +29,7 @@ export const playstationplus = [
         title: "PlayStation Plus",
         tipo: "Deluxe",
         consola: "PS5",
-        tieneOferta: true,
+        tieneOferta: false,
         precioOferta: [81250], // 65000
         mesesEnOferta: [12],
         precioLista: [28350, 43200, 135000],
@@ -41,7 +41,7 @@ export const playstationplus = [
         title: "PlayStation Plus",
         tipo: "Essential",
         consola: "PS4",
-        tieneOferta: true,
+        tieneOferta: false,
         precioOferta: [60000], // 48000
         mesesEnOferta: [12],
         precioLista: [14850, 22950, 67500],
@@ -53,7 +53,7 @@ export const playstationplus = [
         title: "PlayStation Plus",
         tipo: "Extra",
         consola: "PS4",
-        tieneOferta: true,
+        tieneOferta: false,
         precioOferta: [75000], // 60000
         mesesEnOferta: [12],
         precioLista: [22950, 37800, 121500],
@@ -65,7 +65,7 @@ export const playstationplus = [
         title: "PlayStation Plus",
         tipo: "Deluxe",
         consola: "PS4",
-        tieneOferta: true,
+        tieneOferta: false,
         precioOferta: [81250], // 65000
         mesesEnOferta: [12],
         precioLista: [28350, 43200, 135000],
@@ -80,7 +80,7 @@ export const reventaPsnPlus = [
         title: "PlayStation Plus",
         tipo: "Essential",
         consola: "PS5",
-        tieneOferta: true,
+        tieneOferta: false,
         precioOferta: [45000],
         mesesEnOferta: [12],
         precioReventa: [11000, 17000, 50000],
@@ -92,7 +92,7 @@ export const reventaPsnPlus = [
         title: "PlayStation Plus",
         tipo: "Extra",
         consola: "PS5",
-        tieneOferta: true,
+        tieneOferta: false,
         precioOferta: [58000], // 60000
         mesesEnOferta: [12],
         precioReventa: [17000, 28000, 90000],
@@ -104,7 +104,7 @@ export const reventaPsnPlus = [
         title: "PlayStation Plus",
         tipo: "Deluxe",
         consola: "PS5",
-        tieneOferta: true,
+        tieneOferta: false,
         precioOferta: [61000], // 65000
         mesesEnOferta: [12],
         precioReventa: [21000, 32000, 100000],
@@ -116,7 +116,7 @@ export const reventaPsnPlus = [
         title: "PlayStation Plus",
         tipo: "Essential",
         consola: "PS4",
-        tieneOferta: true,
+        tieneOferta: false,
         precioOferta: [45000], // 48000
         mesesEnOferta: [12],
         precioReventa: [11000, 17000, 50000],
@@ -128,7 +128,7 @@ export const reventaPsnPlus = [
         title: "PlayStation Plus",
         tipo: "Extra",
         consola: "PS4",
-        tieneOferta: true,
+        tieneOferta: false,
         precioOferta: [58000], // 60000
         mesesEnOferta: [12],
         precioReventa: [17000, 28000, 90000],
@@ -140,7 +140,7 @@ export const reventaPsnPlus = [
         title: "PlayStation Plus",
         tipo: "Deluxe",
         consola: "PS4",
-        tieneOferta: true,
+        tieneOferta: false,
         precioOferta: [61000], // 65000
         mesesEnOferta: [12],
         precioReventa: [21000, 32000, 100000],

@@ -7,16 +7,16 @@ export const images = [
     //     path: "/images/home-carousel/findesemana-1305.avif",
     //     urlTo: "/juegos/ofertas/fin-de-semana"
     // },
+    // {
+    //     id: id++,
+    //     alt: "Days of Play",
+    //     path: "/images/home-carousel/daysofplay-2805.png",
+    //     urlTo: "/juegos/ofertas/days-of-play"
+    // },
     {
         id: id++,
-        alt: "Days of Play",
-        path: "/images/home-carousel/daysofplay-2805.png",
-        urlTo: "/juegos/ofertas/days-of-play"
-    },
-    {
-        id: id++,
-        alt: "Summer Game Fest",
-        path: "/images/home-carousel/summergamefest-1806.webp",
+        alt: "Ofertas de mitad de año",
+        path: "/images/home-carousel/ofertasdemitaddeano-0207.webp",
         urlTo: "/juegos/ofertas"
     },
     {

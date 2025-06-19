@@ -11,7 +11,7 @@ const PlayStationPlusSSS = () => {
     return (
         <main className="styledMain">
             <PaymentInfoBanner/>
-            <PlusOfertaBanner/>
+            {/*<PlusOfertaBanner/>*/}
             <article className={"w-full sm:w-11/12 md:w-9/12 xl:w-7/12 mx-auto py-8 px-2 md:px-4"}>
                 <h1 className="text-xl md:text-4xl font-bold text-center mb-8">Subscripciones PlayStation Plus</h1>
                 <PsnPlusCustomerInfo/>
