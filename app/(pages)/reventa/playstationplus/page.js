@@ -8,7 +8,7 @@ import PlusOfertaBanner from "@/components/personalized-ui/shared/PlusOfertaBann
 function SubscripcionPlus() {
     return (
         <main className={"styledMain"}>
-            <PlusOfertaBanner/>
+            {/*<PlusOfertaBanner/>*/}
             <article className={"w-full sm:w-11/12 md:w-10/12 lg:w-9/12 mx-auto py-8 px-2 md:px-4"}>
                 <h1 className="text-xl md:text-3xl font-bold text-center mb-4">Subscripciones PlayStation Plus
                     PS4 & PS5</h1>
