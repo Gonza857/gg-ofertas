@@ -166,7 +166,7 @@ class ModeloJuegos {
 
         try {
             let ofertas = await this.repositorioJuegos.obtenerTodasLasOfertasConFiltro(filtros)
-            ofertas.juegos = this.#formatearJuegosParaPresentar(tipoCliente, ofertas.juegos);
+            ofertas.forEach((o) => this.#formatearJuegosParaPresentar(tipoCliente, o.juegos))
             return ofertas
         } catch (e) {
             console.log(e)
