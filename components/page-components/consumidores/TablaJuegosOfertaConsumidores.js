@@ -34,7 +34,7 @@ function TablaJuegosOfertaConsumidores({juegos = [], fechaExpiracion, titulo = n
             setBusqueda(null)
         }
         const juegosFiltrados = [...juegos].filter((j) => {
-            return j.name.toLowerCase().includes(e.target.value.toLowerCase())
+            return j.nombre.toLowerCase().includes(e.target.value.toLowerCase())
         });
         setJuegoBuscado(e.target.value)
         setBusqueda(juegosFiltrados)
@@ -51,10 +51,10 @@ function TablaJuegosOfertaConsumidores({juegos = [], fechaExpiracion, titulo = n
                     sortedGames.sort((a, b) => b.price - a.price);
                     break;
                 case "name-asc":
-                    sortedGames.sort((a, b) => a.name.localeCompare(b.name));
+                    sortedGames.sort((a, b) => a.nombre.localeCompare(b.nombre));
                     break;
                 case "name-desc":
-                    sortedGames.sort((a, b) => b.name.localeCompare(a.name));
+                    sortedGames.sort((a, b) => b.nombre.localeCompare(a.nombre));
                     break;
                 default:
                     sortedGames = juegos;
@@ -164,13 +164,13 @@ const Cuerpo = ({juegos = [], busqueda = null}) => {
                 busqueda.map(j => (
                     <Registro
                         juego={j}
-                        key={j.name}
+                        key={j.nombre}
                     />))
                 :
                 juegos.map(j => (
                     <Registro
                         juego={j}
-                        key={j.name}
+                        key={j.nombre}
                     />))
             }
         </TableBody>
@@ -179,17 +179,17 @@ const Cuerpo = ({juegos = [], busqueda = null}) => {
 
 const Registro = ({juego}) => {
     const {copiar, copiado} = useCopiarAlPortapapeles()
-    const mensaje = `${juego.name} | Precio Lista: $${juego.precioLista} | Transferencia: $${juego.precioTransferencia}`
+    const mensaje = `${juego.nombre} | Precio Lista: $${juego.precioLista} | Transferencia: $${juego.precioTransferencia}`
     return (
         <TableRow>
             <TableCell
                 className="font-medium p-2"
-                onClick={() => copiar(mensaje, juego.name)}
+                onClick={() => copiar(mensaje, juego.nombre)}
             >
-                {juego.name}
+                {juego.nombre}
             </TableCell>
             <TableCell className={"p-2 text-center"}>${juego.precioLista}</TableCell>
-            <TableCell className={"p-2 text-center"}>${juego.precioTransferencia}</TableCell>
+            <TableCell className={"p-2 text-center text-cyan-800 font-semibold"}>${juego.precioTransferencia}</TableCell>
             <TableCell className="p-2 text-center">
                 <Link
                     href={`https://wa.me/5491132001372?text=${"Me interesa " + encodeURIComponent(mensaje)}`}

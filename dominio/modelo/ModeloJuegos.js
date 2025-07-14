@@ -1,8 +1,14 @@
 import {JuegoClienteDTO} from "@/dominio/utils/dto/juegos";
 import {id} from "date-fns/locale";
+import JuegoOferta, {JuegoOfertaAdmin, JuegoOfertaCliente, JuegoOfertaRevendedor} from "@/app/entities/JuegoOferta";
 
 class ModeloJuegos {
     repositorioJuegos;
+    tipoCliente = {
+        ADMIN: "admin",
+        RESELLER: "reseller",
+        CUSTOMER: "customer",
+    }
 
     constructor(repositorioJuegos) {
         this.repositorioJuegos = repositorioJuegos;
@@ -98,53 +104,111 @@ class ModeloJuegos {
         return await this.repositorioJuegos.obtenerJuegos()
     }
 
-    async obtenerJuegosOferta(tipoCliente, usuario, quiereTodas, nroOferta) {
-        tipoCliente = tipoCliente ?? "customer"
-
-        if (tipoCliente === "admin" && !usuario) throw new Error("No autorizado.")
-
-        let oferta;
-
-        if (Number(nroOferta) === 2) {
-            const filtros = [
-                {atributo: "nro", valor: Number(nroOferta)},
-                {atributo: "estaActiva", valor: true}
-            ]
-            oferta = await this.repositorioJuegos.obtenerOfertaActual(filtros)
-        } else {
-            const filtros = [
-                {atributo: "nro", valor: 0},
-                {atributo: "estaActiva", valor: true}
-            ]
-            oferta = await this.repositorioJuegos.obtenerOfertaActual(filtros)
-        }
-
-        if (tipoCliente === "customer") {
-            this.#formatearJuegosParaPresentar(tipoCliente, oferta.juegos)
-
-        } else if (tipoCliente === "reseller") {
-            this.#formatearJuegosParaPresentar(tipoCliente, oferta.juegos)
-        } else {
-            // Admin
-            if (quiereTodas && quiereTodas === "true") {
-                // quiere ver todas
-                oferta = await this.repositorioJuegos.obtenerTodasLasOfertas();
-                oferta.forEach((o) => {
-                    this.#formatearJuegosParaPresentar(tipoCliente, o.juegos)
-                })
-                return oferta
-            } else {
-                // quiere ver una en específico
-                this.#formatearJuegosParaPresentar(tipoCliente, oferta.juegos)
-
-            }
-        }
-
-        this.#ordenarPorDestacadoAndTitulo(oferta.juegos)
-        return oferta;
+    async actualizarOferta(id, nuevosDatos = null) {
+        if (!nuevosDatos) throw new Error("Error altualizar oferta.");
+        const oferta = await this.repositorioJuegos.obtenerOfertaPorId(id);
+        if (!oferta) throw new Error("Error altualizar oferta.");
+        Object.assign(oferta, nuevosDatos)
+        if (!oferta.estaActiva) oferta.prioridad = null;
+        console.log("asi va la oferta", oferta);
+        await this.repositorioJuegos.actualizarJuegosOferta(oferta)
     }
 
-    #ordenarPorDestacadoAndTitulo (arrayJuegos) {
+    async obtenerOferta(id) {
+
+    }
+
+    async obtenerOfertaActual() {
+        const filtros = [
+            {atributo: "estaActiva", valor: true},
+            {atributo: "prioridad", valor: 1},
+        ]
+        return await this.repositorioJuegos.obtenerOfertaActual(filtros)
+    }
+
+    async obtenerJuegosOferta(
+        tipoCliente = "customer",
+        usuario,
+        quiereTodas,
+        nroOferta,
+        estaActiva = true
+    ) {
+
+        if (tipoCliente === "admin" && !usuario) throw new Error("No autorizado.")
+        if (isNaN(Number(nroOferta))) throw new Error("Error al obtener las ofertas.")
+
+        // convertir nro a prioridad oferta
+
+        // Oferta principal si es revendedor o cliente
+        if (
+            nroOferta === 1 &&
+            (
+                tipoCliente === this.tipoCliente.RESELLER ||
+                tipoCliente === this.tipoCliente.CUSTOMER
+            )
+        ) {
+            const filtros = [
+                {atributo: "estaActiva", valor: true},
+                {atributo: "prioridad", valor: 1},
+            ]
+            let oferta = await this.repositorioJuegos.obtenerOfertaActual(filtros)
+            this.#ordenarPorDestacadoAndTitulo(oferta.juegos)
+            oferta.juegos = this.#formatearJuegosParaPresentar(tipoCliente, oferta.juegos);
+            return oferta;
+        }
+
+        // Si es admin de aca para abajo
+
+        const filtros = [
+            // {atributo: "nro", valor: Number(nroOferta)},
+            {atributo: "estaActiva", valor: estaActiva}
+        ]
+
+        try {
+            let ofertas = await this.repositorioJuegos.obtenerTodasLasOfertasConFiltro(filtros)
+            ofertas.juegos = this.#formatearJuegosParaPresentar(tipoCliente, ofertas.juegos);
+            return ofertas
+        } catch (e) {
+            console.log(e)
+            return []
+        }
+
+        // console.log(ofertas)
+        // console.log("ofertas obtenidas", ofertas.length)
+        // this.#excluirJuegos(ofertas)
+        // console.log("ofertas filtradas", ofertas)
+
+        // if (tipoCliente === this.tipoCliente.CUSTOMER || tipoCliente === this.tipoCliente.RESELLER) {
+        //     this.#formatearJuegosParaPresentar(tipoCliente, oferta.juegos)
+        // } else {
+        //     // Admin
+        //     if (quiereTodas && quiereTodas === "true") {
+        //         // quiere ver todas
+        //         oferta = await this.repositorioJuegos.obtenerTodasLasOfertas();
+        //         oferta.forEach((o) => {
+        //             this.#formatearJuegosParaPresentar(tipoCliente, o.juegos)
+        //         })
+        //         this.#excluirJuegos(oferta);
+        //         return oferta
+        //     } else {
+        //         // quiere ver una en específico
+        //         this.#formatearJuegosParaPresentar(tipoCliente, oferta.juegos)
+        //
+        //     }
+        // }
+        //
+        // this.#ordenarPorDestacadoAndTitulo(oferta.juegos)
+        // this.#excluirJuegos(oferta);
+        // return ofertas;
+    }
+
+    #excluirJuegos(ofertas) {
+        ofertas.forEach((oferta) => {
+            delete oferta.juegos
+        })
+    }
+
+    #ordenarPorDestacadoAndTitulo(arrayJuegos) {
         return arrayJuegos.sort((a, b) => {
             // Destacados primero
             if (a.esDestacado !== b.esDestacado) {
@@ -156,30 +220,13 @@ class ModeloJuegos {
     }
 
     #formatearJuegosParaPresentar(cliente = "customer", arrayJuegos) {
-        if (cliente === "admin") {
-            arrayJuegos.forEach((j, i) => {
-                j.precioReventa = this.#redondearCien((j.price) * 0.95).toFixed(0)
-                j.precioClienteLista = this.#redondearCien(j.price * 1.25).toFixed(0);
-                j.precioClienteTransferencia = this.#redondearCien(j.precioClienteLista * 0.8).toFixed(0);
-                j.modoEdicion = false;
-                j.id = i;
-            })
-            return;
-        } else if (cliente === "reseller") {
-            arrayJuegos.forEach((j) => {
-                j.price = this.#redondearCien((j.price) * 0.95).toFixed(0)
-            })
-            return;
-        }
+        if (cliente === "admin")
+            return arrayJuegos.map((j, i) => new JuegoOfertaAdmin(j.price, i, j.name))
 
-        arrayJuegos.forEach((j) => {
-            j.precioLista = this.#redondearCien(Number(j.precioClienteLista)).toFixed(0);
-            j.precioTransferencia = this.#redondearCien(Number(j.precioClienteTransferencia)).toFixed(0);
-            delete j.price
-            delete j.precioClienteLista
-            delete j.precioReventa
-            delete j.precioClienteTransferencia
-        })
+        if (cliente === "reseller")
+            return arrayJuegos.map((j, i) => new JuegoOfertaRevendedor(j.price, i, j.name));
+
+        return arrayJuegos.map((j, i) => new JuegoOfertaCliente(j.price, i, j.name));
     }
 
 
@@ -233,14 +280,7 @@ class ModeloJuegos {
 
         ofertaNueva.estaActiva = false;
 
-        juegos.forEach((j, i) => {
-            j.modoEdicion = false;
-            j.id = i;
-            j.precioReventa = Number(this.#redondearCien((j.price) * 0.95).toFixed(0))
-            j.precioClienteLista = Number(this.#redondearCien(j.price * 1.25).toFixed(0))
-            j.precioClienteTransferencia = Number(this.#redondearCien(j.precioClienteLista * 0.8).toFixed(0));
-            j.esDestacado = false;
-        })
+        juegos.forEach((j, i) => new JuegoOferta(j.price, i))
 
         const resultado = await this.repositorioJuegos.guardarOferta(ofertaNueva)
         if (!resultado) throw new Error("No se puedo actualizar")

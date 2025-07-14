@@ -57,7 +57,7 @@ function TablaJuegosOfertaReventa({juegos = [], fechaExpiracion, titulo = null})
             setBusqueda(null)
         }
         const juegosFiltrados = [...juegos].filter((j) => {
-            return j.name.toLowerCase().includes(e.target.value.toLowerCase())
+            return j.nombre.toLowerCase().includes(e.target.value.toLowerCase())
         });
         setJuegoBuscado(e.target.value)
         setBusqueda(juegosFiltrados)
@@ -68,16 +68,16 @@ function TablaJuegosOfertaReventa({juegos = [], fechaExpiracion, titulo = null})
             let sortedGames = [...juegos];
             switch (value) {
                 case "price-asc":
-                    sortedGames.sort((a, b) => a.price - b.price);
+                    sortedGames.sort((a, b) => a.precio - b.precio);
                     break;
                 case "price-desc":
-                    sortedGames.sort((a, b) => b.price - a.price);
+                    sortedGames.sort((a, b) => b.precio - a.precio);
                     break;
                 case "name-asc":
-                    sortedGames.sort((a, b) => a.name.localeCompare(b.name));
+                    sortedGames.sort((a, b) => a.nombre.localeCompare(b.nombre));
                     break;
                 case "name-desc":
-                    sortedGames.sort((a, b) => b.name.localeCompare(a.name));
+                    sortedGames.sort((a, b) => b.nombre.localeCompare(a.nombre));
                     break;
                 default:
                     sortedGames = juegos;
@@ -172,7 +172,7 @@ const Cuerpo = ({juegos = [], copiarJuego, juegoCopiado, busqueda = null}) => {
                 busqueda.map(j => (
                     <Registro
                         juego={j}
-                        key={j.name}
+                        key={j.nombre}
                         copiarJuego={copiarJuego}
                         juegoCopiado={juegoCopiado}
                     />))
@@ -180,7 +180,7 @@ const Cuerpo = ({juegos = [], copiarJuego, juegoCopiado, busqueda = null}) => {
                 juegos.map(j => (
                     <Registro
                         juego={j}
-                        key={j.name}
+                        key={j.nombre}
                         copiarJuego={copiarJuego}
                         juegoCopiado={juegoCopiado}
                     />))
@@ -191,16 +191,16 @@ const Cuerpo = ({juegos = [], copiarJuego, juegoCopiado, busqueda = null}) => {
 
 const Registro = ({juego, copiarJuego, juegoCopiado}) => {
     const {copiar, copiado} = useCopiarAlPortapapeles()
-    const mensaje = `${juego.name} - $${juego.price}`
+    const mensaje = `${juego.nombre} - $${juego.precio}`
     return (
         <TableRow>
             <TableCell
                 className="font-medium p-1 py-2"
-                onClick={() => copiar(mensaje, juego.name)}
+                onClick={() => copiar(mensaje, juego.nombre)}
             >
-                {juego.name}
+                {juego.nombre}
             </TableCell>
-            <TableCell className={"p-1 py-2 text-center"}>${juego.price}</TableCell>
+            <TableCell className={"p-1 py-2 text-center"}>${juego.precio}</TableCell>
             <TableCell className="p-2 text-center">
                 <div className={"flex gap-2"}>
                     <Link

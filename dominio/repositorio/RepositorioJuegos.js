@@ -9,6 +9,21 @@ class RepositorioJuegos {
         this.BaseDeDatos = bd;
     }
 
+    // OFERTAS
+    async obtenerOfertaPorId(id) {
+        return await this.BaseDeDatos.obtenerPorId(this.COLECCION, id);
+    }
+    async obtenerTodasLasOfertasConFiltro(filtros) {
+        return await this.BaseDeDatos.buscarVariosPorAtributo(this.COLECCION, filtros)
+    }
+    async actualizarJuegosOferta (ofertasObject) {
+        return await this.BaseDeDatos.actualizar("ofertas", ofertasObject, ofertasObject.id)
+    }
+    async obtenerOfertaActual (filtros) {
+        return await this.BaseDeDatos.buscarUnoPorAtributos(this.COLECCION, filtros)
+    }
+
+    // STOCK JUEGOS
     async obtenerJuegos() {
         return await this.BaseDeDatos.obtenerPorId(this.COLECCION, "nbC1nBnbrJarc6vaCbOc");
     }
@@ -16,6 +31,8 @@ class RepositorioJuegos {
     async obtenerTodasLasOfertas() {
         return await this.BaseDeDatos.obtenerTodos(this.COLECCION);
     }
+
+
 
     async eliminarJuegoEnStock(id) {
         return await this.BaseDeDatos.eliminar("stock-juegos", id)
@@ -30,26 +47,20 @@ class RepositorioJuegos {
         return await this.BaseDeDatos.obtenerTodos("stock-juegos")
     }
 
-    async actualizarJuegosOferta (ofertasObject) {
-        return await this.BaseDeDatos.actualizar("ofertas", ofertasObject, ofertasObject.id)
-    }
+
 
     async guardarOferta(ofertas) {
         return await this.BaseDeDatos.guardar(this.COLECCION, ofertas);
     }
 
-    async obtenerOfertaActual (filtros) {
-        return await this.BaseDeDatos.buscarUnoPorAtributos(this.COLECCION, filtros)
-    }
+
 
 
     async obtenerOfertaPorAtributoValor (atributo, valor) {
         return await this.BaseDeDatos.buscarUnoPorAtributo(this.COLECCION, atributo, valor)
     }
 
-    async obtenerOfertaPorId(id) {
-        return await this.BaseDeDatos.obtenerPorId(this.COLECCION, id);
-    }
+
 
     async guardarJuegoStock (juego) {
         return await this.BaseDeDatos.guardar("stock-juegos", juego);

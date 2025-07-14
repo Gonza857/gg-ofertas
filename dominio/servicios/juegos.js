@@ -1,6 +1,12 @@
 import Fetcher from "@/infraestructura/Fetcher";
 
-export async function obtenerJuegosOferta(tipoCliente = "customer", token, todas = false, nro = 0) {
+export async function obtenerJuegosOferta
+(
+    tipoCliente = "customer",
+    token,
+    todas = false,
+    nro = 1
+) {
     const fetchParams = {
         method: 'GET',
         cache: 'no-cache',
@@ -8,8 +14,54 @@ export async function obtenerJuegosOferta(tipoCliente = "customer", token, todas
             Cookie: `access-token=${token}`,
         },
     }
-    return Fetcher.request(`/juegos/ofertas?cliente=${tipoCliente}&todas=${todas}&nro=${nro}`, fetchParams)
+    const params = new URLSearchParams({
+        cliente: tipoCliente,
+        todas: String(todas),
+        nro: nro,
+    })
+    return Fetcher.requestNew(`/juegos/ofertas`, fetchParams, params)
 }
+
+export async function obtenerJuegosOfertaPorEstado
+(
+    tipoCliente = "customer",
+    token,
+    activa = true
+) {
+    const fetchParams = {
+        method: 'GET',
+        cache: 'no-cache',
+        headers: {
+            Cookie: `access-token=${token}`,
+        },
+    }
+
+    const params = new URLSearchParams({
+        cliente: tipoCliente,
+        estaActiva: String(activa),
+    })
+
+    const url = `/juegos/ofertas?${params.toString()}`
+    return Fetcher.request(url, fetchParams)
+}
+
+export async function actualizarEstadoOferta(id, estado = true) {
+    const fetchParams = {
+        method: 'PATCH',
+        body: JSON.stringify({estaActiva: estado}),
+    }
+    return Fetcher.requestNew(`/juegos/ofertas/${id}`, fetchParams)
+}
+
+export async function actualizarPrioridadOferta (id, prioridad = 1) {
+    const fetchParams = {
+        method: 'PATCH',
+        body: JSON.stringify({prioridad: prioridad}),
+    }
+    return Fetcher.requestNew(`/juegos/ofertas/${id}`, fetchParams)
+}
+
+
 
 export async function obtenerJuegosOfertaCliente(tipoCliente = "customer", todas = false) {
     const fetchParams = {
@@ -30,18 +82,13 @@ export async function obtenerOfertaPorId(token, id) {
     return Fetcher.request(`/juegos/ofertas/${id}`, fetchParams)
 }
 
-export async function subirOfertas(nuevaOferta, token) {
+export async function subirOferta(nuevaOferta) {
     const fetchParams = {
         method: 'POST',
-        headers: {
-            'Content-type': 'application/json',
-            Cookie: `access-token=${token}`,
-        },
         body: JSON.stringify(nuevaOferta),
     };
-    return Fetcher.request(`/juegos/ofertas`, fetchParams);
+    return Fetcher.requestNew(`/juegos/ofertas`, fetchParams);
 }
-
 
 
 export async function actualizarOfertas(ofertasObject, token) {

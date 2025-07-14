@@ -138,7 +138,7 @@ class MiFirebase {
         }
     }
 
-    async buscarVariosPorAtributo(coleccion, atributo, dato) {
+    async buscarVariosPorAtributo(coleccion, filtros) {
         /*  OPERADORES
             < menos que
             <= menor o igual a
@@ -156,12 +156,21 @@ class MiFirebase {
                 this.BASE_DE_DATOS,
                 coleccion
             );
-            const consulta = query(
-                referenciaDocumento,
-                where(atributo.toString(), '==', dato.toString())
+
+            // Convertir los filtros a una lista de condiciones where
+            const condiciones = filtros.map(filtro =>
+                where(filtro.atributo, '==', filtro.valor)
             );
-            const resultados = await getDocs(consulta);
-            return resultados.docs.map((d) => ({...d.data(), id: d.id}));
+
+            const consulta = query(referenciaDocumento, ...condiciones);
+
+            const resultado = await getDocs(consulta);
+
+            if (!resultado.empty) {
+                return resultado.docs.map((d) => ({...d.data(), id: d.id}));
+            } else {
+                return [];
+            }
         } catch (e) {
             throw new FirebaseError(e.message);
         }

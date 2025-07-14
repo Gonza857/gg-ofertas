@@ -8,7 +8,7 @@ import {useState} from "react";
 import {Convertidor} from "@/app/helpers/Converter";
 import {Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
 import {Copy} from "lucide-react";
-import {subirOfertas} from "@/dominio/servicios/juegos";
+import {subirOferta} from "@/dominio/servicios/juegos";
 import {toastError, toastSuccess} from "@/lib/Toast";
 import {useRouter} from "next/navigation";
 
@@ -31,7 +31,7 @@ function AgregarOferta() {
     };
 
     const guardar = async () => {
-        const {mensaje, exito} = await subirOfertas(games)
+        const {mensaje, exito} = await subirOferta(games)
         if (exito) {
             // router.push("/")
             return toastSuccess(mensaje)

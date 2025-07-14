@@ -4,6 +4,8 @@ import {revalidatePath} from "next/cache";
 import {cookies} from "next/headers";
 import ManejadorRespuesta from "@/infraestructura/ManejadorRespuesta";
 import CookieManager from "@/dominio/utils/auth/cookiesManager";
+import {juegosOferta, patchOferta} from "@/app/schemas/backend/ofertas";
+import UrlParametersHandlers from "@/app/helpers/UrlParametersHandlers";
 
 const modeloJuegos = container.resolve("ModeloJuegos");
 const modeloUsuario = container.resolve("ModeloUsuario");
@@ -21,22 +23,23 @@ const validarAdmin = async () => {
     return {exito: true, usuario}
 }
 
+
 export async function GET(req, res) {
     const resultado = await validarAdmin();
     if (!resultado.exito) return resultado;
 
-    const {searchParams} = new URL(req.url);
-    const valor = searchParams.get("cliente");
-    const tipoCliente = valor === "undefined" ? undefined : valor;
+    const parametrosNecesarios = [
+        "cliente", "todas", "nro", "estaActiva"
+    ]
+    const parametros = UrlParametersHandlers.obtenerParametros(parametrosNecesarios, req)
 
-    const todas = searchParams.get("todas");
-    const quiereTodas = todas === "undefined" ? undefined : todas;
-
-    const nro = searchParams.get("nro");
-    const nroOferta = nro === "undefined" ? undefined : nro;
+    const { cliente, todas, nro, estaActiva } = juegosOferta.parse(parametros)
 
     try {
-        const ofertas = await modeloJuegos.obtenerJuegosOferta(tipoCliente, resultado.usuario, quiereTodas, nroOferta);
+        const ofertas =
+            await modeloJuegos.obtenerJuegosOferta(
+                cliente, resultado.usuario, todas, nro, estaActiva
+            );
         return ManejadorRespuesta.ok({data: ofertas})
     } catch (e) {
         return ManejadorRespuesta.error(e.message)
@@ -46,10 +49,18 @@ export async function GET(req, res) {
 export async function POST(req, res) {
     const resultado = await validarAdmin();
     if (!resultado.exito) return resultado;
+    const body = await req.json()
+
+    let nuevosDatos;
+    try {
+        nuevosDatos = patchOferta.parse(body)
+    } catch (error) {
+        console.log(error)
+        return ManejadorRespuesta.error(error.message)
+    }
 
     try {
-        const cuerpo = await req.json();
-        await modeloJuegos.subirOfertas(cuerpo);
+        await modeloJuegos.subirOfertas(nuevosDatos);
         revalidar()
         return ManejadorRespuesta.ok()
     } catch (e) {

@@ -1,7 +1,6 @@
 import Fetcher from "@/infraestructura/Fetcher";
 
 export async function obtenerTodasLasTarjetas(tipoCliente = "customer", token) {
-    console.log("token que mando al back", token)
     const fetchParams = {
         method: 'GET',
         cache: 'no-cache',
@@ -9,7 +8,13 @@ export async function obtenerTodasLasTarjetas(tipoCliente = "customer", token) {
             Cookie: `access-token=${token}`,
         },
     }
-    return Fetcher.request(`/giftcards?cliente=${tipoCliente}`, fetchParams)
+
+    const params = new URLSearchParams({
+        cliente: tipoCliente,
+    })
+
+    const url = `/giftcards?${params.toString()}`
+    return Fetcher.request(url, fetchParams)
 }
 
 export async function actualizarTarjeta(tarjetaActualizada) {

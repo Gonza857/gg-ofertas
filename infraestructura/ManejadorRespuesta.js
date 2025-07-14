@@ -3,6 +3,7 @@ import {NextResponse} from "next/server";
 class ManejadorRespuesta {
     static NOT_AUTHORIZED = NextResponse.json({exito: false, mensaje: "No autorizado", status: 401})
     static CUSTOMER = {exito: true, usuario: null}
+    static RESELLER = {exito: true, usuario: null}
 
     static notAuthorized() {
 

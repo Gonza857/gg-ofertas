@@ -13,7 +13,7 @@ export const metadata = {
 
 async function JuegosOfertaReventa() {
     const token = cookies().get("access-token")?.value
-    const resultado = await obtenerJuegosOferta("reseller", token, false, 0)
+    const resultado = await obtenerJuegosOferta("reseller", token)
     if (!resultado.exito) return <>Error</>
 
     return (

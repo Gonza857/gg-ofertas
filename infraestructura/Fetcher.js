@@ -7,10 +7,27 @@ export default class Fetcher {
 
 
     static async request(endpoint, parametros = {}) {
+        console.log("request a endpoint", endpoint);
         try {
             const respuesta = await fetch(`${this.baseUrl}${endpoint}`, parametros);
             return await this.#manejarResultadoOk(respuesta);
         } catch (error) {
+            console.log("Error fetcher", error);
+            throw new Error("Ocurrio un error al obtener los datos. Reintenta nuevamente más tarde.")
+        }
+    }
+
+    static async requestNew(endpoint, parametros = {}, queryParams = null) {
+        let url = `${this.baseUrl}${endpoint}`
+        if (queryParams) {
+            url = `${this.baseUrl}${endpoint}?${queryParams.toString()}`;
+        }
+        console.log("request a endpoint", url);
+        try {
+            const respuesta = await fetch(url, parametros);
+            return await this.#manejarResultadoOk(respuesta);
+        } catch (error) {
+            console.log("Error fetcher", error);
             throw new Error("Ocurrio un error al obtener los datos. Reintenta nuevamente más tarde.")
         }
     }

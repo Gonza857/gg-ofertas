@@ -1,19 +1,14 @@
 "use client";
-import Image from "next/image";
 import {useEffect, useState} from "react";
-import Link from "next/link";
-import {addDoc, collection} from "firebase/firestore";
 import {Convertidor} from "@/app/helpers/Converter";
-import {db} from "@/app/firebase/config";
 import {Firebase} from "@/app/helpers/Firebase";
 import {Textarea} from "@/components/ui/textarea";
 import {Button} from "@/components/ui/button";
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
 import {Label} from "@/components/ui/label";
 import {Input} from "@/components/ui/input";
 import {Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
 import {Check, Copy} from "lucide-react";
-import {obtenerJuegosOferta, subirOfertas} from "@/dominio/servicios/juegos";
+import {obtenerJuegosOferta, subirOferta} from "@/dominio/servicios/juegos";
 import {toastError, toastSuccess} from "@/lib/Toast";
 import {useRouter} from "next/navigation";
 
@@ -56,7 +51,7 @@ export default function Home() {
     };
 
     const guardarOfertas = async () => {
-        const {mensaje, exito} = await subirOfertas(games)
+        const {mensaje, exito} = await subirOferta(games)
         if (exito) {
             router.push("/")
             return toastSuccess(mensaje)

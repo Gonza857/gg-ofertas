@@ -6,8 +6,9 @@ import {Button} from "@/components/ui/button";
 import useModoEdicionPorFila from "@/components/custom-hooks/useEditarFila";
 import {FcCancel} from "react-icons/fc";
 import {Input} from "@/components/ui/input";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {
+    actualizarEstadoOferta,
     actualizarOfertas,
     actualizarOfertasNavegador,
     eliminarJuegoOfertaNavegador,
@@ -18,6 +19,8 @@ import Link from "next/link";
 import {Card, CardContent} from "@/components/ui/card"
 import {Label} from "@/components/ui/label";
 import {Switch} from "@/components/ui/switch";
+import CambiadorEstadoOferta from "@/app/(modules)/admin/(components)/juegos/ofertas/CambiadorEstadoOferta";
+import SelectorPrioridad from "@/app/(modules)/admin/(components)/juegos/ofertas/SelectorPrioridad";
 
 function TablaJuegosOfertaAdmin({ofertas}) {
     const {
@@ -31,6 +34,7 @@ function TablaJuegosOfertaAdmin({ofertas}) {
     } = useModoEdicionPorFila(ofertas.juegos);
 
     const [quiereAgrear, setQuiereAgregar] = useState(false)
+    const [estaActivo, setEstaActivo] = useState(ofertas.estaActiva)
 
     const [newProduct, setNewProduct] = useState({
         name: "",
@@ -94,19 +98,26 @@ function TablaJuegosOfertaAdmin({ofertas}) {
         juegos, editar, cancelar, actualizarItem, actualizarJuego, eliminarJuego, cambiarDestacado
     }
 
+    const cambiadorEstadoOfertaProps = {
+        estaActivo,
+        setEstaActivo,
+        ofertaId: ofertas.id,
+    }
+
     return (
         <>
             <p className={"italic"}>Ofertas disponibles {juegos.length}</p>
             <div className={"flex flex-col gap-4"}>
                 <div
-                    className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-2 sm:space-y-0 mb-4">
-                    <p className="text-xl font-bold tracking-tight">Agregar juego</p>
-
-                    <Button onClick={() => setQuiereAgregar(true)}>
+                    className="flex flex-col gap-2 space-y-2 sm:space-y-0 mb-4">
+                    <Button onClick={() => setQuiereAgregar(true)} className={"w-fit"}>
                         <Plus className="mr-2 h-4 w-4"/>
-                        Agregar
+                        Agregar juego
                     </Button>
-
+                    <CambiadorEstadoOferta {...cambiadorEstadoOfertaProps} />
+                    {ofertas.estaActiva &&
+                        <SelectorPrioridad oferta={ofertas}/>
+                    }
                 </div>
 
                 {quiereAgrear &&

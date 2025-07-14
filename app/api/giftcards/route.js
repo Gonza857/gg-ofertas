@@ -24,27 +24,21 @@ const convertirFormData_a_Object = (formData) => {
 
 const validarAdmin = async () => {
     const sessionUser = CookieManager.get(cookies(), "access-token")
-    console.log("SESSION USER", sessionUser)
     if (!sessionUser) return ManejadorRespuesta.CUSTOMER
     const usuario = await modeloUsuario.obtenerPorCorreo(sessionUser.email)
-    console.log("USUARIO", usuario)
     if (!usuario) return ManejadorRespuesta.NOT_AUTHORIZED
-    console.log("PASA PORQUE ES CAPO")
     return {exito: true, usuario}
 }
 
 export async function GET(req, res) {
     const resultado = await validarAdmin();
     if (!resultado.exito) return resultado;
-
     const {searchParams} = new URL(req.url);
     let solicitante = searchParams.get('cliente') === "undefined" ? undefined : searchParams.get('cliente');
-    console.log("solicitante", solicitante)
     try {
         const tarjetas = await modeloTarjetas.obtenerTodas(solicitante, resultado.usuario)
         return ManejadorRespuesta.ok({data: tarjetas})
     } catch (e) {
-        console.error(e)
         return ManejadorRespuesta.error(e.message);
     }
 }
