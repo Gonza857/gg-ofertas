@@ -15,7 +15,7 @@ function SubscripcionPlus() {
                 <PsnPlusCustomerInfo/>
                 <div className={"py-8 border-b border-slate-200"}>
                     <h2 className="text-2xl font-bold mb-6">Membresías PlayStation Plus</h2>
-                    <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                    <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
                         {reventaPsnPlus.map((sub, index) => (
                             <PlayStationPlusReventa product={sub} key={index}/>
                         ))}

@@ -45,10 +45,18 @@ function TablaJuegosOfertaConsumidores({juegos = [], fechaExpiracion, titulo = n
             let sortedGames = [...juegos];
             switch (value) {
                 case "price-asc":
-                    sortedGames.sort((a, b) => a.price - b.price);
+                    sortedGames.sort((a, b) => {
+                        const precioA = (a.precioLista + a.precioTransferencia) / 2
+                        const precioB = (b.precioLista + b.precioTransferencia) / 2
+                        return precioA - precioB
+                    });
                     break;
                 case "price-desc":
-                    sortedGames.sort((a, b) => b.price - a.price);
+                    sortedGames.sort((a, b) => {
+                        const precioA = (a.precioLista + a.precioTransferencia) / 2
+                        const precioB = (b.precioLista + b.precioTransferencia) / 2
+                        return precioB -precioA
+                    });
                     break;
                 case "name-asc":
                     sortedGames.sort((a, b) => a.nombre.localeCompare(b.nombre));
