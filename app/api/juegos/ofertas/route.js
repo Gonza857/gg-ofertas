@@ -33,14 +33,14 @@ export async function GET(req, res) {
     ]
     const parametros = UrlParametersHandlers.obtenerParametros(parametrosNecesarios, req)
 
-    const { cliente, todas, nro, estaActiva } = juegosOferta.parse(parametros)
+    const {cliente, todas, nro, estaActiva} = juegosOferta.parse(parametros)
 
     try {
         const ofertas =
             await modeloJuegos.obtenerJuegosOferta(
                 cliente, resultado.usuario, todas, nro, estaActiva
             );
-        return ManejadorRespuesta.ok({data: ofertas})
+        return ManejadorRespuesta.ok(ofertas)
     } catch (e) {
         return ManejadorRespuesta.error(e.message)
     }

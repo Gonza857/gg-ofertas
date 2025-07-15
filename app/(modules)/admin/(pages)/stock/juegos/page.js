@@ -5,27 +5,18 @@ import Link from "next/link";
 import {redirect} from "next/navigation";
 import {cookies} from "next/headers";
 import {obtenerJuegosStock} from "@/dominio/servicios/stock-juegos";
+import {Suspense} from "react"
+import TablaJuegosStock from "@/app/(modules)/admin/(components)/stock/TablaJuegosStock";
+import SmallSpinner from "@/app/(modules)/admin/(components)/SmallSpinner";
 
 export const revalidate = 3600;
 export const dynamic = "force-dynamic";
 
 async function StockJuegos() {
-    const token = cookies().get("access-token")?.value
-    const resultado = await obtenerJuegosStock(token)
-    if (!resultado.exito) {
-        if (resultado.status === 401) {
-            redirect("/")
-        } else {
-            return <>
-                Error al pedir los datos
-            </>
-        }
-    }
-
     return (
         <main className={"styledAdminMain"}>
             <article className={"w-full lg:w-11/12 mx-auto sm:px-2"}>
-                <div className={"flex justify-center items-center relative mb-4"}>
+                <div className={"flex justify-between items-center relative mb-4"}>
                     <h1 className="text-xl md:text-2xl font-bold text-center w-fit self-center">
                         Juegos en Stock
                     </h1>
@@ -36,7 +27,15 @@ async function StockJuegos() {
                         </Button>
                     </Link>
                 </div>
-                <TablaJuegosStockAdmin juegos={resultado.data ?? []}/>
+                <Suspense fallback={
+                    <div className="text-center py-10">
+                        <SmallSpinner />
+                        <p className="text-muted-foreground">Cargando juegos...</p>
+                    </div>
+                }>
+                    <TablaJuegosStock/>
+                </Suspense>
+
             </article>
         </main>
     )

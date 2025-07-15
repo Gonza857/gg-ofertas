@@ -37,7 +37,7 @@ export async function GET(req, res) {
 
     try {
         const juegos = await modeloJuegos.obtenerJuegosStock(consolaBuscada, resultado.usuario)
-        return ManejadorRespuesta.ok({data: juegos})
+        return ManejadorRespuesta.ok(juegos)
     } catch (e) {
         return ManejadorRespuesta.error(e.message);
     }
@@ -46,14 +46,12 @@ export async function GET(req, res) {
 export async function POST(req, res) {
     const resultado = await validarAdmin();
     if (!resultado.exito) return resultado;
-
     try {
         const cuerpo = await req.json();
-        const resultado = await modeloJuegos.guardarJuegoStock(cuerpo);
+        console.log("cuerpo", cuerpo)
+        const juegoStockCreado = await modeloJuegos.guardarJuegoStock(cuerpo);
         revalidar()
-        return NextResponse.json(
-            resultado
-        )
+        return ManejadorRespuesta.creado("Juego creado correctamente", juegoStockCreado)
     } catch (e) {
         return ERROR(e.message)
     }

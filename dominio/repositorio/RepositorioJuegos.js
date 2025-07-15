@@ -32,7 +32,19 @@ class RepositorioJuegos {
         return await this.BaseDeDatos.obtenerTodos(this.COLECCION);
     }
 
-
+    // PREVENTA JUEGOS
+    async guardarPreventa(ofertas) {
+        return await this.BaseDeDatos.guardar("preventas", ofertas);
+    }
+    async obtenerPreventas() {
+        return await this.BaseDeDatos.obtenerTodos("preventas");
+    }
+    async obtenerPreventaPorId(id) {
+        return await this.BaseDeDatos.obtenerPorId("preventas", id);
+    }
+    async actualizarPreventa(preventa, id) {
+        return await this.BaseDeDatos.actualizar("preventas", preventa, id)
+    }
 
     async eliminarJuegoEnStock(id) {
         return await this.BaseDeDatos.eliminar("stock-juegos", id)

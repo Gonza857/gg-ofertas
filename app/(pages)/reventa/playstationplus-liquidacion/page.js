@@ -1,14 +1,12 @@
 import {Box, Clock, Gamepad2, Scroll} from "lucide-react";
-import {obtenerPlusStock} from "@/dominio/servicios/playstationplus";
-import TablaPlusLiquidacion from "@/components/page-components/reventa/TablaPlusLiquidacion";
 import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from "@/components/ui/accordion";
+import React, {Suspense} from "react";
+import BrandSpinner from "@/app/(modules)/admin/(components)/BrandSpinner";
+import WrapperPlusLiquidacion from "@/app/(pages)/reventa/(components)/WrapperPlusLiquidacion";
 
 export const dynamic = "force-dynamic";
 
 async function StockPlayStationPlus() {
-    const {exito, data} = await obtenerPlusStock()
-    if (!exito) return <>Error</>
-
     return (
         <main className={"styledMain"}>
             <article className={"w-full sm:w-11/12 md:w-3/4 xl:w-1/2 mx-auto p-2 md:p-0"}>
@@ -16,7 +14,11 @@ async function StockPlayStationPlus() {
                     PlayStation Plus En Liquidación PS4 & PS5
                 </h1>
                 <Recordatorios/>
-                <TablaPlusLiquidacion subscripciones={data}/>
+                <Suspense fallback={
+                    <BrandSpinner/>
+                }>
+                    <WrapperPlusLiquidacion/>
+                </Suspense>
             </article>
         </main>
     )

@@ -1,4 +1,4 @@
-import {GiftCardClienteDTO, GiftCardRevendedorDTO} from "@/dominio/utils/dto/giftcard";
+import {GiftCardAdminDTO, GiftCardClienteDTO, GiftCardRevendedorDTO} from "@/dominio/utils/dto/giftcard";
 import GestorImagen from "@/infraestructura/GestorImagen";
 import {v4 as uuidv4} from 'uuid'
 
@@ -15,28 +15,22 @@ class ModeloTarjeta {
     async obtenerTodas(solicitante = null, usuario) {
         solicitante = solicitante ?? "customer"
 
-        const tarjetas = await this.repositorioTarjetas.obtenerTodas();
+        let tarjetas = [];
+        if (solicitante === "customer") {
+            tarjetas = await this.repositorioTarjetas.obtenerParaCliente();
+            tarjetas = tarjetas.map(t => new GiftCardClienteDTO(t))
+        } else if (solicitante === "admin" || solicitante === "reseller") {
+            if (solicitante === "admin" && !usuario) throw new Error("No autorizado.")
+            tarjetas = await this.repositorioTarjetas.obtenerTodas();
+            tarjetas =
+                solicitante === "admin" ?
+                    tarjetas.map(t => new GiftCardAdminDTO(t))
+                    :
+                    tarjetas.map(t => new GiftCardRevendedorDTO(t))
+        }
+
         tarjetas.sort((a, b) => a.nombre.localeCompare(b.nombre))
-        tarjetas.forEach(t => {
-            t.precioCliente = Number(t.precioCliente);
-            t.precioReventa = Number(t.precioReventa);
-            t.mostrarCliente = t.mostrarCliente === "true"
-            this.#transformarFecha(t)
-        })
-
-        console.log("solicitante", solicitante)
-
-        // admin
-        if (solicitante === "admin" && !usuario) throw new Error("No autorizado.")
-        if (solicitante === "admin" && usuario) return tarjetas;
-
-        // revendedor
-        if (solicitante === "reseller") return tarjetas.map(t => new GiftCardRevendedorDTO(t))
-        console.log("Me saltié el reseller")
-
-        // cliente
-        return tarjetas.filter(t => t.mostrarCliente).map(t => new GiftCardClienteDTO(t))
-
+        return tarjetas;
     }
 
     async guardar(inputTarjeta, usuario) {
@@ -73,9 +67,7 @@ class ModeloTarjeta {
 
     }
 
-    #transformarFecha(objeto) {
-        objeto.editado = objeto.editado ? new Date(objeto.editado.toDate()) : "-"
-    }
+
 
     async eliminar(id, usuario) {
         if (!usuario || !id) throw new Error("Sin permisos.")
@@ -84,8 +76,7 @@ class ModeloTarjeta {
     }
 
     async actualizar(inputTarjeta, usuario) {
-        console.log("input tarjeta", inputTarjeta)
-        console.log("usuario", usuario)
+
         if (!usuario || !inputTarjeta) throw new Error("Sin permisos.")
         const pudoActualizar = await this.repositorioTarjetas.actualizar(inputTarjeta);
         if (!pudoActualizar) throw new Error("No se pudo actualizar.")

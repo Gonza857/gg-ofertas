@@ -2,7 +2,9 @@ import TablaJuegosStock from "@/components/page-components/principales/stock/Tab
 import {obtenerJuegosStock} from "@/dominio/servicios/stock-juegos";
 import Recordatorios from "@/components/page-components/consumidores/juegos/stock/Recordatorios";
 import {cookies} from "next/headers";
-import React from "react";
+import React, {Suspense} from "react";
+import BrandSpinner from "@/app/(modules)/admin/(components)/BrandSpinner";
+import WrapperJuegosStock from "@/app/(pages)/(consumidores)/(components)/WrapperJuegosStock";
 
 export const dynamic = "force-dynamic";
 
@@ -12,8 +14,6 @@ export const metadata = {
 };
 
 async function JuegosEnStock () {
-    const token = cookies().get("access-token")?.value
-    const resultado = await obtenerJuegosStock(token, undefined)
     return (
         <main className={"styledMain pt-20"}>
             <article className={"w-full sm:w-11/12 md:w-10/12 xl:w-3/4 mx-auto p-2 md:p-0"}>
@@ -28,7 +28,11 @@ async function JuegosEnStock () {
                 <p className={"mt-2 text-sm text-neutral-500 dark:text-neutral-400"}>
                     Si el juego esta de oferta. Se toma el precio de oferta.
                 </p>
-                <TablaJuegosStock juegos={resultado.data ?? []} cliente={true}/>
+                <Suspense fallback={
+                    <BrandSpinner/>
+                }>
+                    <WrapperJuegosStock cliente={true}/>
+                </Suspense>
             </article>
         </main>
     )

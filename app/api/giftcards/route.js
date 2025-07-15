@@ -33,11 +33,13 @@ const validarAdmin = async () => {
 export async function GET(req, res) {
     const resultado = await validarAdmin();
     if (!resultado.exito) return resultado;
+
     const {searchParams} = new URL(req.url);
     let solicitante = searchParams.get('cliente') === "undefined" ? undefined : searchParams.get('cliente');
     try {
         const tarjetas = await modeloTarjetas.obtenerTodas(solicitante, resultado.usuario)
-        return ManejadorRespuesta.ok({data: tarjetas})
+        console.log("tarjetas back", tarjetas.length)
+        return ManejadorRespuesta.ok(tarjetas)
     } catch (e) {
         return ManejadorRespuesta.error(e.message);
     }
@@ -54,7 +56,7 @@ export async function POST(req, res) {
         const id = await modeloTarjetas.guardar(convertirFormData_a_Object(cuerpo), resultado.usuario);
         // const id = await modeloTarjetas.guardar(cuerpo, resultado.usuario);
         revalidar()
-        return ManejadorRespuesta.ok({id});
+        return ManejadorRespuesta.ok(id);
     } catch (e) {
         console.error(e)
         return ManejadorRespuesta.error(e.message)

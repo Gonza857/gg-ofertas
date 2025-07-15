@@ -47,7 +47,7 @@ export async function GET(req, res) {
 
     try {
         const resultadoObtener = await modeloPlus.obtenerSubscripcionesEnStock(cliente)
-        return ManejadorRespuesta.ok({data: resultadoObtener})
+        return ManejadorRespuesta.ok(resultadoObtener)
     } catch (e) {
         console.error(e.message)
         return ManejadorRespuesta.error(e.message)

@@ -13,8 +13,8 @@ export async function obtenerTodasLasTarjetas(tipoCliente = "customer", token) {
         cliente: tipoCliente,
     })
 
-    const url = `/giftcards?${params.toString()}`
-    return Fetcher.request(url, fetchParams)
+    const url = `/giftcards`
+    return Fetcher.requestNew(url, fetchParams, params)
 }
 
 export async function actualizarTarjeta(tarjetaActualizada) {

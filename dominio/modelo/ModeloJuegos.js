@@ -1,6 +1,7 @@
 import {JuegoClienteDTO} from "@/dominio/utils/dto/juegos";
 import {id} from "date-fns/locale";
 import JuegoOferta, {JuegoOfertaAdmin, JuegoOfertaCliente, JuegoOfertaRevendedor} from "@/app/entities/JuegoOferta";
+import JuegoPreventa from "@/app/entities/JuegoPreventa";
 
 class ModeloJuegos {
     repositorioJuegos;
@@ -26,9 +27,26 @@ class ModeloJuegos {
         return diccionario[datosConsola]
     }
 
-    #redondearCien(num) {
-        const resto = num % 100;
-        return resto >= 50 ? Math.ceil(num / 100) * 100 : Math.floor(num / 100) * 100;
+    async crearPreventa (preventaObject) {
+        const preventa = new JuegoPreventa(preventaObject)
+        await this.repositorioJuegos.guardarPreventa({...preventa})
+    }
+
+    async obtenerPreventas () {
+        return await this.repositorioJuegos.obtenerPreventas()
+    }
+
+    async obtenerPreventaPorId(id) {
+        if (!id) throw new Error ("Error al obtener preventa.")
+        return await this.repositorioJuegos.obtenerPreventaPorId(id)
+    }
+
+    async actualizarPreventa (preventaInput, id) {
+        if (!preventaInput && !id) throw new Error("Error altualizar oferta.");
+        const preventa = await this.repositorioJuegos.obtenerPreventaPorId(id);
+        if (!preventa) throw new Error("Error altualizar oferta.");
+        Object.assign(preventa, preventaInput)
+        await this.repositorioJuegos.actualizarPreventa(preventa, id)
     }
 
     async guardarJuegoStock(juego) {
@@ -39,7 +57,8 @@ class ModeloJuegos {
         const resultado = await this.repositorioJuegos.guardarJuegoStock(juego);
         return {
             exito: resultado,
-            mensaje: "Guardado correctamante."
+            mensaje: "Guardado correctamante.",
+            data: juego
         }
     }
 

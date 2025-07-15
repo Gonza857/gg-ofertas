@@ -11,27 +11,37 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/c
 import {Input} from "@/components/ui/input";
 import {CardDescription} from "@/components/ui/card";
 import {RadioGroup, RadioGroupItem} from "@/components/ui/radio-group";
-import {actualizarJuegoStock, eliminarJuegoStock} from "@/dominio/servicios/stock-juegos";
+import {actualizarJuegoStock, eliminarJuegoStock, recargarJuegosStock} from "@/dominio/servicios/stock-juegos";
 import ModalEditarJuego from "@/components/page-components/admin/ModalEditarJuego";
 import TablaJuegosStock from "@/components/page-components/admin/TablaJuegosStock";
 import {formatearJuego} from "@/dominio/utils/juegos-stock/utils";
+import {useStockStore} from "@/app/(modules)/admin/context/contextoJuego";
+import ServicioJuegoStock from "@/app/(modules)/admin/context/ServicioJuegoStock";
+import SmallSpinner from "@/app/(modules)/admin/(components)/SmallSpinner";
+import {AiOutlineReload} from "react-icons/ai";
 
 function TablaJuegosStockAdmin({juegos: j}) {
-    const [juegos, setJuegos] = useState(j)
     const [modalEditarAbierto, setModalEditarAbierto] = useState(false)
     const [modalEliminarAbierto, setModalEliminarAbierto] = useState(false)
     const [juegoSeleccionado, setJuegoSeleccionado] = useState(null)
     const [juegosBusqueda, setJuegosBusqueda] = useState([])
     const [juegoBuscado, setJuegoBuscado] = useState("")
 
+    const [estaCargando, setEstaCargando] = useState(false)
+
+    const {juegos, setJuegos: st, eliminarJE} = useStockStore();
+
+    useEffect(() => {
+        st(j)
+    }, [st, j])
+
+
     const buscarJuego = (e) => {
         if (e.target.value.length === 0) {
             setJuegosBusqueda([])
             setJuegoBuscado("")
         }
-        const juegosFiltrados = [...juegos].filter((j) => {
-            return j.nombre.toLowerCase().includes(e.target.value.toLowerCase())
-        });
+        const juegosFiltrados = ServicioJuegoStock.buscarJuegoEnArray([...juegos], e.target.value)
         setJuegoBuscado(e.target.value)
         setJuegosBusqueda(juegosFiltrados)
     }
@@ -81,10 +91,13 @@ function TablaJuegosStockAdmin({juegos: j}) {
     const manejarEliminarJuego = async () => {
         if (!juegoSeleccionado.id) return toastError("No se pudo eliminar el PlayStation Plus")
         const {mensaje, exito} = await eliminarJuegoStock(juegoSeleccionado.id)
-        setJuegos(eliminarLocal(juegoSeleccionado.id))
+        if (exito) {
+            eliminarJE(juegoSeleccionado.id)
+            toastSuccess(mensaje)
+        } else {
+            toastError(mensaje)
+        }
         manejarModalEliminar()
-        if (exito) return toastSuccess(mensaje)
-        toastError(mensaje)
     }
 
     const tablaProps = {
@@ -107,8 +120,25 @@ function TablaJuegosStockAdmin({juegos: j}) {
         manejarEliminarJuego
     }
 
+    const recargar = async () => {
+        setEstaCargando(true)
+        const resultado = await recargarJuegosStock()
+        console.log("respuesta server", resultado)
+        if (resultado.exito) {
+            st(resultado.data)
+            setEstaCargando(false)
+            toastSuccess("Recarga realizada correctamante.")
+        } else {
+            toastError(resultado.mensaje)
+        }
+    }
+
     return (
         <>
+            <p>Cantidad juegos actual: {juegos.length ?? 0}</p>
+            <Button onClick={recargar} disabled={estaCargando}>
+                {estaCargando ? <SmallSpinner /> : <AiOutlineReload/>}
+            </Button>
             <ModalEliminar {...modalEliminarProps}/>
             <ModalEditarJuego {...modalEditarProps}/>
             <Input
@@ -145,7 +175,6 @@ const ModalEliminar = ({estaAbierto, manejarEliminarJuego, manejarModalEliminar}
         </ModalCustomizado>
     )
 }
-
 
 
 export default TablaJuegosStockAdmin;

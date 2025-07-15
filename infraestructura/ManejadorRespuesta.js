@@ -14,11 +14,33 @@ class ManejadorRespuesta {
     }
 
     static error(m) {
-        return NextResponse.json({mensaje: m, exito: false,})
+        return NextResponse.json(
+            {
+                mensaje: m,
+                exito: false,
+            },
+            {status: 500}
+        )
     }
 
     static ok(data) {
-        return NextResponse.json({exito: true, ...data})
+        return NextResponse.json(
+            {
+                exito: true,
+                data: data
+            }
+        )
+    }
+
+    static creado(mensaje, data = {}) {
+        return NextResponse.json(
+            {
+                exito: true,
+                mensaje,
+                data: {...data}
+            },
+            {status: 201}
+        )
     }
 }
 

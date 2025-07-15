@@ -2,7 +2,10 @@
 
 import {Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
 import {Button} from "@/components/ui/button";
-import {Eye, Pen, Trash2} from "lucide-react";
+import {Eye, Minus, Package, Pen, Plus, Trash2} from "lucide-react";
+import {useStockStore} from "@/app/(modules)/admin/context/contextoJuego";
+import {useEffect} from "react";
+import {useCopiarAlPortapapeles} from "@/hooks/useCopyToClipboard";
 
 function TablaJuegosStock(props) {
     return (
@@ -47,12 +50,46 @@ const Cuerpo = ({juegos, editarJuego, eliminarJuego}) => {
 }
 
 const Registro = ({juego: j, editarJuego, eliminarJuego}) => {
+    const {updateStockJE} = useStockStore()
+    const {copiar, copiado} = useCopiarAlPortapapeles()
+    const textoBase = `${j.nombre} ${j.idioma !== "-" ? `(${j.idioma})` : ""} [${j.consola}]
+    Cuenta ${j.tipo} $`
+    const textoReventa = `${textoBase}${j.precioReventa}`
+    const textoCliente = `${textoBase}${j.precioCliente}`
+
     return (
         <TableRow className={""}>
             <TableCell className={"p-0"}>{j.nombre}</TableCell>
-            <TableCell className={"p-0 text-center"}>{j.stock}</TableCell>
-            <TableCell className={"p-0 text-center"}>${j.precioCliente.toLocaleString("es-AR")}</TableCell>
-            <TableCell className={"p-0 text-center"}>${j.precioReventa.toLocaleString("es-AR")}</TableCell>
+            <TableCell className={"p-0 text-center"}>
+                <div className="flex items-center justify-center gap-2">
+                    <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => updateStockJE(j.id, -1)}
+                        disabled={j.stock === 0}
+                        className="h-8 w-8 p-0"
+                    >
+                        <Minus className="h-4 w-4"/>
+                    </Button>
+                    <div className="flex items-center justify-center">
+                        <span>{j.stock}</span>
+                    </div>
+                    <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => updateStockJE(j.id, 1)}
+                        className="h-8 w-8 p-0"
+                    >
+                        <Plus className="h-4 w-4"/>
+                    </Button>
+                </div>
+            </TableCell>
+            <TableCell className={"p-0 text-center cursor-pointer"} onClick={() => copiar(textoCliente, j.id)}>
+                ${j.precioCliente.toLocaleString("es-AR")}
+            </TableCell>
+            <TableCell className={"p-0 text-center cursor-pointer"} onClick={() => copiar(textoReventa, j.id)}>
+                ${j.precioReventa.toLocaleString("es-AR")}
+            </TableCell>
             <TableCell className={"p-0 text-center"}>{j.consola.join("/")}</TableCell>
             <TableCell className={"p-0 text-center"}>{j.tipo === "Primaria" ? "1°" : "2°"}</TableCell>
             <TableCell className={"p-0 text-center"}>{j.idioma ?? "-"}</TableCell>
@@ -61,7 +98,8 @@ const Registro = ({juego: j, editarJuego, eliminarJuego}) => {
                     <Button
                         variant={"outline"}
                         size={"sm"}
-                        onClick={() => {}}
+                        onClick={() => {
+                        }}
                     >
                         <Eye
                             className="h-4 w-4 mx-auto"
@@ -88,12 +126,6 @@ const Registro = ({juego: j, editarJuego, eliminarJuego}) => {
                 </div>
 
             </TableCell>
-            {/*<TableCell className={"p-0 text-center"}>*/}
-            {/*   */}
-            {/*</TableCell>*/}
-            {/*<TableCell className={"p-1 text-center"}>*/}
-            {/*    */}
-            {/*</TableCell>*/}
         </TableRow>
     )
 }

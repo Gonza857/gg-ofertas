@@ -3,10 +3,20 @@ import Fetcher from "@/infraestructura/Fetcher";
 export async function obtenerJuegosStock(token, consola) {
     const fetchParams = {
         method: 'GET',
-        cache: "no-store",
+        next: {
+            revalidate: 60
+        },
         headers: {
             Cookie: `access-token=${token}`,
         },
+    }
+    return Fetcher.request(`/juegos/stock?consola=${consola}`, fetchParams)
+}
+
+export async function recargarJuegosStock (consola = undefined) {
+    const fetchParams = {
+        method: 'GET',
+        cache: "no-store",
     }
     return Fetcher.request(`/juegos/stock?consola=${consola}`, fetchParams)
 }

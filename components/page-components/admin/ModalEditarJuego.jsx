@@ -10,25 +10,30 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/c
 import {useState} from "react";
 import {actualizarJuegoStock} from "@/dominio/servicios/stock-juegos";
 import {toastError, toastSuccess} from "@/lib/Toast";
+import {useStockStore} from "@/app/(modules)/admin/context/contextoJuego";
 
 
 function ModalEditarJuego({estaAbierto, manejarModalEditar, juegoSeleccionado = null, actualizarLocal}) {
+    const {actualizarJE} = useStockStore()
+
     const [datosFormulario, setDatosFormulario] = useState({...juegoSeleccionado});
     const router = useRouter();
 
     if (!juegoSeleccionado) return;
 
-    console.log("juego seleccionado", juegoSeleccionado)
-
     const enviarFormulario = async (e) => {
         e.preventDefault()
         const {mensaje, exito} = await actualizarJuegoStock({...juegoSeleccionado, ...datosFormulario});
+        if (exito) {
+            toastSuccess(mensaje);
+            actualizarJE({...juegoSeleccionado, ...datosFormulario})
+            router.push("/admin/stock/juegos")
+
+        } else {
+            toastError(mensaje);
+        }
         manejarModalEditar()
-        actualizarLocal({...juegoSeleccionado, ...datosFormulario})
-        if (exito) return toastSuccess(mensaje);
-        toastError(mensaje);
         setDatosFormulario({})
-        router.refresh()
     }
 
     const manejarCampos = (e) => {

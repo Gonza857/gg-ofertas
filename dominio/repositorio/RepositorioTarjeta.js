@@ -12,6 +12,13 @@ class RepositorioTarjeta {
         return await this.baseDeDatos.obtenerTodos(this.COLECCION)
     }
 
+    async obtenerParaCliente () {
+        const filtros = [
+            {atributo: "mostrarCliente", valor: true}
+        ]
+        return await this.baseDeDatos.buscarVariosPorAtributo(this.COLECCION, filtros)
+    }
+
     async guardar (tarjeta) {
         tarjeta.editado = serverTimestamp()
         return await this.baseDeDatos.guardarConUID(this.COLECCION, tarjeta);
