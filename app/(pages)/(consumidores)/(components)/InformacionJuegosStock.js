@@ -1,8 +1,9 @@
 import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert";
-import {AlertCircle, Clock, CreditCard, Info} from "lucide-react";
+import {AlertCircle, CheckCircle, Clock, CreditCard, Info} from "lucide-react";
 import {Badge} from "@/components/ui/badge";
 import Link from "next/link";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
+import React from "react";
 
 function InformacionJuegosStock () {
     return (
@@ -44,15 +45,24 @@ function InformacionJuegosStock () {
                     </CardHeader>
                     <CardContent className="space-y-3">
                         <div className="flex justify-between items-center">
-                            <span className="text-sm">Garantía</span>
-                            <Badge variant="secondary">12 meses</Badge>
+                            <div className={"flex gap-2"}>
+                                <CheckCircle className="h-4 w-4 text-green-600"/>
+                                <span className="text-sm">Garantía</span>
+                            </div>
+                            <Badge variant="secondary">Ilimitada</Badge>
                         </div>
                         <div className="flex justify-between items-center">
-                            <span className="text-sm">Soporte técnico personalizado</span>
+                            <div className={"flex gap-2"}>
+                                <CheckCircle className="h-4 w-4 text-green-600"/>
+                                <span className="text-sm">Soporte técnico personalizado</span>
+                            </div>
                             <Badge variant="secondary">Todos los días</Badge>
                         </div>
                         <div className="flex justify-between items-center">
-                            <span className="text-sm">Juegos y licencias</span>
+                            <div className={"flex gap-2"}>
+                                <CheckCircle className="h-4 w-4 text-green-600"/>
+                                <span className="text-sm">Juegos y licencias</span>
+                            </div>
                             <Badge variant="secondary">Originales y oficiales</Badge>
                         </div>
                     </CardContent>
@@ -67,13 +77,12 @@ function InformacionJuegosStock () {
                     </CardHeader>
                     <CardContent className="space-y-3">
                         <div className="flex justify-between items-center">
-                            <span className="text-sm">Precio lista</span>
-                            <Badge variant="secondary">Hasta 3 cuotas sin interés</Badge>
+                            <span className="text-sm">Precios publicados</span>
+                            <Badge variant="secondary">Transferencia CVU/CBU</Badge>
                         </div>
                         <div className="flex justify-between items-center">
-                            <span className="text-sm">Precio transferencia</span>
-                            <Badge variant="secondary" className={"bg-blue-600 text-white"}>20% OFF Abonando por
-                                CVU/CBU</Badge>
+                            <span className="text-sm">Pagá en 3 o 6 cuotas</span>
+                            <Badge variant="secondary">Consultar financiación</Badge>
                         </div>
                         <Alert className="mt-3 p-2">
                             <AlertDescription className="text-xs">

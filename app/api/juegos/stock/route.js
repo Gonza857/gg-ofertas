@@ -88,10 +88,9 @@ export async function PATCH(req, res) {
     try {
         juegoStock = updateJuegoStock.parse(body)
     } catch (e) {
+        console.log(e)
         return ManejadorRespuesta.error(e.message)
     }
-
-    console.log("juego stock en back", juegoStock)
 
     try {
 

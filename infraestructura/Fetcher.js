@@ -7,7 +7,6 @@ export default class Fetcher {
 
 
     static async request(endpoint, parametros = {}) {
-        console.log("request a endpoint", endpoint);
         try {
             const respuesta = await fetch(`${this.baseUrl}${endpoint}`, parametros);
             return await this.#manejarResultadoOk(respuesta);
@@ -22,7 +21,6 @@ export default class Fetcher {
         if (queryParams) {
             url = `${this.baseUrl}${endpoint}?${queryParams.toString()}`;
         }
-        console.log("request a endpoint", url);
         try {
             const respuesta = await fetch(url, parametros);
             return await this.#manejarResultadoOk(respuesta);

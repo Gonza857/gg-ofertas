@@ -16,6 +16,7 @@ export const useStockStore = create((set) => ({
         set((anterior) => {
             const juegosActualizados = ServicioJuegoStock.actualizarStock(idJuego, cantidad, anterior.juegos)
             const juegoActualizado = ServicioJuegoStock.obtenerPorId(juegosActualizados, idJuego);
+            console.log("mando este juego al back", juegoActualizado)
             ServicioJuegoStock.actualizarJuegoBD(juegoActualizado)
             return {
                 juegos: juegosActualizados

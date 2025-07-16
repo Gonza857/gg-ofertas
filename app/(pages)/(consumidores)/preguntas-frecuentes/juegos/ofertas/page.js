@@ -1,37 +1,57 @@
 import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert";
-import {AlertCircle, CheckCircle, Clock, CreditCard, Gift, Info} from "lucide-react";
+import {AlertCircle, CheckCircle, Clock, CreditCard, Gift, Info, Joystick, TimerIcon} from "lucide-react";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import {Badge} from "@/components/ui/badge";
+import React from "react";
 
 function InformacionJuegosOferta () {
     return (
-        <main className={"styledMain"}>
+        <main className={"styledMain w-full sm:w-11/12 md:w-9/12 lg:w-7/12 mx-auto px-2 pt-20"}>
+
+            <h2 className="mt-4 text-2xl font-bold mb-2 text-center">Información juegos digitales</h2>
 
             {/* Información Específica del Negocio */}
             <div className="space-y-4">
-                {/* Banner de Oferta con Countdown */}
-                <Alert className="border-red-200 bg-red-50">
-                    <Clock className="h-4 w-4" />
-                    <AlertTitle className="text-red-800 flex items-center gap-2">
-                        🔥 ¡Juegos en Oferta!
-                        <Badge variant="destructive" className="animate-pulse">
-                            Hasta 16/07/25 19:00Hs
-                        </Badge>
-                    </AlertTitle>
-                    <AlertDescription className="text-red-700">
-                        Aprovecha los precios especiales antes de que termine la promoción
-                    </AlertDescription>
-                </Alert>
 
-                {/* Información de Transferencia */}
+                <Card className="border-green-200 bg-blue-50">
+                    <CardContent className="p-4">
+                        <div className="flex flex-col items-start gap-3">
+                            <div className={"flex gap-2"}>
+                                <Joystick className="h-5 w-5 text-blue-600 mt-0.5"/>
+                                <h3 className="font-semibold text-blue-800 mb-1">Compatibilidad</h3>
+                            </div>
+                            <div>
+                                <p className="text-sm text-blue-700">
+                                    Nuestros juegos son compatibles con consolas PS4 Y PS5. La consola debe
+                                    estar original, es decir sin ningun &apos;chipeo&apos;, &apos;desbloqueo&apos;
+                                    o similar.
+                                    <strong> Nuestra garantía no cubre si la consola no cumple estos
+                                        requisitos.</strong>
+                                </p>
+                            </div>
+                        </div>
+                    </CardContent>
+                </Card>
+
+                {/* Información de envios/entrega */}
                 <Card className="border-green-200 bg-green-50">
                     <CardContent className="p-4">
-                        <div className="flex items-start gap-3">
-                            <CreditCard className="h-5 w-5 text-green-600 mt-0.5" />
+                        <div className="flex flex-col items-start gap-3">
+                            <div className={"flex gap-2"}>
+                                <TimerIcon className="h-5 w-5 text-green-600 mt-0.5"/>
+                                <h3 className="font-semibold text-green-800 mb-1">Envios y tiempos de entrega</h3>
+                            </div>
                             <div>
-                                <h3 className="font-semibold text-green-800 mb-1">💰 Precio por Transferencia</h3>
                                 <p className="text-sm text-green-700">
-                                    Los precios mostrados son abonando por <strong>transferencia bancaria CVU/CBU</strong>
+                                    Se entrega
+                                    <strong> usuario y contraseña </strong>
+                                    junto con el
+                                    <strong> instructivo de instalación </strong>.
+                                    Se envia por correo electrónico
+                                    <strong> si o si </strong>
+                                    para mantener un registro inborrable de la entrega.
+                                    El tiempo de entrega de los juegos de oferta demora entre 5 a 30 minutos.
+                                    Se notifica si hay demora.
                                 </p>
                             </div>
                         </div>
@@ -39,91 +59,56 @@ function InformacionJuegosOferta () {
                 </Card>
 
                 {/* Información de Cuentas */}
-                <Card className="border-blue-200 bg-blue-50">
+                <Card className="border-blue-200 bg-red-50">
                     <CardContent className="p-4">
-                        <div className="flex items-start gap-3">
-                            <AlertCircle className="h-5 w-5 text-blue-600 mt-0.5" />
+                        <div className="flex flex-col items-start gap-3">
+                            <div className={"flex gap-2"}>
+                                <AlertCircle className="h-5 w-5 text-red-600 mt-0.5"/>
+                                <h3 className="font-semibold text-red-800 mb-1">Importante</h3>
+                            </div>
                             <div>
-                                <h3 className="font-semibold text-blue-800 mb-1">📋 Información de Stock</h3>
-                                <p className="text-sm text-blue-700">
-                                    El precio publicado es en <strong>cuenta primaria</strong>. Por cuenta secundaria{" "}
-                                    <strong>consultar stock</strong> disponible.
+                                <p className="text-sm text-red-700">
+                                    El juego no se puede revender una vez instalado en la consola.
+                                    El usuario enviado es
+                                    <strong> unicamente para 1 consola</strong>.
+                                    Es decir que
+                                    <strong> no se puede instalar en otra consola</strong>.
+                                    No esta permitido cambiar datos del usuario ni
+                                    acceder desde un dispositivo externo.
+                                    Si se rompen estos términos
+                                    <strong> la garantía queda anualada sin derecho a reclamo</strong>.
                                 </p>
                             </div>
                         </div>
                     </CardContent>
                 </Card>
+
+
+                {/* Información de Cuentas */}
+                <Card className="border-blue-200 bg-yellow-50">
+                    <CardContent className="p-4">
+                        <div className="flex flex-col items-start gap-3">
+                            <div className={"flex gap-2"}>
+                                <AlertCircle className="h-5 w-5 text-yellow-600 mt-0.5"/>
+                                <h3 className="font-semibold text-yellow-800 mb-1">Excepciones</h3>
+                            </div>
+                            <div>
+                                <p className="text-sm text-yellow-700">
+                                    Por favor comunicarse si tiene dudas antes de realizar alguna
+                                    acción en lo que respecta al usuario que enviamos. Podemos considerar
+                                    dar garantía en casos aislados y excepcionales para que pueda
+                                    mantener su juego. Agradecemos su modestia al consultarnos y despejar dudas
+                                    previo a hacer cualquier acción que involucre nuestros usuarios.
+                                </p>
+                            </div>
+                        </div>
+                    </CardContent>
+                </Card>
+
             </div>
 
-            <Alert className="border-yellow-200 bg-yellow-50">
-                <Info className="h-4 w-4" />
-                <AlertTitle className="text-yellow-800">Información importante</AlertTitle>
-                <AlertDescription className="text-yellow-700">
-                    Más información sobre tiempos de entrega, envio, garantía y compatibilidad. Click aqui
-                </AlertDescription>
-            </Alert>
-
-            <Card className="border-l-4 border-l-blue-500 w-4/12">
-                <CardHeader className="pb-3">
-                    <CardTitle className="flex items-center gap-2 text-blue-700">
-                        <Clock className="h-5 w-5" />
-                        Tiempos de Entrega
-                    </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                    <div className="flex justify-between items-center">
-                        <span className="text-sm">📍 Capital Federal</span>
-                        <Badge variant="secondary">24 horas</Badge>
-                    </div>
-                    <div className="flex justify-between items-center">
-                        <span className="text-sm">🏙️ Gran Buenos Aires</span>
-                        <Badge variant="secondary">48 horas</Badge>
-                    </div>
-                    <div className="flex justify-between items-center">
-                        <span className="text-sm">🌎 Interior del país</span>
-                        <Badge variant="secondary">3-5 días</Badge>
-                    </div>
-                </CardContent>
-            </Card>
-
-            <Card className="border-l-4 border-l-green-500 w-4/12">
-                <CardHeader className="pb-3">
-                    <CardTitle className="flex items-center gap-2 text-green-700">
-                        <CreditCard className="h-5 w-5" />
-                        Formas de Pago
-                    </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                    <div className="flex items-center gap-3">
-                        <CheckCircle className="h-4 w-4 text-green-600"/>
-                        <span className="text-sm">Transferencia bancaria</span>
-                        <Badge variant="outline" className="text-xs text-white bg-green-600">
-                            20% OFF
-                        </Badge>
-                    </div>
-                    <div className="flex items-center gap-3">
-                        <CheckCircle className="h-4 w-4 text-green-600"/>
-                        <span className="text-sm">Cuotas sin interés (crédito y débito)</span>
-                        <Badge variant="outline" className="text-xs">
-                            Hasta 3x
-                        </Badge>
-                    </div>
-                    <div className="flex items-center gap-3">
-                        <CheckCircle className="h-4 w-4 text-green-600"/>
-                        <span className="text-sm">Criptomonedas</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                        <CheckCircle className="h-4 w-4 text-green-600"/>
-                        <span className="text-sm">Efectivo rapipago-pagofacil</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                        <CheckCircle className="h-4 w-4 text-green-600"/>
-                        <span className="text-sm">MercadoPago, NaranjaX, Cuenta DNI, Uala, Brubank, etc</span>
-                    </div>
-                </CardContent>
-            </Card>
         </main>
-    )
+)
 }
 
 export default InformacionJuegosOferta

@@ -228,7 +228,6 @@ class ModeloJuegos {
     }
 
     #ordenarPorDestacadoAndTitulo(arrayJuegos) {
-        console.log("arary de juegos para ordenar", arrayJuegos)
         arrayJuegos.sort((a, b) => {
             // Destacados primero
             if (a.esDestacado !== b.esDestacado) {
@@ -295,7 +294,6 @@ class ModeloJuegos {
         if (!id && !usuario) throw new Error("No autorizado.")
         const oferta = await this.repositorioJuegos.obtenerOfertaPorId(id);
         if (!oferta) return null;
-        console.log("oferta encontrada", oferta)
         oferta.juegos = this.#formatearJuegosParaPresentar("admin", oferta.juegos)
         this.#ordenarPorDestacadoAndTitulo(oferta.juegos)
         return oferta
@@ -311,8 +309,6 @@ class ModeloJuegos {
             this.calcularPrecios(j)
             this.convertirParaGuardar(j, i)
         })
-
-        console.log("oferta nueva GUARDO BACK", ofertaNueva)
 
         const resultado = await this.repositorioJuegos.guardarOferta(ofertaNueva)
         if (!resultado) throw new Error("No se puedo actualizar")

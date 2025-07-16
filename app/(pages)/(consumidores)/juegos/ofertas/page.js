@@ -23,7 +23,7 @@ async function Ofertas() {
     return (
         <main className={"styledMain w-full sm:w-11/12 md:w-9/12 lg:w-7/12 mx-auto px-2 pt-20"}>
             <h2 className="mt-4 text-2xl font-bold mb-2 text-center">{resultado.data.titulo}</h2>
-            <InformacionJuegosOferta/>
+            <InformacionJuegosOferta fecha={resultado.data.termina}/>
             <TablaJuegosOfertaConsumidores
                 juegos={resultado.data.juegos}
                 fechaExpiracion={resultado.data.termina}
