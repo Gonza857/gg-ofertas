@@ -3,7 +3,7 @@
 import React, {useRef, useState} from "react";
 import {toast} from "@/hooks/use-toast";
 import {Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
-import {Box, Check, Clock, Copy, Info, Scroll} from "lucide-react";
+import {Box, Check, Clock, Copy, Gamepad2, Info, Scroll, Search} from "lucide-react";
 import {Input} from "@/components/ui/input";
 import {Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
 import {useCopiarAlPortapapeles} from "@/hooks/useCopyToClipboard";
@@ -11,6 +11,8 @@ import Link from "next/link";
 import {FaWhatsapp} from "react-icons/fa";
 import {Button} from "@/components/ui/button";
 import {FaTelegram} from "react-icons/fa6";
+import ExportarExcel from "@/lib/ExportarExcel";
+import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
 
 function redondearCien(num) {
     const resto = num % 100;
@@ -94,15 +96,6 @@ function TablaJuegosOfertaReventa({juegos = [], fechaExpiracion, titulo = null})
 
     return (
         <article className={"w-full py-4"} ref={topRef}>
-            <h2 className="text-2xl font-bold mb-2">
-                Juegos en oferta hasta el {fechaExpiracion}
-            </h2>
-            <p className={"mt-2 text-sm text-neutral-500 dark:text-neutral-400"}>
-                Transferencia - Precio abonando por transferencia bancaria CVU/CBU
-            </p>
-            <p className={"mt-2 text-sm text-neutral-500 dark:text-neutral-400 font-semibold"}>
-                El precio publicado es en cuenta primaria. Por secundaria consultar stock.
-            </p>
             <div className={"px-2 mt-2"}>
                 <Table className={"my-4 border rounded"}>
                     <TableBody>
@@ -112,33 +105,46 @@ function TablaJuegosOfertaReventa({juegos = [], fechaExpiracion, titulo = null})
                     </TableBody>
                 </Table>
             </div>
-            <h2 className="text-2xl font-semibold mt-2">
-                Busca tu juego
-            </h2>
-            <div className={"flex flex-col md:flex-row md:justify-between gap-4 pb-2 mt-2"}>
-                <Input
-                    onChange={buscarJuego}
-                    placeholder={"Buscar por nombre de juego 🔎"}
-                    className={"w-full md:w-3/4"}
-                />
-                <div className={"w-full md:w-1/4"}>
-                    <Select onValueChange={handleSortChange}>
-                        <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Ordenar por..."/>
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectGroup>
-                                <SelectItem value="revelancia">Revelancia</SelectItem>
-                                <SelectItem value="price-asc">Precio: Menor a Mayor</SelectItem>
-                                <SelectItem value="price-desc">Precio: Mayor a Menor</SelectItem>
-                                <SelectItem value="name-asc">Nombre: A-Z</SelectItem>
-                                <SelectItem value="name-desc">Nombre: Z-A</SelectItem>
-                            </SelectGroup>
-                        </SelectContent>
-                    </Select>
-                </div>
-            </div>
-            <TablaOfertas {...tablaProps}/>
+            <Card>
+                <CardHeader>
+                    <CardTitle className={"flex gap-2"}>
+                        <Gamepad2 className="h-5 w-5"/>
+                        Juegos en oferta PS4/PS5
+                    </CardTitle>
+                    <CardDescription>Precio en cuenta primaria</CardDescription>
+                </CardHeader>
+                <CardContent className={"space-y-4 p-2 md:p-6"}>
+                    <div className="flex flex-col md:flex-row gap-4">
+                        <div className="relative flex-1">
+                            <Search
+                                className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4"/>
+                            <Input
+                                onChange={buscarJuego}
+                                placeholder={"Buscar por nombre de juego 🔎"}
+                                className={"pl-10"}
+                            />
+                        </div>
+                        <div className="flex gap-2">
+                            <Select onValueChange={handleSortChange}>
+                                <SelectTrigger className="w-full">
+                                    <SelectValue placeholder="Ordenar por..."/>
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectGroup>
+                                        <SelectItem value="revelancia">Revelancia</SelectItem>
+                                        <SelectItem value="price-asc">Precio: Menor a Mayor</SelectItem>
+                                        <SelectItem value="price-desc">Precio: Mayor a Menor</SelectItem>
+                                        <SelectItem value="name-asc">Nombre: A-Z</SelectItem>
+                                        <SelectItem value="name-desc">Nombre: Z-A</SelectItem>
+                                    </SelectGroup>
+                                </SelectContent>
+                            </Select>
+                        </div>
+                    </div>
+                    <TablaOfertas {...tablaProps}/>
+                    <ExportarExcel datos={juegos}/>
+                </CardContent>
+            </Card>
         </article>
     )
 }

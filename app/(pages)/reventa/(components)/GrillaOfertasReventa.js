@@ -3,6 +3,7 @@ import TablaJuegosOfertaReventa from "@/components/page-components/reventa/Tabla
 import React from "react";
 import {cookies} from "next/headers";
 import {obtenerJuegosOferta} from "@/dominio/servicios/juegos";
+import InformacionJuegosOfertaReventa from "@/app/(pages)/reventa/(components)/InformacionJuegosOfertaReventa";
 
 async function GrillaOfertasReventa() {
     const token = cookies().get("access-token")?.value
@@ -12,7 +13,7 @@ async function GrillaOfertasReventa() {
     return (
         <>
             <h2 className="mt-4 text-2xl font-bold mb-2 text-center">{resultado.data.titulo}</h2>
-            <Recordatorios/>
+            <InformacionJuegosOfertaReventa fecha={resultado.data.termina}/>
             <TablaJuegosOfertaReventa
                 juegos={resultado.data.juegos}
                 fechaExpiracion={resultado.data.termina}

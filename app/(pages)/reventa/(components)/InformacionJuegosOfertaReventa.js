@@ -1,27 +1,26 @@
-import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
-import {AlertCircle, CheckCircle, Clock, CreditCard, Info} from "lucide-react";
 import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert";
-import Link from "next/link";
+import {AlertCircle, CheckCircle, Clock, CreditCard, Info} from "lucide-react";
 import {Badge} from "@/components/ui/badge";
+import Link from "next/link";
+import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import React from "react";
 
-function InformacionJuegosStockReventa () {
+function InformacionJuegosOfertaReventa ({fecha}) {
     return (
         <div className={"space-y-4"}>
-            <Card className="border-blue-200 bg-blue-50">
-                <CardContent className="p-4">
-                    <div className="flex items-start gap-3">
-                        <AlertCircle className="h-5 w-5 text-blue-600 mt-0.5"/>
-                        <div>
-                            <h3 className="font-semibold text-blue-800 mb-1">📋 Información de precios</h3>
-                            <p className="text-sm text-blue-700">
-                                Si el juego publicado esta de oferta
-                                <strong> se toma el precio de oferta</strong>.
-                            </p>
-                        </div>
-                    </div>
-                </CardContent>
-            </Card>
+            {/* Fecha de conclusión */}
+            <Alert className="border-red-200 bg-red-50">
+                <Clock className="h-4 w-4"/>
+                <AlertTitle className="text-red-800 flex items-center gap-2">
+                    🔥 ¡Juegos en Oferta!
+                    <Badge variant="destructive" className="animate-pulse">
+                        Hasta el {fecha}
+                    </Badge>
+                </AlertTitle>
+                <AlertDescription className="text-red-700">
+                    Aprovecha los precios especiales antes de que termine la promoción.
+                </AlertDescription>
+            </Alert>
 
             <Alert className="border-yellow-200 bg-yellow-50">
                 <Info className="h-4 w-4"/>
@@ -95,4 +94,4 @@ function InformacionJuegosStockReventa () {
     )
 }
 
-export default InformacionJuegosStockReventa;
+export default InformacionJuegosOfertaReventa;

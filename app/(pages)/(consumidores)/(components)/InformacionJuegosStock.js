@@ -7,18 +7,6 @@ import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 function InformacionJuegosStock () {
     return (
         <div className={"space-y-4"}>
-            {/*<Alert className="border-red-200 bg-red-50">*/}
-            {/*    <Clock className="h-4 w-4"/>*/}
-            {/*    <AlertTitle className="text-red-800 flex items-center gap-2">*/}
-            {/*        🔥 ¡Juegos en Oferta!*/}
-            {/*        <Badge variant="destructive" className="animate-pulse">*/}
-            {/*            Hasta 16/07/25 19:00Hs*/}
-            {/*        </Badge>*/}
-            {/*    </AlertTitle>*/}
-            {/*    <AlertDescription className="text-red-700">*/}
-            {/*        Aprovecha los precios especiales antes de que termine la promoción*/}
-            {/*    </AlertDescription>*/}
-            {/*</Alert>*/}
 
             <Card className="border-blue-200 bg-blue-50">
                 <CardContent className="p-4">
@@ -28,7 +16,7 @@ function InformacionJuegosStock () {
                             <h3 className="font-semibold text-blue-800 mb-1">📋 Información de precios</h3>
                             <p className="text-sm text-blue-700">
                                 Si el juego publicado esta de oferta
-                                <strong>se toma el precio de oferta</strong>.
+                                <strong> se toma el precio de oferta</strong>.
                             </p>
                         </div>
                     </div>

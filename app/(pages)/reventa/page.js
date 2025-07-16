@@ -6,6 +6,7 @@ import Recordatorios from "@/components/page-components/consumidores/juegos/ofer
 import BrandSpinner from "@/app/(modules)/admin/(components)/BrandSpinner";
 import WrapperJuegosStock from "@/app/(pages)/(consumidores)/(components)/WrapperJuegosStock";
 import GrillaOfertasReventa from "@/app/(pages)/reventa/(components)/GrillaOfertasReventa";
+import InformacionJuegosOfertaReventa from "@/app/(pages)/reventa/(components)/InformacionJuegosOfertaReventa";
 
 export const dynamic = "force-dynamic";
 

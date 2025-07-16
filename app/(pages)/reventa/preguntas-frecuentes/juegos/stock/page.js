@@ -15,7 +15,7 @@ import {Alert, AlertDescription} from "@/components/ui/alert";
 
 function InformacionJuegosOferta() {
     return (
-        <main className={"styledMain w-full sm:w-11/12 md:w-9/12 lg:w-7/12 mx-auto px-2 pt-20"}>
+        <main className={"styledMain w-full sm:w-11/12 md:w-9/12 lg:w-7/12 mx-auto px-2 pt-20 md:pb-4"}>
 
             <h2 className="mt-4 text-2xl font-bold mb-2 text-center">Información juegos digitales (reventa)</h2>
 
@@ -113,64 +113,6 @@ function InformacionJuegosOferta() {
                 </Card>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 py-4">
-
-                <Card className="border-l-4 border-l-blue-500">
-                    <CardHeader className="pb-3">
-                        <CardTitle className="flex items-center gap-2 text-blue-700">
-                            <Clock className="h-5 w-5"/>
-                            Beneficios
-                        </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-3">
-                        <div className="flex justify-between items-center">
-                            <div className={"flex gap-2"}>
-                                <CheckCircle className="h-4 w-4 text-green-600"/>
-                                <span className="text-sm">Garantía</span>
-                            </div>
-                            <Badge variant="secondary">Ilimitada</Badge>
-                        </div>
-                        <div className="flex justify-between items-center">
-                            <div className={"flex gap-2"}>
-                                <CheckCircle className="h-4 w-4 text-green-600"/>
-                                <span className="text-sm">Soporte técnico personalizado</span>
-                            </div>
-                            <Badge variant="secondary">Todos los días</Badge>
-                        </div>
-                        <div className="flex justify-between items-center">
-                            <div className={"flex gap-2"}>
-                                <CheckCircle className="h-4 w-4 text-green-600"/>
-                                <span className="text-sm">Juegos y licencias</span>
-                            </div>
-                            <Badge variant="secondary">Originales y oficiales</Badge>
-                        </div>
-                    </CardContent>
-                </Card>
-
-                <Card className="border-l-4 border-l-green-500">
-                    <CardHeader className="pb-3">
-                        <CardTitle className="flex items-center gap-2 text-green-700">
-                            <CreditCard className="h-5 w-5"/>
-                            Formas de Pago
-                        </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-3">
-                        <div className="flex items-center gap-3">
-                            <CheckCircle className="h-4 w-4 text-green-600"/>
-                            <span className="text-sm">Transferencia bancaria</span>
-                        </div>
-                        <div className="flex items-center gap-3">
-                            <CheckCircle className="h-4 w-4 text-green-600"/>
-                            <span className="text-sm">Criptomonedas</span>
-                        </div>
-                        <Alert className="mt-3 p-2">
-                            <AlertDescription className="text-xs">
-                                💡 Para descuentos comprando varias unidades, consultar.
-                            </AlertDescription>
-                        </Alert>
-                    </CardContent>
-                </Card>
-            </div>
         </main>
     )
 }
