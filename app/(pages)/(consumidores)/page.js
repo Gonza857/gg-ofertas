@@ -24,7 +24,6 @@ export const metadata = {
 async function Principal() {
     const token = cookies().get("access-token")?.value
     const resultado = await obtenerTodasLasTarjetas(undefined, token)
-    console.log("resultado back", resultado)
     if (!resultado.exito) return <>Error</>
 
     return (

@@ -4,6 +4,7 @@ import {revalidatePath} from "next/cache";
 import {cookies} from "next/headers";
 import CookieManager from "@/dominio/utils/auth/cookiesManager";
 import ManejadorRespuesta from "@/infraestructura/ManejadorRespuesta";
+import {updateJuegoStock} from "@/app/schemas/backend/juegoStock";
 
 const modeloJuegos = container.resolve("ModeloJuegos");
 const modeloUsuario = container.resolve("ModeloUsuario");
@@ -81,12 +82,22 @@ export async function DELETE(req, res) {
 export async function PATCH(req, res) {
     const resultado = await validarAdmin();
     if (!resultado.exito) return resultado;
+    const body = await req.json();
+
+    let juegoStock;
+    try {
+        juegoStock = updateJuegoStock.parse(body)
+    } catch (e) {
+        return ManejadorRespuesta.error(e.message)
+    }
+
+    console.log("juego stock en back", juegoStock)
 
     try {
-        const cuerpo = await req.json();
-        const resultado = await modeloJuegos.actualizarJuegoStock(cuerpo)
+
+        const resultado = await modeloJuegos.actualizarJuegoStock(juegoStock)
         revalidar()
-        return ManejadorRespuesta.ok({data: resultado})
+        return ManejadorRespuesta.ok(resultado)
     } catch (e) {
         return ManejadorRespuesta.error(e.message);
     }

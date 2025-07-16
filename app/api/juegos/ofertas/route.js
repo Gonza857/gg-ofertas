@@ -42,6 +42,7 @@ export async function GET(req, res) {
             );
         return ManejadorRespuesta.ok(ofertas)
     } catch (e) {
+        console.log(e.message)
         return ManejadorRespuesta.error(e.message)
     }
 }

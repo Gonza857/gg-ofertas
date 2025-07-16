@@ -2,6 +2,7 @@ import {JuegoClienteDTO} from "@/dominio/utils/dto/juegos";
 import {id} from "date-fns/locale";
 import JuegoOferta, {JuegoOfertaAdmin, JuegoOfertaCliente, JuegoOfertaRevendedor} from "@/app/entities/JuegoOferta";
 import JuegoPreventa from "@/app/entities/JuegoPreventa";
+import {JuegoStockAdmin, JuegoStockCliente} from "@/app/entities/JuegoStock";
 
 class ModeloJuegos {
     repositorioJuegos;
@@ -111,7 +112,7 @@ class ModeloJuegos {
         let resultado = consolaBuscada ? filtrados : juegos
 
         if (usuario) {
-            // es admin
+            resultado = resultado.map(r => new JuegoStockAdmin(r));
         } else {
             // es user normal
         }
@@ -171,6 +172,7 @@ class ModeloJuegos {
                 {atributo: "prioridad", valor: 1},
             ]
             let oferta = await this.repositorioJuegos.obtenerOfertaActual(filtros)
+            console.log("oferta back", oferta)
             this.#ordenarPorDestacadoAndTitulo(oferta.juegos)
             oferta.juegos = this.#formatearJuegosParaPresentar(tipoCliente, oferta.juegos);
             return oferta;
@@ -234,7 +236,7 @@ class ModeloJuegos {
                 return a.esDestacado ? -1 : 1;
             }
             // Si ambos son o no son destacados, ordenar por título
-            return a.nombre.localeCompare(b.nombre);
+            return a.name.localeCompare(b.name);
         });
     }
 
