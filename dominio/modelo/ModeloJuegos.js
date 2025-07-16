@@ -234,11 +234,12 @@ class ModeloJuegos {
                 return a.esDestacado ? -1 : 1;
             }
             // Si ambos son o no son destacados, ordenar por título
-            return a.name.localeCompare(b.name);
+            return a.nombre.localeCompare(b.nombre);
         });
     }
 
     #formatearJuegosParaPresentar(cliente = "customer", arrayJuegos) {
+        console.log("formato para", cliente)
         if (cliente === "admin")
             return arrayJuegos.map((j, i) => new JuegoOfertaAdmin(j.price, i, j.name))
 
@@ -286,7 +287,7 @@ class ModeloJuegos {
         if (!id && !usuario) throw new Error("No autorizado.")
         const oferta = await this.repositorioJuegos.obtenerOfertaPorId(id);
         if (!oferta) return null;
-        this.#formatearJuegosParaPresentar("admin", oferta.juegos)
+        oferta.juegos = this.#formatearJuegosParaPresentar("admin", oferta.juegos)
         this.#ordenarPorDestacadoAndTitulo(oferta.juegos)
         return oferta
 

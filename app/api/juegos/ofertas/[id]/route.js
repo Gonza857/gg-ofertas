@@ -30,7 +30,7 @@ export async function GET(req, res) {
 
     try {
         const oferta = await modeloJuegos.obtenerPorId(id, resultado.usuario);
-        return ManejadorRespuesta.ok({data: oferta})
+        return ManejadorRespuesta.ok(oferta)
     } catch (e) {
         console.error(e)
         return ManejadorRespuesta.error(e.message)

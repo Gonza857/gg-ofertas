@@ -53,6 +53,7 @@ export class JuegoOfertaAdmin extends JuegoOferta {
     constructor(precioDefault, i, nombre) {
         super(nombre, i);
         this.precioBase = precioDefault
+        this.#calcularPrecios(precioDefault)
     }
 
     #calcularPrecios (precioDefault) {
