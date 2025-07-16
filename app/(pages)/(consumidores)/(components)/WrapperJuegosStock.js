@@ -9,7 +9,6 @@ async function WrapperJuegosStock ({consola = undefined, cliente = false}) {
 
     return (
         <TablaJuegosStock juegos={resultado.data ?? []} cliente={cliente}/>
-
     )
 }
 

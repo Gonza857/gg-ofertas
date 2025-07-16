@@ -2,7 +2,7 @@
 
 import {Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
 import {useCopiarAlPortapapeles} from "@/hooks/useCopyToClipboard";
-import {Check, Copy} from "lucide-react";
+import {Check, Copy, Gamepad2, Search} from "lucide-react";
 import React, {useEffect, useRef, useState} from "react";
 import {Checkbox} from "@/components/ui/checkbox";
 import {Label} from "@/components/ui/label";
@@ -12,6 +12,7 @@ import ordenador from "@/lib/ordenamiento";
 import {useRouter, useSearchParams} from "next/navigation";
 import Link from "next/link";
 import {FaWhatsapp} from "react-icons/fa";
+import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
 
 function TablaJuegosStock({juegos: s, cliente = false}) {
     const [juegos, setJuegos] = useState(s || [])
@@ -97,102 +98,71 @@ function TablaJuegosStock({juegos: s, cliente = false}) {
 
     return (
         <>
-            <h2 className="text-2xl font-semibold mt-4">
-                Busca tu juego
-            </h2>
-            <Buscar_Ordenar
-                buscarJuego={buscarJuego}
-                handleSortChange={handleSortChange}
-                juegoBuscado={juegoBuscado}
-            />
-            <div className="flex flex-col sm:flex-row gap-2 md:gap-4 mt-4">
-                {/* Filtros */}
-                <div className="lg:mb-2 sm:border-r pe-2 md:pe-4">
-                    <h3 className="text-sm font-semibold pb-2">Tipo de Cuenta</h3>
-                    <div className="flex gap-2">
-                        <Label className="flex items-center space-x-2">
-                            <Checkbox
-                                checked={filtros.tipo.includes("primaria")}
-                                onCheckedChange={() => handleFilterChange("tipo", "primaria")}
-                            />
-                            <span>Primaria</span>
-                        </Label>
-                        <Label className="flex items-center space-x-2">
-                            <Checkbox
-                                checked={filtros.tipo.includes("secundaria")}
-                                onCheckedChange={() => handleFilterChange("tipo", "secundaria")}
-                            />
-                            <span>Secundaria</span>
-                        </Label>
+            {/*{juegoBuscado &&*/}
+            {/*    <p className={"py-3 text-sm text-gray-600"}>Se muestran resultados para: {juegoBuscado}</p>}*/}
+
+            <Card className={"mt-4"}>
+                <CardHeader className={"pb-2"}>
+                    <CardTitle className={"flex gap-2"}>
+                        <Gamepad2 className="h-5 w-5"/>
+                        Juegos en stock
+                    </CardTitle>
+                    <CardDescription>Cuentas primarias y secundarias</CardDescription>
+                </CardHeader>
+                <CardContent className={"space-y-4 p-2 md:p-6"}>
+                    {/* Filtros */}
+                    <div className="lg:mb-2 sm:border-r pe-2 md:pe-4">
+                        <h3 className="text-sm font-semibold pb-2">Tipo de Cuenta</h3>
+                        <div className="flex gap-2">
+                            <Label className="flex items-center space-x-2">
+                                <Checkbox
+                                    checked={filtros.tipo.includes("primaria")}
+                                    onCheckedChange={() => handleFilterChange("tipo", "primaria")}
+                                />
+                                <span>Primaria</span>
+                            </Label>
+                            <Label className="flex items-center space-x-2">
+                                <Checkbox
+                                    checked={filtros.tipo.includes("secundaria")}
+                                    onCheckedChange={() => handleFilterChange("tipo", "secundaria")}
+                                />
+                                <span>Secundaria</span>
+                            </Label>
+                        </div>
                     </div>
-                </div>
 
-                {/*<div className="lg:mb-2 sm:border-r pe-2 md:pe-4">*/}
-                {/*    <h3 className="text-sm font-semibold pb-2">Consola</h3>*/}
-                {/*    <div className="flex gap-2">*/}
-                {/*        <Label className="flex items-center space-x-2">*/}
-                {/*            <Checkbox*/}
-                {/*                checked={filtros.consola.includes("ps4")}*/}
-                {/*                onCheckedChange={() => handleFilterChange("consola", "ps4")}*/}
-                {/*            />*/}
-                {/*            <span>PS4</span>*/}
-                {/*        </Label>*/}
-                {/*        <Label className="flex items-center space-x-2">*/}
-                {/*            <Checkbox*/}
-                {/*                checked={filtros.consola.includes("ps5")}*/}
-                {/*                onCheckedChange={() => handleFilterChange("consola", "ps5")}*/}
-                {/*            />*/}
-                {/*            <span>PS5</span>*/}
-                {/*        </Label>*/}
-                {/*    </div>*/}
-                {/*</div>*/}
+                    <div className="flex flex-col md:flex-row gap-4">
+                        <div className="relative flex-1">
+                            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                            <Input
+                                onChange={buscarJuego}
+                                placeholder={"Buscar por nombre de juego 🔎"}
+                                className={"w-full"}
+                            />
+                        </div>
+                        <div className="flex gap-2">
+                            <Select onValueChange={handleSortChange}>
+                                <SelectTrigger className="w-full">
+                                    <SelectValue placeholder="Ordenar por..."/>
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectGroup>
+                                        <SelectItem value="revelancia">Revelancia</SelectItem>
+                                        <SelectItem value="price-asc">Precio: Menor a Mayor</SelectItem>
+                                        <SelectItem value="price-desc">Precio: Mayor a Menor</SelectItem>
+                                        <SelectItem value="name-asc">Nombre: A-Z</SelectItem>
+                                        <SelectItem value="name-desc">Nombre: Z-A</SelectItem>
+                                    </SelectGroup>
+                                </SelectContent>
+                            </Select>
+                        </div>
+                    </div>
 
-            </div>
+                    <Tabla {...tablaProps}/>
 
-            {juegoBuscado &&
-                <p className={"py-3 text-sm text-gray-600"}>Se muestran resultados para: {juegoBuscado}</p>}
-            <Tabla {...tablaProps}/>
+                </CardContent>
+            </Card>
         </>
-    )
-}
-
-const Buscar_Ordenar = ({buscarJuego, handleSortChange}) => {
-    return (
-        <div className={"flex flex-col md:flex-row md:justify-between gap-4 mt-2"}>
-            <Buscador buscarJuego={buscarJuego}/>
-            <Ordenador handleSortChange={handleSortChange}/>
-        </div>
-    )
-}
-
-const Buscador = ({buscarJuego}) => {
-    return (
-        <Input
-            onChange={buscarJuego}
-            placeholder={"Buscar por nombre de juego 🔎"}
-            className={"w-full"}
-        />
-    )
-}
-
-const Ordenador = ({handleSortChange}) => {
-    return (
-        <div className={"w-full md:w-1/4"}>
-            <Select onValueChange={handleSortChange}>
-                <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Ordenar por..."/>
-                </SelectTrigger>
-                <SelectContent>
-                    <SelectGroup>
-                        <SelectItem value="revelancia">Revelancia</SelectItem>
-                        <SelectItem value="price-asc">Precio: Menor a Mayor</SelectItem>
-                        <SelectItem value="price-desc">Precio: Mayor a Menor</SelectItem>
-                        <SelectItem value="name-asc">Nombre: A-Z</SelectItem>
-                        <SelectItem value="name-desc">Nombre: Z-A</SelectItem>
-                    </SelectGroup>
-                </SelectContent>
-            </Select>
-        </div>
     )
 }
 

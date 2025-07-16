@@ -28,21 +28,21 @@ class ModeloJuegos {
         return diccionario[datosConsola]
     }
 
-    async crearPreventa (preventaObject) {
+    async crearPreventa(preventaObject) {
         const preventa = new JuegoPreventa(preventaObject)
         await this.repositorioJuegos.guardarPreventa({...preventa})
     }
 
-    async obtenerPreventas () {
+    async obtenerPreventas() {
         return await this.repositorioJuegos.obtenerPreventas()
     }
 
     async obtenerPreventaPorId(id) {
-        if (!id) throw new Error ("Error al obtener preventa.")
+        if (!id) throw new Error("Error al obtener preventa.")
         return await this.repositorioJuegos.obtenerPreventaPorId(id)
     }
 
-    async actualizarPreventa (preventaInput, id) {
+    async actualizarPreventa(preventaInput, id) {
         if (!preventaInput && !id) throw new Error("Error altualizar oferta.");
         const preventa = await this.repositorioJuegos.obtenerPreventaPorId(id);
         if (!preventa) throw new Error("Error altualizar oferta.");
@@ -130,7 +130,6 @@ class ModeloJuegos {
         if (!oferta) throw new Error("Error altualizar oferta.");
         Object.assign(oferta, nuevosDatos)
         if (!oferta.estaActiva) oferta.prioridad = null;
-        console.log("asi va la oferta", oferta);
         await this.repositorioJuegos.actualizarJuegosOferta(oferta)
     }
 
@@ -172,7 +171,6 @@ class ModeloJuegos {
                 {atributo: "prioridad", valor: 1},
             ]
             let oferta = await this.repositorioJuegos.obtenerOfertaActual(filtros)
-            console.log("oferta back", oferta)
             this.#ordenarPorDestacadoAndTitulo(oferta.juegos)
             oferta.juegos = this.#formatearJuegosParaPresentar(tipoCliente, oferta.juegos);
             return oferta;
@@ -230,49 +228,57 @@ class ModeloJuegos {
     }
 
     #ordenarPorDestacadoAndTitulo(arrayJuegos) {
-        return arrayJuegos.sort((a, b) => {
+        console.log("arary de juegos para ordenar", arrayJuegos)
+        arrayJuegos.sort((a, b) => {
             // Destacados primero
             if (a.esDestacado !== b.esDestacado) {
                 return a.esDestacado ? -1 : 1;
             }
             // Si ambos son o no son destacados, ordenar por título
-            return a.name.localeCompare(b.name);
+            return a.nombre.localeCompare(b.nombre);
         });
     }
 
     #formatearJuegosParaPresentar(cliente = "customer", arrayJuegos) {
-        console.log("formato para", cliente)
         if (cliente === "admin")
-            return arrayJuegos.map((j, i) => new JuegoOfertaAdmin(j.price, i, j.name))
+            return arrayJuegos.map((j, i) => new JuegoOfertaAdmin(j, i))
 
         if (cliente === "reseller")
-            return arrayJuegos.map((j, i) => new JuegoOfertaRevendedor(j.price, i, j.name));
+            return arrayJuegos.map((j, i) => new JuegoOfertaRevendedor(j, i));
 
-        return arrayJuegos.map((j, i) => new JuegoOfertaCliente(j.price, i, j.name));
+        return arrayJuegos.map((j, i) => new JuegoOfertaCliente(j, i));
     }
 
 
     async actualizarOfertas(ofertasObject, usuario) {
         if (!usuario) throw new Error("No autorizado.")
-        delete ofertasObject.exito
+        if (!ofertasObject) throw new Error("No se pudo actualizar.")
+        ofertasObject.juegos = this.#formatearJuegosParaPresentar("admin", ofertasObject.juegos)
+        // delete ofertasObject.exito
+        //
+        // if (ofertasObject.accion === 0) {
+        //     // cambia destacado
+        //     ofertasObject.juegos.forEach((j) => {
+        //         j.name = `${j.esDestacado ? "⭐" : "💎"} ${j.name.replace(/^(\⭐|💎)\s*/, '')}`
+        //     })
+        // }
+        //
+        // if (ofertasObject.nuevo) {
+        //     ofertasObject.nuevo.name = "💎 " + ofertasObject.nuevo.name
+        //     ofertasObject.juegos = [...ofertasObject.juegos, ofertasObject.nuevo];
+        //     delete ofertasObject.nuevo;
+        // }
+        //
+        // this.#formatearJuegosParaPresentar("admin", ofertasObject.juegos)
+        //
 
-        if (ofertasObject.accion === 0) {
-            // cambia destacado
-            ofertasObject.juegos.forEach((j) => {
-                j.name = `${j.esDestacado ? "⭐" : "💎"} ${j.name.replace(/^(\⭐|💎)\s*/, '')}`
-            })
-        }
-
-        if (ofertasObject.nuevo) {
-            ofertasObject.nuevo.name = "💎 " + ofertasObject.nuevo.name
-            ofertasObject.juegos = [...ofertasObject.juegos, ofertasObject.nuevo];
-            delete ofertasObject.nuevo;
-        }
-
-        this.#formatearJuegosParaPresentar("admin", ofertasObject.juegos)
-
+        ofertasObject.juegos = this.#convertirJuegosObjectNormal(ofertasObject.juegos)
         const resultado = await this.repositorioJuegos.actualizarJuegosOferta(ofertasObject)
         if (!resultado) throw new Error("No se pudo actualizar las ofertas.");
+    }
+
+    #convertirJuegosObjectNormal(juegos) {
+         return juegos.map(j => ({...j}))
     }
 
     async eliminarJuegoDeOferta({idJuego, idOferta}, usuario) {
@@ -289,6 +295,7 @@ class ModeloJuegos {
         if (!id && !usuario) throw new Error("No autorizado.")
         const oferta = await this.repositorioJuegos.obtenerOfertaPorId(id);
         if (!oferta) return null;
+        console.log("oferta encontrada", oferta)
         oferta.juegos = this.#formatearJuegosParaPresentar("admin", oferta.juegos)
         this.#ordenarPorDestacadoAndTitulo(oferta.juegos)
         return oferta
@@ -298,11 +305,14 @@ class ModeloJuegos {
     async subirOfertas(ofertaNueva) {
         if (!ofertaNueva) throw new Error("No se recibieron los datos.")
 
-        const {juegos} = ofertaNueva;
-
         ofertaNueva.estaActiva = false;
 
-        juegos.forEach((j, i) => new JuegoOferta(j.price, i))
+        ofertaNueva.juegos.forEach((j, i) => {
+            this.calcularPrecios(j)
+            this.convertirParaGuardar(j, i)
+        })
+
+        console.log("oferta nueva GUARDO BACK", ofertaNueva)
 
         const resultado = await this.repositorioJuegos.guardarOferta(ofertaNueva)
         if (!resultado) throw new Error("No se puedo actualizar")
@@ -311,6 +321,22 @@ class ModeloJuegos {
             exito: resultado,
             mensaje: "Ofertas subidas correctamente."
         }
+    }
+
+    convertirParaGuardar (juego, i) {
+        juego.id = i
+        juego.esDestacado = false
+    }
+
+    calcularPrecios (juego) {
+        juego.precioClienteLista = Number(this.redondearCien(juego.precioBase * 1.25).toFixed(0))
+        juego.precioClienteTransferencia = Number(this.redondearCien(juego.precioClienteLista * 0.8).toFixed(0))
+        juego.precioReventa = Number(this.redondearCien((juego.precioBase) * 0.95).toFixed(0))
+    }
+
+    redondearCien(num) {
+        const resto = num % 100;
+        return resto >= 50 ? Math.ceil(num / 100) * 100 : Math.floor(num / 100) * 100;
     }
 }
 

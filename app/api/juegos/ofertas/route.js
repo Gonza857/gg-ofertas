@@ -72,11 +72,20 @@ export async function POST(req, res) {
 export async function PATCH(req, res) {
     const resultado = await validarAdmin();
     if (!resultado.exito) return resultado;
+    const body = await req.json();
+
+    let nuevosDatos;
+    try {
+        nuevosDatos = patchOferta.parse(body)
+    } catch (error) {
+        console.log(error)
+        return ManejadorRespuesta.error(error.message)
+    }
+
 
     try {
-        const cuerpo = await req.json();
-        await modeloJuegos.actualizarOfertas(cuerpo, resultado.usuario);
-        revalidar()
+        await modeloJuegos.actualizarOfertas(nuevosDatos, resultado.usuario);
+        // revalidar()
         return ManejadorRespuesta.ok();
     } catch (e) {
         console.error(e)

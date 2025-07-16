@@ -2,7 +2,7 @@
 
 import {toast} from "@/hooks/use-toast";
 import React, {useRef, useState} from "react";
-import {Box, Check, Clock, Copy, Info, Scroll} from "lucide-react";
+import {Box, Check, Clock, Copy, Gamepad2, Info, Scroll, Search} from "lucide-react";
 import {Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
 import {Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
 import {Input} from "@/components/ui/input";
@@ -11,6 +11,7 @@ import {Button} from "@/components/ui/button";
 import {FaWhatsapp} from "react-icons/fa";
 import Link from "next/link";
 import Recordatorios from "@/components/page-components/consumidores/juegos/ofertas/Recordatorios";
+import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
 
 function redondearCien(num) {
     const resto = num % 100;
@@ -55,7 +56,7 @@ function TablaJuegosOfertaConsumidores({juegos = [], fechaExpiracion, titulo = n
                     sortedGames.sort((a, b) => {
                         const precioA = (a.precioLista + a.precioTransferencia) / 2
                         const precioB = (b.precioLista + b.precioTransferencia) / 2
-                        return precioB -precioA
+                        return precioB - precioA
                     });
                     break;
                 case "name-asc":
@@ -80,25 +81,8 @@ function TablaJuegosOfertaConsumidores({juegos = [], fechaExpiracion, titulo = n
 
 
     return (
-        <article className={"w-full py-4"}>
-            <h2 className="text-2xl font-bold mb-2">
-                Juegos en oferta hasta el {fechaExpiracion}
-            </h2>
-            <p className={"mt-2 text-sm text-neutral-500 dark:text-neutral-400"}>
-                Precio lista - Hasta 3 pagos con tarjeta de crédito/débito (
-                <Link href={"/formas-de-pago"} className={"hover:underline transition-all"}>
-                    Ver formas de pago
-                </Link>
-
-                )
-            </p>
-            <p className={"mt-2 text-sm text-neutral-500 dark:text-neutral-400"}>
-                Transferencia - Precio abonando por transferencia bancaria CVU/CBU
-            </p>
-            <p className={"mt-2 text-sm text-neutral-500 dark:text-neutral-400 font-semibold"}>
-                El precio publicado es en cuenta primaria. Por secundaria consultar stock.
-            </p>
-            <div className={"mt-2"}>
+        <article className={"w-full pb-4"}>
+            <div>
                 <Table className={"my-4 border rounded"}>
                     <TableBody>
                         <TableRow>
@@ -107,33 +91,44 @@ function TablaJuegosOfertaConsumidores({juegos = [], fechaExpiracion, titulo = n
                     </TableBody>
                 </Table>
             </div>
-            <h2 className="text-2xl font-semibold mb-2">
-                Busca tu juego
-            </h2>
-            <div className={"flex flex-col md:flex-row md:justify-between gap-4 pb-2 mt-2"}>
-                <Input
-                    onChange={buscarJuego}
-                    placeholder={"Buscar por nombre de juego 🔎"}
-                    className={"w-full md:w-3/4"}
-                />
-                <div className={"w-full md:w-1/4"}>
-                    <Select onValueChange={handleSortChange}>
-                        <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Ordenar por..."/>
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectGroup>
-                                <SelectItem value="revelancia">Revelancia</SelectItem>
-                                <SelectItem value="price-asc">Precio: Menor a Mayor</SelectItem>
-                                <SelectItem value="price-desc">Precio: Mayor a Menor</SelectItem>
-                                <SelectItem value="name-asc">Nombre: A-Z</SelectItem>
-                                <SelectItem value="name-desc">Nombre: Z-A</SelectItem>
-                            </SelectGroup>
-                        </SelectContent>
-                    </Select>
-                </div>
-            </div>
-            <TablaOfertas {...tablaProps}/>
+            <Card>
+                <CardHeader>
+                    <CardTitle className={"flex gap-2"}>
+                        <Gamepad2 className="h-5 w-5"/>
+                        Juegos en oferta PS4/PS5
+                    </CardTitle>
+                    <CardDescription>Precio en cuenta primaria</CardDescription>
+                </CardHeader>
+                <CardContent className={"space-y-4 p-2 md:p-6"}>
+                    <div className="flex flex-col md:flex-row gap-4">
+                        <div className="relative flex-1">
+                            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                            <Input
+                                onChange={buscarJuego}
+                                placeholder={"Buscar por nombre de juego"}
+                                className={"pl-10"}
+                            />
+                        </div>
+                        <div className="flex gap-2">
+                            <Select onValueChange={handleSortChange}>
+                                <SelectTrigger className="w-full">
+                                    <SelectValue placeholder="Ordenar por..."/>
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectGroup>
+                                        <SelectItem value="revelancia">Revelancia</SelectItem>
+                                        <SelectItem value="price-asc">Precio: Menor a Mayor</SelectItem>
+                                        <SelectItem value="price-desc">Precio: Mayor a Menor</SelectItem>
+                                        <SelectItem value="name-asc">Nombre: A-Z</SelectItem>
+                                        <SelectItem value="name-desc">Nombre: Z-A</SelectItem>
+                                    </SelectGroup>
+                                </SelectContent>
+                            </Select>
+                        </div>
+                    </div>
+                    <TablaOfertas {...tablaProps}/>
+                </CardContent>
+            </Card>
         </article>
     )
 }
@@ -197,7 +192,8 @@ const Registro = ({juego}) => {
                 {juego.nombre}
             </TableCell>
             <TableCell className={"p-2 text-center"}>${juego.precioLista}</TableCell>
-            <TableCell className={"p-2 text-center text-cyan-800 font-semibold"}>${juego.precioTransferencia}</TableCell>
+            <TableCell
+                className={"p-2 text-center text-cyan-800 font-semibold"}>${juego.precioTransferencia}</TableCell>
             <TableCell className="p-2 text-center">
                 <Link
                     href={`https://wa.me/5491132001372?text=${"Me interesa " + encodeURIComponent(mensaje)}`}

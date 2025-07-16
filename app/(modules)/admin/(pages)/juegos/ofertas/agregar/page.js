@@ -122,7 +122,7 @@ const Cuerpo = ({juegos = []}) => {
             {juegos.map(j => (
                 <Registro
                     juego={j}
-                    key={j.name}
+                    key={j.nombre}
                 />))
             }
         </TableBody>
@@ -135,13 +135,13 @@ function redondearCien(num) {
 }
 
 const Registro = ({juego}) => {
-    const precioLista = redondearCien(juego.price * 1.25).toFixed(0)
+    const precioLista = redondearCien(juego.precioBase * 1.25).toFixed(0)
     const precioTransferencia = redondearCien(precioLista * 0.8).toFixed(0)
-    const precioReventa = redondearCien((juego.price) * 0.95).toFixed(0)
+    const precioReventa = redondearCien((juego.precioBase) * 0.95).toFixed(0)
 
     return (
         <TableRow>
-            <TableCell className="font-medium p-2">{juego.name}</TableCell>
+            <TableCell className="font-medium p-2">{juego.nombre}</TableCell>
             <TableCell className={"p-2 text-center"}>${precioLista}</TableCell>
             <TableCell className={"p-2 text-center"}>${precioTransferencia}</TableCell>
             <TableCell className={"p-2 text-center"}>${precioReventa}</TableCell>

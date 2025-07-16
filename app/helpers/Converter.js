@@ -29,8 +29,8 @@ export class Convertidor {
 
   #cleanGame(game) {
     return {
-      name: "💎 " + game[0],
-      price: parseInt(game[1].replace(".", ""), 10),
+      nombre: "💎 " + game[0],
+      precioBase: parseInt(game[1].replace(".", ""), 10),
     };
   }
 }

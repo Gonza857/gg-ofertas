@@ -18,29 +18,30 @@ class JuegoOferta {
 export class JuegoOfertaRevendedor extends JuegoOferta {
     precio;
 
-    constructor(precioDefault, i, nombre) {
+    constructor({precioReventa, nombre}, i) {
         super(nombre, i);
-        this.precio = this.#calcularPrecio(precioDefault)
+        this.precio = Number(precioReventa);
     }
 
-    #calcularPrecio (precioDefault) {
-        return Number(this.redondearCien((precioDefault) * 0.95).toFixed(0))
-    }
+    // #calcularPrecio (precioDefault) {
+    //     return Number(this.redondearCien((precioDefault) * 0.95).toFixed(0))
+    // }
 
 }
 
 export class JuegoOfertaCliente extends JuegoOferta {
     precioTransferencia;
     precioLista
-    constructor(precioDefault, i, nombre) {
+    constructor({precioClienteLista, precioClienteTransferencia, nombre}, i) {
         super(nombre, i);
-        this.#calcularPrecios(precioDefault)
+        this.precioTransferencia = Number(precioClienteTransferencia)
+        this.precioLista = Number(precioClienteLista)
     }
 
-    #calcularPrecios (precioDefault) {
-        this.precioLista = Number(this.redondearCien(precioDefault * 1.25).toFixed(0))
-        this.precioTransferencia = Number(this.redondearCien(this.precioLista * 0.8).toFixed(0))
-    }
+    // #calcularPrecios (precioDefault) {
+    //     this.precioLista = Number(this.redondearCien(precioDefault * 1.25).toFixed(0))
+    //     this.precioTransferencia = Number(this.redondearCien(this.precioLista * 0.8).toFixed(0))
+    // }
 
 }
 
@@ -50,17 +51,19 @@ export class JuegoOfertaAdmin extends JuegoOferta {
     precioBase;
     precioReventa;
 
-    constructor(precioDefault, i, nombre) {
+    constructor({precioBase, precioReventa, precioClienteTransferencia, precioClienteLista, nombre}, i) {
         super(nombre, i);
-        this.precioBase = precioDefault
-        this.#calcularPrecios(precioDefault)
+        this.precioBase = Number(precioBase);
+        this.precioReventa = Number(precioReventa);
+        this.precioClienteTransferencia = Number(precioClienteTransferencia);
+        this.precioClienteLista = Number(precioClienteLista);
     }
 
-    #calcularPrecios (precioDefault) {
-        this.precioClienteLista = Number(this.redondearCien(precioDefault * 1.25).toFixed(0))
-        this.precioClienteTransferencia = Number(this.redondearCien(this.precioClienteLista * 0.8).toFixed(0))
-        this.precioReventa = Number(this.redondearCien((precioDefault) * 0.95).toFixed(0))
-    }
+    // #calcularPrecios (precioDefault) {
+    //     this.precioClienteLista = Number(this.redondearCien(precioDefault * 1.25).toFixed(0))
+    //     this.precioClienteTransferencia = Number(this.redondearCien(this.precioClienteLista * 0.8).toFixed(0))
+    //     this.precioReventa = Number(this.redondearCien((precioDefault) * 0.95).toFixed(0))
+    // }
 
 }
 

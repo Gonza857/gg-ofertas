@@ -75,6 +75,7 @@ function TablaJuegosOfertaAdmin({ofertas}) {
     }
 
     const actualizarJuego = async (datosForm) => {
+        console.log("datos form", datosForm)
         const itemsActualizados = actualizarItem(datosForm)
         const resultado = await actualizarOfertasNavegador({...ofertas, juegos: itemsActualizados});
         if (resultado.exito) {
@@ -209,7 +210,7 @@ const CamposNormales = ({juego, activarModoEdicion, cambiarDestacado}) => {
                     />
                 </div>
             </TableCell>
-            <TableCell className={`p-1 py-2`}>${juego.price}</TableCell>
+            <TableCell className={`p-1 py-2`}>${juego.precioBase}</TableCell>
             <TableCell className={`p-1 py-2`}>${juego.precioReventa}</TableCell>
             <TableCell className={`p-1 py-2`}>${juego.precioClienteTransferencia}</TableCell>
             <TableCell className={`p-1 py-2`}>${juego.precioClienteLista}</TableCell>
@@ -225,8 +226,9 @@ const CamposNormales = ({juego, activarModoEdicion, cambiarDestacado}) => {
 }
 
 const CamposEdicion = ({juego, cancelar, guardar, eliminar}) => {
+    console.log("Juego para editar", juego)
     const [datosForm, setDatosForm] = useState({
-        price: juego.price,
+        precioBase: juego.precioBase,
         precioReventa: juego.precioReventa,
         precioClienteLista: juego.precioClienteLista,
         precioClienteTransferencia: juego.precioClienteTransferencia,
@@ -246,8 +248,8 @@ const CamposEdicion = ({juego, cancelar, guardar, eliminar}) => {
         },
         {
             tipo: "text",
-            name: "price",
-            defaultValue: juego.price
+            name: "precioBase",
+            defaultValue: juego.precioBase
         },
         {
             tipo: "text",
