@@ -37,7 +37,7 @@ function TablaJuegosOfertaAdmin({ofertas}) {
     const [estaActivo, setEstaActivo] = useState(ofertas.estaActiva)
 
     const [newProduct, setNewProduct] = useState({
-        name: "",
+        nombre: "",
         price: "",
     })
 
@@ -51,10 +51,10 @@ function TablaJuegosOfertaAdmin({ofertas}) {
     }
 
     const handleAddProduct = async () => {
-        if (newProduct.name.trim() === "" || newProduct.price === "") return
+        if (newProduct.nombre.trim() === "" || newProduct.price === "") return
 
         const juegoNuevo = {
-            name: newProduct.name,
+            nombre: newProduct.nombre,
             price: Number(newProduct.price),
         }
 
@@ -125,12 +125,12 @@ function TablaJuegosOfertaAdmin({ofertas}) {
                         <CardContent className="pt-6">
                             <div className="grid gap-6 sm:grid-cols-2">
                                 <div className="grid gap-2">
-                                    <Label htmlFor="name">Nombre del Producto</Label>
+                                    <Label htmlFor="nombre">Nombre del Producto</Label>
                                     <Input
-                                        id="name"
+                                        id="nombre"
                                         placeholder="Ingrese nombre del producto"
-                                        value={newProduct.name}
-                                        onChange={(e) => setNewProduct({...newProduct, name: e.target.value})}
+                                        value={newProduct.nombre}
+                                        onChange={(e) => setNewProduct({...newProduct, nombre: e.target.value})}
                                     />
                                 </div>
                                 <div className="grid gap-2">
@@ -199,7 +199,7 @@ const Registro = ({juego, activarModoEdicion, cancelar, actualizarJuego, elimina
 const CamposNormales = ({juego, activarModoEdicion, cambiarDestacado}) => {
     return (
         <>
-            <TableCell className={`font-medium p-1 py-2`}>{juego.name}</TableCell>
+            <TableCell className={`font-medium p-1 py-2`}>{juego.nombre}</TableCell>
             <TableCell className={`p-1 py-2`}>
                 <div className={"flex justify-center items-center mx-auto"}>
                     <Switch
@@ -231,7 +231,7 @@ const CamposEdicion = ({juego, cancelar, guardar, eliminar}) => {
         precioClienteLista: juego.precioClienteLista,
         precioClienteTransferencia: juego.precioClienteTransferencia,
         id: juego.id,
-        name: juego.name
+        nombre: juego.nombre
     })
 
     const realizarCambio = (e) => {
@@ -241,8 +241,8 @@ const CamposEdicion = ({juego, cancelar, guardar, eliminar}) => {
     const campos = [
         {
             tipo: "text",
-            name: "name",
-            defaultValue: juego.name
+            name: "nombre",
+            defaultValue: juego.nombre
         },
         {
             tipo: "text",
