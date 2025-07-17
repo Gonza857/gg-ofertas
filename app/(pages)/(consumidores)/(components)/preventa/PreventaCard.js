@@ -27,7 +27,7 @@ function PreventaCard({preventa}) {
                 {/*    -20%*/}
                 {/*</Badge>*/}
             </div>
-            <CardContent className="p-4">
+            <CardContent className="p-2 sm:p-4">
                 <div className="mb-3">
                     <h3 className="font-bold text-lg text-gray-900 mb-1 line-clamp-2">{preventa.titulo}</h3>
                     <div className="flex items-center justify-between text-sm text-gray-600">
@@ -48,7 +48,7 @@ function PreventaCard({preventa}) {
                 {/* Precios compactos */}
                 <div className="space-y-2 mb-3">
                     {/* Precio por transferencia */}
-                    <div className="flex items-center justify-between bg-green-50 rounded-lg p-2">
+                    <div className="flex items-center justify-between bg-green-50 rounded-lg p-1 sm:p-2">
                         <div className="flex items-center gap-1">
                             <CreditCard className="h-3 w-3 text-green-600"/>
                             <span className="text-xs text-green-700 font-medium">Transferencia</span>
@@ -73,7 +73,7 @@ function PreventaCard({preventa}) {
                 </div>
 
                 <div className="text-center">
-                    <p className="text-xs text-gray-500 mb-2">Lanzamiento: {preventa.fechaLanzamiento}</p>
+                    <p className="text-xs text-gray-500 mb-2">Estreno: {preventa.fechaLanzamiento}</p>
                     <Link href={`/juegos/preventas/${preventa.id}`}>
                         <Button size="sm" className="w-full bg-purple-600 hover:bg-purple-700">
                             Ver Detalles
