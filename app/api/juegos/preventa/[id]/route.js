@@ -64,7 +64,7 @@ export async function PATCH (req, res) {
         return ManejadorRespuesta.error(resultadoValidarPreventa.error)
     }
 
-    console.log(`preventa validada ${id}`, resultadoValidarPreventa.data)
+    console.log(`preventa validada [${id}]`, resultadoValidarPreventa.data)
 
     try {
         await modeloJuego.actualizarPreventa(resultadoValidarPreventa.data, id)
