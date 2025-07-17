@@ -102,7 +102,7 @@ function PreventaDetalle({preventa}) {
                                 <div className="text-right md:text-left">
                                     <div className="text-xl font-semibold text-blue-700 mb-1">
                                         {/*{gameData.cuotasDisponibles}x ${cuotaAmount.toFixed(2)}*/}
-                                        6x ${Math.round(preventa.precioClienteLista / 3)}
+                                        6x ${Math.round(preventa.precioClienteLista / 6)}
                                     </div>
                                     <p className="text-sm text-blue-600">Sin interés con tarjeta</p>
                                 </div>
