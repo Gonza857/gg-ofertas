@@ -77,8 +77,8 @@ function FormularioAgregarPreventa({item = null}) {
                 precioReventa: item.precioReventa,
                 precioClienteLista: item.precioClienteLista,
                 precioClienteTransferencia: item.precioClienteTransferencia,
-                plataforma: item.plataforma,
-                region: item.region,
+                plataforma: item?.plataforma,
+                region: item?.region,
                 tipo: item?.tipo
             });
         }

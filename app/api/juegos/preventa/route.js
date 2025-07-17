@@ -2,9 +2,11 @@ import CookieManager from "@/dominio/utils/auth/cookiesManager";
 import {cookies} from "next/headers";
 import ManejadorRespuesta from "@/infraestructura/ManejadorRespuesta";
 import container from "@/dominio/container";
-import {postPreventa} from "@/app/schemas/backend/preventas";
+import {getPreventas, postPreventa} from "@/app/schemas/backend/preventas";
 import {revalidatePath} from "next/cache";
 import {redirect} from "next/navigation";
+import UrlParametersHandlers from "@/app/helpers/UrlParametersHandlers";
+import {juegosOferta} from "@/app/schemas/backend/ofertas";
 
 const modeloUsuario = container.resolve("ModeloUsuario");
 const modeloJuego = container.resolve("ModeloJuegos");
@@ -63,9 +65,18 @@ export async function POST (req, res) {
 }
 
 export async function GET (req, res) {
+    const resultado = await validarAdmin();
+    if (!resultado.exito) return resultado;
+
+    const parametrosNecesarios = [
+        "cliente"
+    ]
+    const parametros = UrlParametersHandlers.obtenerParametros(parametrosNecesarios, req)
+
+    const {cliente} = getPreventas.parse(parametros)
+
     try {
-        const preventas = await modeloJuego.obtenerPreventas()
-        console.log("preventas obtenidas back", preventas)
+        const preventas = await modeloJuego.obtenerPreventas(cliente, resultado.usuario)
         return ManejadorRespuesta.ok(preventas)
     } catch (e) {
         console.log("Error al obtener preventas", e)

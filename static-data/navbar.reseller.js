@@ -1,4 +1,14 @@
-import {BadgePercent, Banknote, FileText, Gamepad2, Joystick, List, MessageCircleQuestion, Tag} from "lucide-react";
+import {
+    BadgePercent,
+    Banknote,
+    FileText,
+    Gamepad2,
+    Joystick,
+    List,
+    MessageCircleQuestion,
+    Star,
+    Tag
+} from "lucide-react";
 import {SiPlaystation4, SiPlaystation5} from "react-icons/si";
 import {FaPlaystation} from "react-icons/fa";
 import {PsplusLogo} from "@/components/personalized-ui/logos";
@@ -14,6 +24,7 @@ export const opcionesNavbarReventa = [
         hasSubmenu: true,
         submenu: [
             {icon: BadgePercent, label: `Juegos en oferta`, href: "/reventa"},
+            {icon: Star, label: `Preventas`, href: "/reventa/juegos/preventas"},
             // {
             //     icon: BadgePercent,
             //     label: `${"Ofertas"} de 'Fin de semana'`,
@@ -50,6 +61,11 @@ export const opcionesMenuLateralReventa = [
         name: "Juegos en oferta",
         icon: <RiDiscountPercentLine className="mr-2 h-6 w-6"/>,
         href: "/reventa"
+    },
+    {
+        name: "Preventas",
+        icon: <Star/>,
+        href: "/reventa/juegos/preventas"
     },
     // {
     //     name: "Ofertas de 'Fin de semana'",

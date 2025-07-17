@@ -5,7 +5,7 @@ import {
     FileText,
     Gamepad2,
     Joystick,
-    MessageCircleQuestion,
+    MessageCircleQuestion, Star,
     Store
 } from "lucide-react";
 import {SiPlaystation4, SiPlaystation5, SiSteam} from "react-icons/si";
@@ -23,6 +23,7 @@ export const navbarOptions = [
         hasSubmenu: true,
         submenu: [
             {icon: BadgePercent, label: `Juegos en oferta`, href: "/juegos/ofertas"},
+            {icon: Star, label: `Preventas`, href: "/juegos/preventas"},
             // {icon: BadgePercent, label: `${"Ofertas"} de 'Fin de semana'`, href: "/juegos/ofertas/fin-de-semana"},
             // {icon: BadgePercent, label: `Ofertas 'Days of Play'`, href: "/juegos/ofertas/days-of-play"},
             {icon: SiPlaystation5, label: "Juegos PS5", href: "/juegos/stock/ps5"},
@@ -75,6 +76,13 @@ export const sideNavbarOptions = [
     //     texto: ""
     // },
     {
+        name: "Preventas",
+        icon: <Star/>,
+        href: "/juegos/preventas",
+        tieneOferta: true,
+        texto: "Nuevo"
+    },
+    {
         name: "Juegos PS4",
         icon: <SiPlaystation4 className="mr-2 h-6 w-6"/>,
         href: "/juegos/stock/ps4"
@@ -88,7 +96,7 @@ export const sideNavbarOptions = [
         name: "PlayStation Plus",
         icon: <PsplusLogo/>,
         href: "/playstationplus",
-        tieneOferta: true,
+        tieneOferta: false,
         texto: "En oferta"
     },
     {

@@ -1,7 +1,11 @@
 import {JuegoClienteDTO} from "@/dominio/utils/dto/juegos";
 import {id} from "date-fns/locale";
 import JuegoOferta, {JuegoOfertaAdmin, JuegoOfertaCliente, JuegoOfertaRevendedor} from "@/app/entities/JuegoOferta";
-import JuegoPreventa from "@/app/entities/JuegoPreventa";
+import JuegoPreventa, {
+    JuegoPreventaAdmin,
+    JuegoPreventaCustomer,
+    JuegoPreventaReseller
+} from "@/app/entities/JuegoPreventa";
 import {JuegoStockAdmin, JuegoStockCliente} from "@/app/entities/JuegoStock";
 import {v4 as uuidv4} from "uuid";
 
@@ -60,8 +64,13 @@ class ModeloJuegos {
 
     }
 
-    async obtenerPreventas() {
-        return await this.repositorioJuegos.obtenerPreventas()
+    async obtenerPreventas(cliente = "customer", usuario = null) {
+        const preventas = await this.repositorioJuegos.obtenerPreventas()
+        console.log("preventas back", preventas)
+        if (cliente === this.tipoCliente.CUSTOMER) return preventas.map(p => new JuegoPreventaCustomer(p))
+        if (cliente === this.tipoCliente.RESELLER) return preventas.map(p => new JuegoPreventaReseller(p))
+        if (!usuario) throw new Error ("No autorizado")
+        return preventas.map(p => new JuegoPreventaAdmin(p))
     }
 
     async obtenerPreventaPorId(id) {

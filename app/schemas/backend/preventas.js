@@ -1,5 +1,9 @@
 import z from "zod";
 
+export const getPreventas = z.object({
+    cliente: z.string(),
+})
+
 export const postPreventa = z.object({
     titulo: z.string().min(1, "El título es obligatorio"),
     plataforma: z.string().min(1),
