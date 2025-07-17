@@ -9,6 +9,25 @@ import {redirect} from "next/navigation";
 const modeloUsuario = container.resolve("ModeloUsuario");
 const modeloJuego = container.resolve("ModeloJuegos");
 
+const convertirFormData_a_Object = (formData) => {
+    const formObject = {};
+
+    for (let [key, value] of formData.entries()) {
+        // Si la clave ya existe (por ejemplo en inputs repetidos), agrupamos en array
+        if (formObject[key]) {
+            if (Array.isArray(formObject[key])) {
+                formObject[key].push(value);
+            } else {
+                formObject[key] = [formObject[key], value];
+            }
+        } else {
+            formObject[key] = value;
+        }
+    }
+
+    return formObject;
+};
+
 const validarAdmin = async () => {
     const sessionUser = CookieManager.get(cookies(), "access-token");
     if (!sessionUser) return ManejadorRespuesta.CUSTOMER
@@ -21,11 +40,12 @@ export async function POST (req, res) {
     const resultado = await validarAdmin();
     if (!resultado.exito) return resultado;
 
-    const body = await req.json();
+    const body = await req.formData();
+    const formValues = convertirFormData_a_Object(body)
 
     let preventa;
     try {
-        preventa = postPreventa.parse(body)
+        preventa = postPreventa.parse(formValues)
     } catch (error) {
         console.log(error)
         return ManejadorRespuesta.error(error.message)
@@ -36,7 +56,7 @@ export async function POST (req, res) {
         revalidatePath("/admin/juegos/preventas")
         return ManejadorRespuesta.creado("Preventa creada", preventa)
     } catch (e) {
-        console.log("Error al crear preventa")
+        console.log("Error al crear preventa", e)
         return ManejadorRespuesta.error(e)
     }
 

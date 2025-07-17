@@ -3,17 +3,21 @@ import {id} from "date-fns/locale";
 import JuegoOferta, {JuegoOfertaAdmin, JuegoOfertaCliente, JuegoOfertaRevendedor} from "@/app/entities/JuegoOferta";
 import JuegoPreventa from "@/app/entities/JuegoPreventa";
 import {JuegoStockAdmin, JuegoStockCliente} from "@/app/entities/JuegoStock";
+import {v4 as uuidv4} from "uuid";
 
 class ModeloJuegos {
     repositorioJuegos;
+    repositorioImagenes;
+
     tipoCliente = {
         ADMIN: "admin",
         RESELLER: "reseller",
         CUSTOMER: "customer",
     }
 
-    constructor(repositorioJuegos) {
+    constructor(repositorioJuegos, repositorioImagen) {
         this.repositorioJuegos = repositorioJuegos;
+        this.repositorioImagenes = repositorioImagen
     }
 
     obtenerArrayDeConsola(datosConsola) {
@@ -29,8 +33,31 @@ class ModeloJuegos {
     }
 
     async crearPreventa(preventaObject) {
-        const preventa = new JuegoPreventa(preventaObject)
-        await this.repositorioJuegos.guardarPreventa({...preventa})
+        console.log("preventa en back", preventaObject)
+
+        const {imagen} = preventaObject;
+        const id = uuidv4()
+
+        const urlImagen = await this.repositorioImagenes.guardar(
+            imagen,
+            id,
+            "/preventas",
+        );
+
+        delete preventaObject.imagen
+        delete preventaObject.estadoImagen
+
+        const preventaLista = {
+            uid: id,
+            imagenUrl: urlImagen,
+            ...preventaObject
+        };
+
+
+        const resultado = await this.repositorioJuegos.guardarPreventa({...preventaLista})
+
+        return {exito: true, id: resultado}
+
     }
 
     async obtenerPreventas() {
@@ -43,11 +70,33 @@ class ModeloJuegos {
     }
 
     async actualizarPreventa(preventaInput, id) {
-        if (!preventaInput && !id) throw new Error("Error altualizar oferta.");
-        const preventa = await this.repositorioJuegos.obtenerPreventaPorId(id);
-        if (!preventa) throw new Error("Error altualizar oferta.");
-        Object.assign(preventa, preventaInput)
-        await this.repositorioJuegos.actualizarPreventa(preventa, id)
+        console.log(`preventa que me llega ${id}`, preventaInput)
+
+        const preventaDB = await this.repositorioJuegos.obtenerPreventaPorId(id);
+        if (!preventaDB) throw new Error("Error altualizar preventa.");
+
+        if (preventaInput.estadoImagen === 3) {
+            if (preventaDB.imagenUrl) {
+                await this.repositorioImagenes.eliminarDeAlmacenamiento("preventas", preventaDB.id)
+            }
+
+            const {imagen} = preventaInput;
+
+            const urlImagen = await this.repositorioImagenes.guardar(
+                imagen,
+                preventaDB.id,
+                "/preventas",
+            );
+
+            delete preventaInput.imagen
+            preventaInput.imagenUrl = urlImagen
+        }
+
+        delete preventaInput.estadoImagen
+        Object.assign(preventaDB, preventaInput)
+
+        await this.repositorioJuegos.actualizarPreventa({...preventaDB}, preventaDB.id)
+
     }
 
     async guardarJuegoStock(juego) {
@@ -277,7 +326,7 @@ class ModeloJuegos {
     }
 
     #convertirJuegosObjectNormal(juegos) {
-         return juegos.map(j => ({...j}))
+        return juegos.map(j => ({...j}))
     }
 
     async eliminarJuegoDeOferta({idJuego, idOferta}, usuario) {
@@ -319,12 +368,12 @@ class ModeloJuegos {
         }
     }
 
-    convertirParaGuardar (juego, i) {
+    convertirParaGuardar(juego, i) {
         juego.id = i
         juego.esDestacado = false
     }
 
-    calcularPrecios (juego) {
+    calcularPrecios(juego) {
         juego.precioClienteLista = Number(this.redondearCien(juego.precioBase * 1.25).toFixed(0))
         juego.precioClienteTransferencia = Number(this.redondearCien(juego.precioClienteLista * 0.8).toFixed(0))
         juego.precioReventa = Number(this.redondearCien((juego.precioBase) * 0.95).toFixed(0))

@@ -50,7 +50,8 @@ class Container {
 
         this.register('ModeloTurquia', new ModeloTurquia());
         this.register('ModeloJuegos', new ModeloJuegos(
-            this.resolve("RepositorioJuegos")
+            this.resolve("RepositorioJuegos"),
+            this.resolve("RepositorioImagen")
         ));
         this.register('ModeloPlus', new ModeloPlus(
             this.resolve("RepositorioPlus")

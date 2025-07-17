@@ -55,9 +55,6 @@ class ModeloTarjeta {
 
         const resultadoGuardarTarjeta = await this.repositorioTarjetas.guardar(tarjetaLista);
 
-        console.log("urlImagen", urlImagen);
-        console.log("resultadoGuardarTarjeta", resultadoGuardarTarjeta)
-
         return {exito: true, id: resultadoGuardarTarjeta}
 
         // if (typeof urlImagen === "string" && resultadoGuardarTarjeta) {

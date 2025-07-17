@@ -3,7 +3,7 @@ import Fetcher from "@/infraestructura/Fetcher";
 export async function crearPreventa(preventa) {
     const fetchParams = {
         method: 'POST',
-        body: JSON.stringify(preventa),
+        body: preventa,
     };
     return Fetcher.requestNew(`/juegos/preventa`, fetchParams);
 }
@@ -11,7 +11,7 @@ export async function crearPreventa(preventa) {
 export async function actualizarPreventa(preventa, id) {
     const fetchParams = {
         method: 'PATCH',
-        body: JSON.stringify(preventa),
+        body: preventa,
     };
     return Fetcher.requestNew(`/juegos/preventa/${id}`, fetchParams);
 }
@@ -26,7 +26,7 @@ export async function obtenerPreventaPorId(token, id) {
     return Fetcher.requestNew(`/juegos/preventa/${id}`, fetchParams);
 }
 
-export async function obtenerPreventas(token) {
+export async function obtenerPreventas(cliente = "customer", token) {
     const fetchParams = {
         method: 'GET',
         cache: 'no-cache',
@@ -34,5 +34,10 @@ export async function obtenerPreventas(token) {
             Cookie: `access-token=${token}`,
         },
     };
-    return Fetcher.requestNew(`/juegos/preventa`, fetchParams);
+
+    const params = new URLSearchParams({
+        cliente: cliente,
+    })
+
+    return Fetcher.requestNew(`/juegos/preventa`, fetchParams, params);
 }

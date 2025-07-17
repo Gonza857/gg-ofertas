@@ -40,8 +40,8 @@ class RepositorioImagen {
         return await this.baseDeDatos.buscarVariosPorAtributo(this.coleccionNombre, "pertenencia", pertenencia)
     }
 
-    async eliminarDeAlmacenamiento(id) {
-        await this.almacenamiento.borrarArchivo("/home", id)
+    async eliminarDeAlmacenamiento(coleccion, id) {
+        await this.almacenamiento.borrarArchivo(`/${coleccion}`, id)
     }
 
     async eliminarProductoDeAlmacenamiento(id) {

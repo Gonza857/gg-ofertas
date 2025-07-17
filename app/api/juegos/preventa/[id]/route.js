@@ -2,7 +2,7 @@ import container from "@/dominio/container";
 import ManejadorRespuesta from "@/infraestructura/ManejadorRespuesta";
 import CookieManager from "@/dominio/utils/auth/cookiesManager";
 import {cookies} from "next/headers";
-import {postPreventa} from "@/app/schemas/backend/preventas";
+import {patchPreventa} from "@/app/schemas/backend/preventas";
 import {revalidatePath} from "next/cache";
 
 const modeloJuego = container.resolve("ModeloJuegos");
@@ -15,6 +15,25 @@ const validarAdmin = async () => {
     if (!usuario) return ManejadorRespuesta.NOT_AUTHORIZED
     return {exito: true, usuario}
 }
+
+const convertirFormData_a_Object = (formData) => {
+    const formObject = {};
+
+    for (let [key, value] of formData.entries()) {
+        // Si la clave ya existe (por ejemplo en inputs repetidos), agrupamos en array
+        if (formObject[key]) {
+            if (Array.isArray(formObject[key])) {
+                formObject[key].push(value);
+            } else {
+                formObject[key] = [formObject[key], value];
+            }
+        } else {
+            formObject[key] = value;
+        }
+    }
+
+    return formObject;
+};
 
 export async function GET (req, res) {
     const id = res.params.id;
@@ -33,23 +52,24 @@ export async function PATCH (req, res) {
     const resultado = await validarAdmin();
     if (!resultado.exito) return resultado;
 
-    const body = await req.json();
     const id = res.params.id;
 
-    let preventa;
-    try {
-        preventa = postPreventa.parse(body)
-    } catch (error) {
-        console.log(error)
-        return ManejadorRespuesta.error(error.message)
+    const body = await req.formData();
+    const formValues = convertirFormData_a_Object(body)
+    console.log("form convertido", formValues)
+
+    let resultadoValidarPreventa = patchPreventa.safeParse(formValues);
+    if (resultadoValidarPreventa.error) {
+        console.log(resultadoValidarPreventa.error)
+        return ManejadorRespuesta.error(resultadoValidarPreventa.error)
     }
 
     try {
-        await modeloJuego.actualizarPreventa(preventa, id)
+        await modeloJuego.actualizarPreventa(resultadoValidarPreventa.data, id)
         revalidatePath(`/admin/juegos/preventas/${id}`)
-        return ManejadorRespuesta.creado("Preventa actualizada", preventa)
+        return ManejadorRespuesta.creado("Preventa actualizada", resultadoValidarPreventa.data)
     } catch (e) {
-        console.log("Error al crear preventa")
+        console.log("Error al crear preventa", e)
         return ManejadorRespuesta.error(e)
     }
 }

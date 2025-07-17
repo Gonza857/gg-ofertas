@@ -4,8 +4,9 @@ import React, {useEffect, useState} from "react";
 import {Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious} from "@/components/ui/carousel"
 import {cn} from "@/lib/utils";
 import GiftCard from "@/components/personalized-ui/item.giftcard";
+import PreventaCard from "@/app/(pages)/(consumidores)/(components)/preventa/PreventaCard";
 
-const MyCarousel = ({productos = [], inicio, fin}) => {
+const MyCarousel = ({productos = [], inicio, fin, tipo}) => {
     const [api, setApi] = useState(null);
 
     useEffect(() => {
@@ -17,6 +18,13 @@ const MyCarousel = ({productos = [], inicio, fin}) => {
 
         return () => clearInterval(interval);
     }, [api]);
+
+    // let Item;
+    // if (tipo === "preventa") {
+    //     Item = PreventaCard
+    // } else if (tipo === "giftcard") {
+    //     Item = GiftCard
+    // }
 
     return (
         <div className={"relative w-full max-w-screen-xl mx-auto px-4"}>
@@ -32,7 +40,11 @@ const MyCarousel = ({productos = [], inicio, fin}) => {
                 <CarouselContent className="-ml-2 md:-ml-4">
                     {productos?.slice(inicio, fin).map((p, i) => (
                         <CarouselItem key={i} className="pl-2 md:pl-4 basis-1/2 md:basis-1/3 lg:basis-1/4">
-                            <GiftCard giftCard={p} />
+                            {tipo === "preventa" ?
+                                <PreventaCard preventa={p}/>
+                                :
+                                <GiftCard giftCard={p}/>
+                            }
                         </CarouselItem>
                     ))}
                 </CarouselContent>

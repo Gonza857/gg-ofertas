@@ -15,8 +15,14 @@ export const images = [
     // },
     {
         id: id++,
+        alt: "EA SPORTS FC 26",
+        path: "/images/home-carousel/fc26.jpg",
+        urlTo: "/juegos/preventas/bcf3024f-c085-4235-8d55-50af83162b55"
+    },
+    {
+        id: id++,
         alt: "Ofertas de mitad de año",
-        path: "/images/home-carousel/ofertasdemitaddeano-0207.webp",
+        path: "/images/home-carousel/ahorrosdeverano-3007.webp",
         urlTo: "/juegos/ofertas"
     },
     {

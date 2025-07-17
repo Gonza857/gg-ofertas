@@ -23,7 +23,6 @@ const transformarDatos = (actualizado) => {
     }
 }
 
-
 function Agregar() {
     const router = useRouter()
     const [isSubmitting, setIsSubmitting] = useState(false)

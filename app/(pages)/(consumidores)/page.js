@@ -13,6 +13,7 @@ import {Button} from "@/components/ui/button";
 import {obtenerTodasLasTarjetas} from "@/dominio/servicios/giftcards";
 import {cookies} from "next/headers";
 import PlusOfertaBannerCuotas from "@/components/personalized-ui/shared/PlusOfertaBannerCuotas";
+import {obtenerPreventas} from "@/dominio/servicios/preventas";
 
 export const dynamic = "force-dynamic";
 
@@ -23,8 +24,12 @@ export const metadata = {
 
 async function Principal() {
     const token = cookies().get("access-token")?.value
-    const resultado = await obtenerTodasLasTarjetas(undefined, token)
-    if (!resultado.exito) return <>Error</>
+    const resultadoGiftcards = await obtenerTodasLasTarjetas(undefined, token)
+    if (!resultadoGiftcards.exito) return <>Error</>
+
+    const resultadoPreventas = await obtenerPreventas(undefined, token)
+    console.log("resultado preventas", resultadoPreventas)
+    if (!resultadoPreventas.exito) return <>Error</>
 
     return (
         <main className={"styledMain"}>
@@ -36,8 +41,18 @@ async function Principal() {
                     titulo={"Tarjetas de regalo"}
                     subtitulo={"¡Canjealas y comprá en tu cuenta!"}
                     textoBoton={"Ver todas"}
+                    tipo={"giftcard"}
                     ruta={"/tarjetas-de-regalo"}
-                    productos={resultado.data}
+                    productos={resultadoGiftcards.data}
+                />
+
+                <GiftCardsSwiper
+                    titulo={"Preventas"}
+                    subtitulo={"¡Llevate lo último de lo último antes que salga!"}
+                    textoBoton={"Ver todas"}
+                    tipo={"preventa"}
+                    ruta={"/juegos/preventas"}
+                    productos={resultadoPreventas.data}
                 />
                 <BusinessHighlights/>
                 <PaymentMethods/>
@@ -46,7 +61,7 @@ async function Principal() {
     )
 }
 
-function GiftCardsSwiper({productos, titulo, subtitulo, textoBoton, ruta}) {
+function GiftCardsSwiper({productos, titulo, subtitulo, textoBoton, ruta, tipo}) {
     if (productos.length === 0) return;
     return (
         <div
@@ -69,7 +84,7 @@ function GiftCardsSwiper({productos, titulo, subtitulo, textoBoton, ruta}) {
                 </Link>
             </div>
             {/* MAP DE GIFTCARDS */}
-            <MyCarousel productos={productos}/>
+            <MyCarousel productos={productos} tipo={tipo}/>
         </div>
     )
 }

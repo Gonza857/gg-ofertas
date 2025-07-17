@@ -33,8 +33,9 @@ class RepositorioJuegos {
     }
 
     // PREVENTA JUEGOS
-    async guardarPreventa(ofertas) {
-        return await this.BaseDeDatos.guardar("preventas", ofertas);
+    async guardarPreventa(preventa) {
+        preventa.editado = serverTimestamp()
+        return await this.BaseDeDatos.guardarConUID("preventas", preventa);
     }
     async obtenerPreventas() {
         return await this.BaseDeDatos.obtenerTodos("preventas");

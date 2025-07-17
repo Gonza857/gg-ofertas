@@ -7,7 +7,6 @@ async function EditarPreventa({params}) {
     const id = params.id;
     const cookie = cookies().get("access-token")?.value
     const resultado = await obtenerPreventaPorId(cookie, id);
-    console.log("resultado back", resultado)
 
     return (
         <div className="flex flex-col mb-4">
