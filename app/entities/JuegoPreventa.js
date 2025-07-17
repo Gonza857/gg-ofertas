@@ -5,6 +5,7 @@ class JuegoPreventa {
     region;
     tipo;
     imagenUrl;
+    id;
 
     constructor(input) {
         this.titulo = input.titulo;
@@ -13,6 +14,7 @@ class JuegoPreventa {
         this.region = input.region;
         this.tipo = input.tipo;
         this.imagenUrl = input.imagenUrl;
+        this.id = input.id;
     }
 }
 
