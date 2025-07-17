@@ -28,8 +28,8 @@ class Almacenamiento {
      * @param {string} ruta con nombre de archivo
      * @param id
      */
-    async borrarArchivo(ruta, id) {
-        const referenciaAlmacenamiento = ref(this.ALMACENAMIENTO, `${ruta}/${id}`);
+    async borrarArchivo(ruta) {
+        const referenciaAlmacenamiento = ref(this.ALMACENAMIENTO, ruta);
         try {
             await deleteObject(referenciaAlmacenamiento);
         } catch (e) {

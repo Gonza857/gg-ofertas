@@ -84,7 +84,7 @@ class ModeloJuegos {
 
         if (preventaInput.estadoImagen === 3) {
             if (preventaDB.imagenUrl) {
-                await this.repositorioImagenes.eliminarDeAlmacenamiento("preventas", preventaDB.id)
+                await this.repositorioImagenes.eliminarDeAlmacenamiento("/preventas", preventaDB.id)
             }
 
             const {imagen} = preventaInput;

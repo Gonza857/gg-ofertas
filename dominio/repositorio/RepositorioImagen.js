@@ -11,13 +11,10 @@ class RepositorioImagen {
     // No uso este metodo porque tiene baseDeDatos.actualizar
     async guardar(imagenBlob, id, rutaColeccion, nombreColeccion) {
         return await this.almacenamiento.subirImagenBlob(`${rutaColeccion}/${id}`, imagenBlob)
-        // const dataActualizado = {
-        //     ...data,
-        //     url,
-        // }
-        // delete dataActualizado.imagen
-        // await this.baseDeDatos.actualizar(nombreColeccion, dataActualizado, data.id)
-        // return true;
+    }
+
+    async eliminarDeAlmacenamiento(rutaColeccion, id) {
+        await this.almacenamiento.borrarArchivo(`${rutaColeccion}/${id}`)
     }
 
     async obtenerImagenPorId(id) {
@@ -40,9 +37,7 @@ class RepositorioImagen {
         return await this.baseDeDatos.buscarVariosPorAtributo(this.coleccionNombre, "pertenencia", pertenencia)
     }
 
-    async eliminarDeAlmacenamiento(coleccion, id) {
-        await this.almacenamiento.borrarArchivo(`/${coleccion}`, id)
-    }
+
 
     async eliminarProductoDeAlmacenamiento(id) {
         await this.almacenamiento.borrarArchivo("/productos", id)
