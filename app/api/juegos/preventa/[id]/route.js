@@ -56,18 +56,22 @@ export async function PATCH (req, res) {
     const body = await req.formData();
     const formValues = convertirFormData_a_Object(body)
 
+    console.log("form values", formValues)
+
     let resultadoValidarPreventa = patchPreventa.safeParse(formValues);
     if (resultadoValidarPreventa.error) {
         console.log(resultadoValidarPreventa.error)
         return ManejadorRespuesta.error(resultadoValidarPreventa.error)
     }
 
+    console.log(`preventa validada ${id}`, resultadoValidarPreventa.data)
+
     try {
         await modeloJuego.actualizarPreventa(resultadoValidarPreventa.data, id)
         revalidatePath(`/admin/juegos/preventas/${id}`)
         return ManejadorRespuesta.creado("Preventa actualizada", resultadoValidarPreventa.data)
     } catch (e) {
-        console.log("Error al crear preventa", e)
+        console.log("Error al actualizar preventa", e)
         return ManejadorRespuesta.error(e)
     }
 }

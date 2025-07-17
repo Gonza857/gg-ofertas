@@ -79,6 +79,7 @@ class ModeloJuegos {
     async actualizarPreventa(preventaInput, id) {
 
         const preventaDB = await this.repositorioJuegos.obtenerPreventaPorId(id);
+        console.log("preventa back", preventaDB)
         if (!preventaDB) throw new Error("Error altualizar preventa.");
 
         if (preventaInput.estadoImagen === 3) {
