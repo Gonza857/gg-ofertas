@@ -7,7 +7,7 @@ import TablaPreventas from "@/app/(modules)/admin/(components)/preventas/TablaPr
 
 async function Preventas () {
     const cookie = cookies().get("access-token")?.value
-    const resultado = await obtenerPreventas(cookie);
+    const resultado = await obtenerPreventas("admin", cookie);
     if (!resultado.exito) return <>Error</>
 
     return (
