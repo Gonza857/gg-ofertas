@@ -6,7 +6,6 @@ import CookieManager from "@/dominio/utils/auth/cookiesManager";
 const modeloUsuario = container.resolve("ModeloUsuario")
 
 export async function POST(req) {
-    console.log("POST de auth")
     const authHeader = req.headers.get('authorization')
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
         return NextResponse.json({ error: 'No autorizado' }, { status: 401 })
@@ -16,7 +15,7 @@ export async function POST(req) {
 
     // TODO: Reemplazar esto con tu verificación real de token
     const usuarioPayload = await verificarTokenYObtenerUsuario(token)
-    console.log(usuarioPayload)
+
     if (!usuarioPayload) {
         return NextResponse.json({ error: 'Token inválido' }, { status: 401 })
     }

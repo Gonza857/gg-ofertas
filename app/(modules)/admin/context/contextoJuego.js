@@ -7,7 +7,6 @@ export const useStockStore = create((set) => ({
     setJuegos: (juegos) => set({ juegos }),
 
     eliminarJE: (id) => {
-        console.log("eliminando id", id)
         set((anterior) => ({
             juegos: anterior.juegos.filter(s => s.id !== id)
         }))
@@ -16,7 +15,6 @@ export const useStockStore = create((set) => ({
         set((anterior) => {
             const juegosActualizados = ServicioJuegoStock.actualizarStock(idJuego, cantidad, anterior.juegos)
             const juegoActualizado = ServicioJuegoStock.obtenerPorId(juegosActualizados, idJuego);
-            console.log("mando este juego al back", juegoActualizado)
             ServicioJuegoStock.actualizarJuegoBD(juegoActualizado)
             return {
                 juegos: juegosActualizados
@@ -25,7 +23,6 @@ export const useStockStore = create((set) => ({
     },
     actualizarJE: (juegoActualizado) => {
         ServicioJuegoStock.formatearJuego(juegoActualizado)
-        console.log("juego actualizado formateado", juegoActualizado)
         set((anterior) => ({
             juegos: ServicioJuegoStock.reordenar(
                 anterior.juegos.map((j) => {

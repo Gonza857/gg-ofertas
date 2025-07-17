@@ -40,7 +40,6 @@ export async function GET (req, res) {
 
     try {
         const preventa = await modeloJuego.obtenerPreventaPorId(id)
-        console.log("preventa obtenida back", preventa)
         return ManejadorRespuesta.ok(preventa)
     } catch (e) {
         console.log("Error al obtener preventas", e)
@@ -56,7 +55,6 @@ export async function PATCH (req, res) {
 
     const body = await req.formData();
     const formValues = convertirFormData_a_Object(body)
-    console.log("form convertido", formValues)
 
     let resultadoValidarPreventa = patchPreventa.safeParse(formValues);
     if (resultadoValidarPreventa.error) {

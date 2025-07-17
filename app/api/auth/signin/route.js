@@ -3,11 +3,9 @@ import {NextResponse} from "next/server";
 
 export async function POST(req, res) {
     const body = await req.json();
-    console.log("recibo este body", body);
     const modeloUsuario = container.resolve("ModeloUsuario");
     try {
         const resultado = await modeloUsuario.guardar(body.email);
-        console.log("resultado de guardar usuario", resultado)
         if (resultado.exito) {
             return NextResponse.json({exito: resultado.exito, mensaje: "Registrado en BD correctamente."})
         }

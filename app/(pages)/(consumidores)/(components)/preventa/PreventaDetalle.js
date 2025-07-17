@@ -23,7 +23,7 @@ function PreventaDetalle({preventa}) {
                         <img
                             src={preventa.imagenUrl || "/placeholder.svg"}
                             alt={preventa.titulo}
-                            className="w-full h-[400px] object-cover"
+                            className="w-full h-[300px] md:h-[400px] object-cover"
                         />
                     </CardContent>
                 </Card>
@@ -34,7 +34,7 @@ function PreventaDetalle({preventa}) {
                 {/* Header con título y acciones */}
                 <div className="flex justify-between items-start">
                     <div>
-                        <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                        <h1 className="text-2xl font-bold text-gray-900 mb-2">
                             {preventa.titulo} - {preventa?.tipo ?? "-"}
                         </h1>
                         <div className="flex items-center gap-4 text-sm text-gray-600">
@@ -57,17 +57,17 @@ function PreventaDetalle({preventa}) {
                     {/* Precio por Transferencia */}
                     <Card className="border-green-200 bg-green-50">
                         <CardContent className="p-4">
-                            <div className="flex items-center justify-between">
+                            <div className="flex flex-col justify-between">
                                 <div className="flex-1">
-                                    <div className="flex items-center gap-3 mb-2">
+                                    <div className="flex items-center gap-3 mb-2 w-full">
                                         <CreditCard className="h-5 w-5 text-green-600"/>
                                         <span
-                                            className="font-semibold text-green-800">Precio por Transferencia</span>
-                                        <Badge variant="destructive" className="text-xs">
+                                            className="text-sm font-semibold text-green-800">Precio por Transferencia</span>
+                                        <Badge variant="destructive" className="text-xs w-fit px-1 md:px-2.5">
                                             -20% OFF
                                         </Badge>
                                     </div>
-                                    <div className="text-3xl font-bold text-green-700 mb-1">
+                                    <div className="text-2xl font-bold text-green-700 mb-1">
                                         ${preventa.precioClienteTransferencia.toFixed(2)}
                                     </div>
                                     <p className="text-sm text-green-600">Abonando por CVU/CBU - Mejor precio</p>
@@ -76,7 +76,7 @@ function PreventaDetalle({preventa}) {
                                     {/*<Badge variant={stockStatus.color as any} className="mb-2">*/}
                                     {/*    {stockStatus.icon} {stockStatus.text}*/}
                                     {/*</Badge>*/}
-                                    <Badge className="mb-2">
+                                    <Badge>
                                         ✅ Disponible
                                     </Badge>
                                     {/*<p className="text-sm text-gray-600">Stock: 77 unidades</p>*/}
@@ -90,9 +90,9 @@ function PreventaDetalle({preventa}) {
                         <CardContent className="p-4">
                             <div className="flex items-center gap-3 mb-2">
                                 <CreditCard className="h-5 w-5 text-blue-600"/>
-                                <span className="font-semibold text-blue-800">💳 Precio en Cuotas</span>
+                                <span className="font-semibold text-blue-800">Precio en Cuotas</span>
                             </div>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4">
                                 <div>
                                     <div className="text-2xl font-bold text-blue-700 mb-1">
                                         ${preventa.precioClienteLista.toFixed(2)}
@@ -132,7 +132,7 @@ function PreventaDetalle({preventa}) {
                 </Button>
 
                 {/* Información de envío y garantía */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-3 gap-4">
                     <Card className="text-center">
                         <CardContent className="p-4">
                             <Joystick className="h-6 w-6 text-blue-600 mx-auto mb-2"/>

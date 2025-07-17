@@ -37,7 +37,6 @@ class ModeloJuegos {
     }
 
     async crearPreventa(preventaObject) {
-        console.log("preventa en back", preventaObject)
 
         const {imagen} = preventaObject;
         const id = uuidv4()
@@ -66,7 +65,6 @@ class ModeloJuegos {
 
     async obtenerPreventas(cliente = "customer", usuario = null) {
         const preventas = await this.repositorioJuegos.obtenerPreventas()
-        console.log("preventas back", preventas)
         if (cliente === this.tipoCliente.CUSTOMER) return preventas.map(p => new JuegoPreventaCustomer(p))
         if (cliente === this.tipoCliente.RESELLER) return preventas.map(p => new JuegoPreventaReseller(p))
         if (!usuario) throw new Error ("No autorizado")
@@ -79,7 +77,6 @@ class ModeloJuegos {
     }
 
     async actualizarPreventa(preventaInput, id) {
-        console.log(`preventa que me llega ${id}`, preventaInput)
 
         const preventaDB = await this.repositorioJuegos.obtenerPreventaPorId(id);
         if (!preventaDB) throw new Error("Error altualizar preventa.");

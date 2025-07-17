@@ -49,7 +49,6 @@ export async function POST(req, res) {
     if (!resultado.exito) return resultado;
     try {
         const cuerpo = await req.json();
-        console.log("cuerpo", cuerpo)
         const juegoStockCreado = await modeloJuegos.guardarJuegoStock(cuerpo);
         revalidar()
         return ManejadorRespuesta.creado("Juego creado correctamente", juegoStockCreado)

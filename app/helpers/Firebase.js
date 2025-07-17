@@ -12,7 +12,6 @@ export class Firebase {
         try {
             const docRef = doc(db, "ofertas", id);
             await deleteDoc(docRef);
-            console.log("eliminado amigo.");
         } catch (e) {
             console.error(e.message);
         }

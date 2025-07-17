@@ -64,7 +64,7 @@ export const opcionesMenuLateralReventa = [
     },
     {
         name: "Preventas",
-        icon: <Star/>,
+        icon: <Star className="mr-2 h-6 w-6"/>,
         href: "/reventa/juegos/preventas"
     },
     // {

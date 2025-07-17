@@ -7,7 +7,6 @@ import {Button} from "@/components/ui/button";
 import Link from "next/link";
 
 function PreventaCard({preventa}) {
-    console.log("preventa card", preventa)
     const handleGameClick = () => {
     }
 

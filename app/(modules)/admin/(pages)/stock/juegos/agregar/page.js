@@ -23,8 +23,6 @@ function AgregarJuego() {
 
     const enviarFormulario = async (e) => {
         e.preventDefault()
-        console.log("Envio estos datos")
-        console.log(datosFormulario);
         const juegoParaGuardar = {
             ...datosFormulario,
             consola: obtenerArrayDeConsola(datosFormulario.consola),

@@ -28,7 +28,6 @@ async function Principal() {
     if (!resultadoGiftcards.exito) return <>Error</>
 
     const resultadoPreventas = await obtenerPreventas(undefined, token)
-    console.log("resultado preventas", resultadoPreventas)
     if (!resultadoPreventas.exito) return <>Error</>
 
     return (

@@ -38,7 +38,6 @@ export async function GET(req, res) {
     let solicitante = searchParams.get('cliente') === "undefined" ? undefined : searchParams.get('cliente');
     try {
         const tarjetas = await modeloTarjetas.obtenerTodas(solicitante, resultado.usuario)
-        console.log("tarjetas back", tarjetas.length)
         return ManejadorRespuesta.ok(tarjetas)
     } catch (e) {
         return ManejadorRespuesta.error(e.message);

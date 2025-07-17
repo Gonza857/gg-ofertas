@@ -21,10 +21,7 @@ const Login = () => {
         e.preventDefault();
         const formData = new FormData(e.target);
         const data = Object.fromEntries(formData.entries());
-        console.log("data para login", data)
         const {mensaje, exito} = await loguearUsuario(data)
-        console.log("server mensaje", mensaje)
-        console.log("server exito", exito)
         if (exito) {
             setMensaje(mensaje);
             router.replace('/admin');
