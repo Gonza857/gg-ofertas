@@ -43,6 +43,8 @@ class ModeloJuegos {
         const {imagen} = preventaObject;
         const id = uuidv4()
 
+        const extension = preventaObject.imagen.name.split('.').pop().toLowerCase()
+
         const urlImagen = await this.repositorioImagenes.guardar(
             imagen,
             id,
@@ -91,6 +93,8 @@ class ModeloJuegos {
             }
 
             const {imagen} = preventaInput;
+
+            const extension = preventaInput.imagen.name.split('.').pop().toLowerCase()
 
             const urlImagen = await this.repositorioImagenes.guardar(
                 imagen,

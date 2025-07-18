@@ -10,11 +10,11 @@ class RepositorioImagen {
 
     // No uso este metodo porque tiene baseDeDatos.actualizar
     async guardar(imagenBlob, id, rutaColeccion) {
-        return await this.almacenamiento.subirImagenBlob(`${rutaColeccion}/${id}`, imagenBlob)
+        return await this.almacenamiento.subirImagenBlob(`/${rutaColeccion}/${id}`, imagenBlob)
     }
 
     async eliminarDeAlmacenamiento(rutaColeccion, id) {
-        await this.almacenamiento.borrarArchivo(`${rutaColeccion}/${id}`)
+        await this.almacenamiento.borrarArchivo(`/${rutaColeccion}/${id}`)
     }
 
     async obtenerImagenPorId(id) {

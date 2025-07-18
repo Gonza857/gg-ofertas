@@ -111,7 +111,7 @@ function FormularioAgregarPreventa({item = null}) {
         }
 
         if (imageState === 3) {
-            formData.append("imagen", image64, "img")
+            formData.append("imagen", image64)
             formData.append("estadoImagen", imageState.toString())
         }
 
