@@ -47,6 +47,22 @@ export async function GET (req, res) {
     }
 }
 
+export async function DELETE (req, res) {
+    const resultado = await validarAdmin();
+    if (!resultado.exito) return resultado;
+
+    const id = res.params.id;
+
+    try {
+        await modeloJuego.eliminarPreventa(id);
+        revalidatePath(`/admin/juegos/preventas`)
+        return ManejadorRespuesta.ok();
+    } catch (e) {
+        console.log("error al eliminar preventa", e)
+        return ManejadorRespuesta.error(e.message)
+    }
+}
+
 export async function PATCH (req, res) {
     const resultado = await validarAdmin();
     if (!resultado.exito) return resultado;
@@ -69,6 +85,8 @@ export async function PATCH (req, res) {
     try {
         await modeloJuego.actualizarPreventa(resultadoValidarPreventa.data, id)
         revalidatePath(`/admin/juegos/preventas/${id}`)
+        revalidatePath(`/admin/juegos/preventas`)
+
         return ManejadorRespuesta.creado("Preventa actualizada", resultadoValidarPreventa.data)
     } catch (e) {
         console.log("Error al actualizar preventa", e)

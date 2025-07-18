@@ -7,6 +7,8 @@ import React from "react";
 import {Button} from "@/components/ui/button";
 import {FaTrash} from "react-icons/fa6";
 import Link from "next/link";
+import {eliminarPreventa} from "@/dominio/servicios/preventas";
+import {toastError, toastSuccess} from "@/lib/Toast";
 
 function TablaPreventas({preventas}) {
     return (
@@ -61,6 +63,15 @@ const Registro = ({item}) => {
         Cuenta primaria $${item.precioClienteTransferencia} 20% OFF (transferencia bancaria)
         `;
 
+    const borrarPreventa = async (id) => {
+        const {exito, mensaje} = await eliminarPreventa(id);
+        if (exito) {
+            toastSuccess("Preventa eliminado correctamente!")
+        } else {
+            toastError(mensaje)
+        }
+    }
+
     return (
         <TableRow>
             <TableCell className={"p-1 text-left"}>{item.titulo}</TableCell>
@@ -90,7 +101,7 @@ const Registro = ({item}) => {
                             <Pen className={"text-black"}/>
                         </Button>
                     </Link>
-                    <Button variant={"outline"} size={"sm"}>
+                    <Button variant={"outline"} size={"sm"} onClick={() => borrarPreventa(item.id)}>
                         <FaTrash className={"text-black"}/>
                     </Button>
                 </div>

@@ -8,6 +8,13 @@ export async function crearPreventa(preventa) {
     return Fetcher.requestNew(`/juegos/preventa`, fetchParams);
 }
 
+export async function eliminarPreventa(id) {
+    const fetchParams = {
+        method: 'DELETE',
+    };
+    return Fetcher.requestNew(`/juegos/preventa/${id}`, fetchParams);
+}
+
 export async function actualizarPreventa(preventa, id) {
     const fetchParams = {
         method: 'PATCH',

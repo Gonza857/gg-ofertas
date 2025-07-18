@@ -46,6 +46,9 @@ class RepositorioJuegos {
     async actualizarPreventa(preventa, id) {
         return await this.BaseDeDatos.actualizar("preventas", preventa, id)
     }
+    async eliminarPreventa(id) {
+        return await this.BaseDeDatos.eliminar("preventas", id)
+    }
 
     async eliminarJuegoEnStock(id) {
         return await this.BaseDeDatos.eliminar("stock-juegos", id)

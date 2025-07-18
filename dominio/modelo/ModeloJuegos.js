@@ -80,6 +80,11 @@ class ModeloJuegos {
         return await this.repositorioJuegos.obtenerPreventaPorId(id)
     }
 
+    async eliminarPreventa (id) {
+        if (!id) throw new Error("Error al eliminar preventa.")
+        await this.repositorioJuegos.eliminarPreventa(id)
+    }
+
     async actualizarPreventa(preventaInput, id) {
 
         const preventaDB = await this.repositorioJuegos.obtenerPreventaPorId(id);
