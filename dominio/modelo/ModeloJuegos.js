@@ -40,13 +40,14 @@ class ModeloJuegos {
 
         console.log("preventa object para guardar", preventaObject)
 
-        const {imagen} = preventaObject;
         const id = uuidv4()
 
-        const extension = preventaObject.imagen.name.split('.').pop().toLowerCase()
+        // const extension = preventaObject.imagen.name.split('.').pop().toLowerCase()
+
+        preventaObject.imagen = new Blob([preventaObject.imagen], { type: preventaObject.imagen.type });
 
         const urlImagen = await this.repositorioImagenes.guardar(
-            imagen,
+            preventaObject.imagen,
             id,
             "preventas",
         );
@@ -90,6 +91,7 @@ class ModeloJuegos {
         const preventaDB = await this.repositorioJuegos.obtenerPreventaPorId(id);
         console.log("preventa back", preventaDB)
         console.log("preventa input", preventaInput)
+
         if (!preventaDB) throw new Error("Error altualizar preventa.");
 
         if (preventaInput.estadoImagen === 3) {
@@ -97,12 +99,12 @@ class ModeloJuegos {
                 await this.repositorioImagenes.eliminarDeAlmacenamiento("preventas", preventaDB.id)
             }
 
-            const {imagen} = preventaInput;
+            // const extension = preventaInput.imagen.name.split('.').pop().toLowerCase()
 
-            const extension = preventaInput.imagen.name.split('.').pop().toLowerCase()
+            preventaInput.imagen = new Blob([preventaInput.imagen], { type: preventaInput.imagen.type });
 
             const urlImagen = await this.repositorioImagenes.guardar(
-                imagen,
+                preventaInput.imagen,
                 preventaDB.id,
                 "preventas",
             );
@@ -110,6 +112,8 @@ class ModeloJuegos {
             delete preventaInput.imagen
             preventaInput.imagenUrl = urlImagen
         }
+
+        console.log("url son iguales", (preventaDB.imagenUrl === preventaInput.imagenUrl))
 
         delete preventaInput.estadoImagen
         Object.assign(preventaDB, preventaInput)

@@ -27,7 +27,6 @@ class Almacenamiento {
 
     /** Borrar archivo
      * @param {string} ruta con nombre de archivo
-     * @param id
      */
     async borrarArchivo(ruta) {
         console.log("Borro archivo de ruta", ruta)
@@ -35,6 +34,7 @@ class Almacenamiento {
         try {
             await deleteObject(referenciaAlmacenamiento);
         } catch (e) {
+            console.log("FIrebase error al borrar", e)
             throw new Error(e.message);
         }
     }
