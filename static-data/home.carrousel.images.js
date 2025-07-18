@@ -17,7 +17,7 @@ export const images = [
         id: id++,
         alt: "EA SPORTS FC 26",
         path: "/images/home-carousel/fc26.jpg",
-        urlTo: "/juegos/preventas/bcf3024f-c085-4235-8d55-50af83162b55"
+        urlTo: "/juegos/preventas/4d14af10-1d61-47be-9d31-2340a2f5ef31"
     },
     {
         id: id++,
