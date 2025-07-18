@@ -55,7 +55,9 @@ export async function POST (req, res) {
 
     try {
         await modeloJuego.crearPreventa(preventa)
-        revalidatePath("/admin/juegos/preventas")
+        revalidatePath("/admin/juegos/preventas", "page")
+        revalidatePath("/juegos/preventas", "page")
+        revalidatePath("/reventa/juegos/preventas", "page")
         return ManejadorRespuesta.creado("Preventa creada", preventa)
     } catch (e) {
         console.log("Error al crear preventa", e)

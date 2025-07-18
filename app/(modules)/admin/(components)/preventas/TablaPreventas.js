@@ -25,6 +25,7 @@ const Cabecera = () => {
         <TableHeader>
             <TableRow>
                 <TableHead className={"w-4/12 px-2 md:px-4"}>Titulo</TableHead>
+                <TableHead className={"w-4/12 px-2 md:px-4"}>Consola</TableHead>
                 <TableHead className={"w-2/12 px-2 md:px-4 text-center"}>Fecha lanzamiento</TableHead>
                 <TableHead className={"w-1/12 px-2 md:px-4 text-center"}>P.B</TableHead>
                 <TableHead className={"w-1/12 px-2 md:px-4 text-center"}>P.R</TableHead>
@@ -75,6 +76,7 @@ const Registro = ({item}) => {
     return (
         <TableRow>
             <TableCell className={"p-1 text-left"}>{item.titulo}</TableCell>
+            <TableCell className={"p-1 text-left"}>{item.plataforma}</TableCell>
             <TableCell className={"p-1 text-center"}>{item.fechaLanzamiento}</TableCell>
             <TableCell className={"p-1 text-center"}>${item.precioBase}</TableCell>
             <TableCell

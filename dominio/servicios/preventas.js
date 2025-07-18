@@ -39,7 +39,9 @@ export async function obtenerPreventaPorId(token, id) {
 export async function obtenerPreventas(cliente = "customer", token) {
     const fetchParams = {
         method: 'GET',
-        cache: 'no-cache',
+        next: {
+            revalidate: 60
+        },
         headers: {
             Cookie: `access-token=${token}`,
         },

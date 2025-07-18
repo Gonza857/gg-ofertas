@@ -37,12 +37,7 @@ class ModeloJuegos {
     }
 
     async crearPreventa(preventaObject) {
-
-        console.log("preventa object para guardar", preventaObject)
-
         const id = uuidv4()
-
-        // const extension = preventaObject.imagen.name.split('.').pop().toLowerCase()
 
         preventaObject.imagen = new Blob([preventaObject.imagen], { type: preventaObject.imagen.type });
 
@@ -87,19 +82,13 @@ class ModeloJuegos {
     }
 
     async actualizarPreventa(preventaInput, id) {
-
         const preventaDB = await this.repositorioJuegos.obtenerPreventaPorId(id);
-        console.log("preventa back", preventaDB)
-        console.log("preventa input", preventaInput)
-
         if (!preventaDB) throw new Error("Error altualizar preventa.");
 
         if (preventaInput.estadoImagen === 3) {
             if (preventaDB.imagenUrl) {
                 await this.repositorioImagenes.eliminarDeAlmacenamiento("preventas", preventaDB.id)
             }
-
-            // const extension = preventaInput.imagen.name.split('.').pop().toLowerCase()
 
             preventaInput.imagen = new Blob([preventaInput.imagen], { type: preventaInput.imagen.type });
 
@@ -113,14 +102,10 @@ class ModeloJuegos {
             preventaInput.imagenUrl = urlImagen
         }
 
-        console.log("url son iguales", (preventaDB.imagenUrl === preventaInput.imagenUrl))
-
         delete preventaInput.estadoImagen
         Object.assign(preventaDB, preventaInput)
-        console.log("esta preventa va a la BD", preventaInput)
 
         await this.repositorioJuegos.actualizarPreventa({...preventaDB}, preventaDB.id)
-
     }
 
     async guardarJuegoStock(juego) {

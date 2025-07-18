@@ -5,21 +5,24 @@ import {Badge} from "@/components/ui/badge";
 import {CreditCard, Gamepad2, Star} from "lucide-react";
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
+import Image from "next/image";
 
 function PreventaCard({preventa}) {
     const handleGameClick = () => {
     }
 
-    return (
-        <Card
+    return (<Card
             className="cursor-pointer hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 overflow-hidden"
             onClick={() => handleGameClick(preventa.id)}
         >
-            <div className="relative">
-                <img src={preventa.imagenUrl || "/placeholder.svg"} alt={preventa.titulo}
-                     className="w-full h-48 object-cover"/>
-                <Badge className="absolute top-3 left-3 bg-purple-600 hover:bg-purple-600">
-                    <Star className="h-3 w-3 fill-yellow-400 text-yellow-400 me-1" />
+            <div className="relative h-[250px] w-full aspect-[3/4] overflow-hidden rounded-xl mx-auto">
+                <Image src={preventa.imagenUrl || "/placeholder.svg"}
+                       alt={preventa.titulo}
+                       fill
+                       className="object-contain"
+                />
+                <Badge className="absolute bottom-3 right-2 bg-purple-600 hover:bg-purple-600">
+                    <Star className="h-3 w-3 fill-yellow-400 text-yellow-400 me-1"/>
                     PREVENTA
                 </Badge>
                 {/*<Badge variant="secondary" className="absolute top-3 right-3">*/}
@@ -27,9 +30,9 @@ function PreventaCard({preventa}) {
                 {/*    -20%*/}
                 {/*</Badge>*/}
             </div>
-            <CardContent className="p-2 sm:p-4">
-                <div className="mb-3">
-                    <h3 className="font-bold text-lg text-gray-900 mb-1 line-clamp-2">{preventa.titulo}</h3>
+            <CardContent className="p-2 sm:px-4">
+                <div className="p-1 sm:p-2">
+                    <h3 className="font-bold min-h-[3rem] lg:text-lg text-gray-900 mb-1 line-clamp-2">{preventa.titulo}</h3>
                     <div className="flex items-center justify-between text-sm text-gray-600">
                         <span className="flex items-center gap-1">
                           <Gamepad2 className="h-3 w-3"/>
@@ -47,28 +50,20 @@ function PreventaCard({preventa}) {
 
                 {/* Precios compactos */}
                 <div className="space-y-2 mb-3">
-                    {/* Precio por transferencia */}
-                    <div className="flex items-center justify-between bg-green-50 rounded-lg p-1 sm:p-2">
-                        <div className="flex items-center gap-1">
-                            <CreditCard className="h-3 w-3 text-green-600"/>
-                            <span className="text-xs text-green-700 font-medium">Transferencia</span>
-                        </div>
-                        <span className="font-bold text-green-700">${preventa.precioClienteTransferencia}</span>
-                    </div>
-
                     {/* Precio en cuotas */}
-                    <div className="flex items-center justify-between bg-blue-50 rounded-lg p-2">
-                        <div className="flex items-center gap-1">
-                            <CreditCard className="h-3 w-3 text-blue-600"/>
-                            <span className="text-xs text-blue-700 font-medium">
-                            {/*{game.cuotasDisponibles}x sin interés*/}
-                                6x sin interés
+                    <span className="md:text-lg text-blue-700 p-1 sm:p-2">
+                            ${preventa.precioClienteLista.toLocaleString("AR")}
+                    </span>
 
-                          </span>
-                        </div>
-                        <span className="font-bold text-blue-700">
-                          ${(preventa.precioClienteLista / 6).toFixed(2)}
+                    {/* Precio por transferencia */}
+                    <div className="flex items-center gap-2 bg-green-50 rounded-lg p-1 sm:p-2">
+                        <span className="text-sm text-green-700">
+                            ${preventa.precioClienteTransferencia.toLocaleString("AR")} con Transferencia
                         </span>
+                        {/*<div className="flex items-center gap-1">*/}
+                        {/*<CreditCard className="h-3 w-3 text-green-600"/>*/}
+                        {/*<span className="text-sm text-green-700 font-medium"></span>*/}
+                        {/*</div>*/}
                     </div>
                 </div>
 
@@ -82,8 +77,7 @@ function PreventaCard({preventa}) {
 
                 </div>
             </CardContent>
-        </Card>
-    )
+        </Card>)
 }
 
 export default PreventaCard;

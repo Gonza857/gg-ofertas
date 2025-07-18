@@ -14,13 +14,11 @@ class Almacenamiento {
      * @param blob archivo BLOB
      */
     async subirImagenBlob(ruta, blob) {
-        console.log("guardo en ruta")
         const referenciaAlmacenamiento = ref(this.ALMACENAMIENTO, ruta);
         try {
             await uploadBytes(referenciaAlmacenamiento, blob);
             return await getDownloadURL(referenciaAlmacenamiento);
         } catch (e) {
-            console.log(e)
             throw new Error(e.message);
         }
     }
@@ -29,12 +27,10 @@ class Almacenamiento {
      * @param {string} ruta con nombre de archivo
      */
     async borrarArchivo(ruta) {
-        console.log("Borro archivo de ruta", ruta)
         const referenciaAlmacenamiento = ref(this.ALMACENAMIENTO, ruta);
         try {
             await deleteObject(referenciaAlmacenamiento);
         } catch (e) {
-            console.log("FIrebase error al borrar", e)
             throw new Error(e.message);
         }
     }
