@@ -14,6 +14,7 @@ class Almacenamiento {
      * @param blob archivo BLOB
      */
     async subirImagenBlob(ruta, blob) {
+        console.log("guardo en ruta")
         const referenciaAlmacenamiento = ref(this.ALMACENAMIENTO, ruta);
         try {
             await uploadBytes(referenciaAlmacenamiento, blob);
@@ -29,6 +30,7 @@ class Almacenamiento {
      * @param id
      */
     async borrarArchivo(ruta) {
+        console.log("Borro archivo de ruta", ruta)
         const referenciaAlmacenamiento = ref(this.ALMACENAMIENTO, ruta);
         try {
             await deleteObject(referenciaAlmacenamiento);

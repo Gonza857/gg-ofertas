@@ -19,6 +19,9 @@ export async function actualizarPreventa(preventa, id) {
 export async function obtenerPreventaPorId(token, id) {
     const fetchParams = {
         method: 'GET',
+        next: {
+            revalidate: 60
+        },
         headers: {
             Cookie: `access-token=${token}`,
         },

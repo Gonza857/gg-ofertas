@@ -53,9 +53,9 @@ function FormularioAgregarPreventa({item = null}) {
     } = useForm({
         defaultValues: {
             precioReventa: null,
-            plataforma: item.plataforma ?? null,
-            region: item.region ?? null,
-            tipo: item.tipo ?? null
+            plataforma: item?.plataforma ?? null,
+            region: item?.region ?? null,
+            tipo: item?.tipo ?? null
         },
     })
 

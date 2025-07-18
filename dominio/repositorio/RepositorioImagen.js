@@ -9,7 +9,7 @@ class RepositorioImagen {
     }
 
     // No uso este metodo porque tiene baseDeDatos.actualizar
-    async guardar(imagenBlob, id, rutaColeccion, nombreColeccion) {
+    async guardar(imagenBlob, id, rutaColeccion) {
         return await this.almacenamiento.subirImagenBlob(`${rutaColeccion}/${id}`, imagenBlob)
     }
 

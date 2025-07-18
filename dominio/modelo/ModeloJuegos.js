@@ -38,13 +38,15 @@ class ModeloJuegos {
 
     async crearPreventa(preventaObject) {
 
+        console.log("preventa object para guardar", preventaObject)
+
         const {imagen} = preventaObject;
         const id = uuidv4()
 
         const urlImagen = await this.repositorioImagenes.guardar(
             imagen,
             id,
-            "/preventas",
+            "preventas",
         );
 
         delete preventaObject.imagen
@@ -80,6 +82,7 @@ class ModeloJuegos {
 
         const preventaDB = await this.repositorioJuegos.obtenerPreventaPorId(id);
         console.log("preventa back", preventaDB)
+        console.log("preventa input", preventaInput)
         if (!preventaDB) throw new Error("Error altualizar preventa.");
 
         if (preventaInput.estadoImagen === 3) {
@@ -101,6 +104,7 @@ class ModeloJuegos {
 
         delete preventaInput.estadoImagen
         Object.assign(preventaDB, preventaInput)
+        console.log("esta preventa va a la BD", preventaInput)
 
         await this.repositorioJuegos.actualizarPreventa({...preventaDB}, preventaDB.id)
 
