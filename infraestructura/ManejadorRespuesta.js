@@ -27,7 +27,7 @@ class ManejadorRespuesta {
         return NextResponse.json(
             {
                 exito: true,
-                data: data
+                data: data,
             }
         )
     }

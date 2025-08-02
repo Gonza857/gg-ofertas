@@ -92,7 +92,6 @@ export async function PATCH(req, res) {
     }
 
     try {
-
         const resultado = await modeloJuegos.actualizarJuegoStock(juegoStock)
         revalidar()
         return ManejadorRespuesta.ok(resultado)

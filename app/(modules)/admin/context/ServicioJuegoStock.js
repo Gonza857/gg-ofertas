@@ -5,9 +5,6 @@ import {toastError, toastSuccess} from "@/lib/Toast";
 class ServicioJuegoStock {
 
     static formatearJuego = (juego) => {
-        juego.precioCliente = Number(juego.precioCliente)
-        juego.precioReventa = Number(juego.precioReventa)
-        juego.stock = Number(juego.stock)
         juego.consola = ServicioJuegoStock.obtenerArrayDeConsola(juego.consola)
         juego.editado = new Date();
     }

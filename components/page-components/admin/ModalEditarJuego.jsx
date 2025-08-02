@@ -7,51 +7,95 @@ import {Label} from "@/components/ui/label";
 import {Input} from "@/components/ui/input";
 import {RadioGroup, RadioGroupItem} from "@/components/ui/radio-group";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {actualizarJuegoStock} from "@/dominio/servicios/stock-juegos";
 import {toastError, toastSuccess} from "@/lib/Toast";
 import {useStockStore} from "@/app/(modules)/admin/context/contextoJuego";
+import {useForm} from "react-hook-form";
+import {format} from "date-fns";
+import { es } from 'date-fns/locale'
+
+const validaciones = {
+    nombre: {
+        required: true
+    },
+    precioCliente: {
+        valueAsNumber: true,
+        required: true
+    },
+    precioReventa: {
+        valueAsNumber: true,
+        required: true
+    },
+    stock: {
+        valueAsNumber: true,
+        required: true
+    }
+}
 
 
-function ModalEditarJuego({estaAbierto, manejarModalEditar, juegoSeleccionado = null, actualizarLocal}) {
-    const {actualizarJE} = useStockStore()
+function ModalEditarJuego({estaAbierto, manejarModalEditar, juegoSeleccionado = null}) {
 
-    const [datosFormulario, setDatosFormulario] = useState({...juegoSeleccionado});
+    const {register, handleSubmit, setValue, reset} = useForm({
+        defaultValues: {
+            nombre: juegoSeleccionado?.nombre || "",
+            precioCliente: juegoSeleccionado?.precioCliente || 0,
+            precioReventa: juegoSeleccionado?.precioReventa || 0,
+            stock: juegoSeleccionado?.stock || 0,
+            mostrarIdioma: juegoSeleccionado?.mostrarIdioma ?? false,
+            consola: juegoSeleccionado?.consola.join("/") || "",
+            tipo: juegoSeleccionado?.tipo || "",
+            idioma: juegoSeleccionado?.idioma || "-"
+        }
+    });
+
+    const {actualizarJE, formatearJuego} = useStockStore()
     const router = useRouter();
 
-    if (!juegoSeleccionado) return;
+    useEffect(() => {
+        if (juegoSeleccionado) {
+            reset({
+                nombre: juegoSeleccionado.nombre,
+                precioCliente: juegoSeleccionado.precioCliente,
+                precioReventa: juegoSeleccionado.precioReventa,
+                stock: juegoSeleccionado.stock,
+                mostrarIdioma: juegoSeleccionado.mostrarIdioma,
+                consola: juegoSeleccionado.consola.join("/"),
+                tipo: juegoSeleccionado.tipo,
+                idioma: juegoSeleccionado.idioma ?? "-"
+            });
+        }
+    }, [juegoSeleccionado, reset]);
 
-    const enviarFormulario = async (e) => {
-        e.preventDefault()
-        const {mensaje, exito} = await actualizarJuegoStock({...juegoSeleccionado, ...datosFormulario});
+    const enviarFormulario = async (datosNuevosJuego) => {
+        const juegoActualizado = formatearJuego({...juegoSeleccionado, ...datosNuevosJuego})
+        const { mensaje, data, exito } = await actualizarJuegoStock(juegoActualizado);
         if (exito) {
-            toastSuccess(mensaje);
-            actualizarJE({...juegoSeleccionado, ...datosFormulario})
-            router.push("/admin/stock/juegos")
-
+            toastSuccess(data.mensaje);
+            actualizarJE(juegoActualizado);
+            router.push("/admin/stock/juegos");
         } else {
             toastError(mensaje);
         }
-        manejarModalEditar()
-        setDatosFormulario({})
-    }
+        manejarModalEditar();
+    };
 
-    const manejarCampos = (e) => {
-        setDatosFormulario((prev) => ({...prev, [e.target.name]: e.target.value}));
-    }
+    if (!juegoSeleccionado) return;
 
-    const manejarSelect = (campo, valor) => setDatosFormulario((prev) => ({...prev, [campo]: valor}))
+    const fechaEditado = juegoSeleccionado.editado ?
+        format(juegoSeleccionado.editado, "d 'de' MMMM 'de' yyyy HH:mm:ss", { locale: es })
+        : "-"
 
     return (
         <ModalCustomizado estaAbierto={estaAbierto}>
             <ModalCustomizado.Titulo>Editando: {juegoSeleccionado.nombre}</ModalCustomizado.Titulo>
-            <form className={"space-y-4"} onSubmit={enviarFormulario}>
+            <form className={"space-y-4"} onSubmit={handleSubmit(enviarFormulario)}>
                 <div className={"space-y-2"}>
                     <Label htmlFor={"nombre"}>Nombre del juego</Label>
                     <Input
                         name={"nombre"}
                         type={"text"}
-                        onChange={manejarCampos}
+                        {...register("nombre", validaciones.nombre)}
                         placeholder={"Nombre del juego"}
                         defaultValue={juegoSeleccionado.nombre}
                     />
@@ -62,7 +106,7 @@ function ModalEditarJuego({estaAbierto, manejarModalEditar, juegoSeleccionado = 
                         <Input
                             name={"precioCliente"}
                             type={"number"}
-                            onChange={manejarCampos}
+                            {...register("precioCliente", validaciones.precioCliente)}
                             defaultValue={juegoSeleccionado.precioCliente}
                         />
                     </div>
@@ -71,7 +115,7 @@ function ModalEditarJuego({estaAbierto, manejarModalEditar, juegoSeleccionado = 
                         <Input
                             name={"precioReventa"}
                             type={"number"}
-                            onChange={manejarCampos}
+                            {...register("precioReventa", validaciones.precioReventa)}
                             defaultValue={juegoSeleccionado.precioReventa}
                         />
                     </div>
@@ -82,7 +126,7 @@ function ModalEditarJuego({estaAbierto, manejarModalEditar, juegoSeleccionado = 
                         <Input
                             name={"stock"}
                             type={"number"}
-                            onChange={manejarCampos}
+                            {...register("stock", validaciones.stock)}
                             defaultValue={juegoSeleccionado.stock}
                         />
                     </div>
@@ -90,8 +134,8 @@ function ModalEditarJuego({estaAbierto, manejarModalEditar, juegoSeleccionado = 
                         <Label>Mostrar Idioma</Label>
                         <RadioGroup
                             className={"flex gap-4"}
-                            defaultValue={juegoSeleccionado?.mostrarIdioma}
-                            onValueChange={(value) => manejarSelect("mostrarIdioma", value)}
+                            onValueChange={(val) => setValue("mostrarIdioma", val === "true")}
+                            defaultValue={String(juegoSeleccionado.mostrarIdioma)}
                         >
                             <div className="flex items-center space-x-2">
                                 <RadioGroupItem value={true} id="si"/>
@@ -107,9 +151,10 @@ function ModalEditarJuego({estaAbierto, manejarModalEditar, juegoSeleccionado = 
                 <div>
                     <Label>Selecciona consola</Label>
                     <Select
-                        defaultValue={juegoSeleccionado?.consola.join("/")}
-                        onValueChange={(valor) => manejarSelect("consola", valor)}
-                        name="consola">
+                        defaultValue={juegoSeleccionado.consola.join("/")}
+                        onValueChange={(valor) => setValue("consola", valor)}
+                        name="consola"
+                    >
                         <SelectTrigger className="w-full">
                             <SelectValue placeholder="Elige una opción"/>
                         </SelectTrigger>
@@ -125,8 +170,9 @@ function ModalEditarJuego({estaAbierto, manejarModalEditar, juegoSeleccionado = 
                     <Label>Selecciona tipo de cuenta</Label>
                     <Select
                         defaultValue={juegoSeleccionado.tipo}
-                        onValueChange={(valor) => manejarSelect("tipo", valor)}
-                        name="tipo">
+                        onValueChange={(valor) => setValue("tipo", valor)}
+                        name="tipo"
+                    >
                         <SelectTrigger className="w-full">
                             <SelectValue placeholder="Elige una opción"/>
                         </SelectTrigger>
@@ -140,7 +186,7 @@ function ModalEditarJuego({estaAbierto, manejarModalEditar, juegoSeleccionado = 
                     <Label>Selecciona idioma del juego</Label>
                     <Select
                         defaultValue={juegoSeleccionado.idioma ?? "-"}
-                        onValueChange={(valor) => manejarSelect("idioma", valor)}
+                        onValueChange={(valor) => setValue("idioma", valor)}
                         name="idioma"
                     >
                         <SelectTrigger className="w-full">
@@ -156,7 +202,9 @@ function ModalEditarJuego({estaAbierto, manejarModalEditar, juegoSeleccionado = 
                         </SelectContent>
                     </Select>
                 </div>
-                <p className={"text-sm"}>Editado por última vez: {juegoSeleccionado.editado ?? "-"}</p>
+                <p className={"text-sm"}>
+                    Editado por última vez: {fechaEditado}
+                </p>
                 <div className={"w-full justify-end flex gap-4"}>
                     <Button
                         variant="destructive"

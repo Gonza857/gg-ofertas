@@ -11,11 +11,15 @@ export const useStockStore = create((set) => ({
             juegos: anterior.juegos.filter(s => s.id !== id)
         }))
     },
+    formatearJuego: (juego) => {
+        ServicioJuegoStock.formatearJuego(juego)
+        return juego
+    },
     updateStockJE: (idJuego, cantidad) => {
         set((anterior) => {
             const juegosActualizados = ServicioJuegoStock.actualizarStock(idJuego, cantidad, anterior.juegos)
-            const juegoActualizado = ServicioJuegoStock.obtenerPorId(juegosActualizados, idJuego);
-            ServicioJuegoStock.actualizarJuegoBD(juegoActualizado)
+            // const juegoActualizado = ServicioJuegoStock.obtenerPorId(juegosActualizados, idJuego);
+            // ServicioJuegoStock.actualizarJuegoBD(juegoActualizado)
             return {
                 juegos: juegosActualizados
             }

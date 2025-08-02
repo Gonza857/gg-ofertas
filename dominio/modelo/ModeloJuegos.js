@@ -124,10 +124,9 @@ class ModeloJuegos {
     async actualizarJuegoStock(input) {
         if (!input || !input.id) throw new Error("No se pudo actualizar el juego")
         input.consola = this.obtenerArrayDeConsola(input.consola)
-        const resultado = await this.repositorioJuegos.actualizarJuegoEnStock(input, input.id)
+        await this.repositorioJuegos.actualizarJuegoEnStock(input, input.id)
         return {
             mensaje: "Juego actualizado correctamante",
-            exito: resultado
         }
     }
 
