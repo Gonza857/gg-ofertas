@@ -18,8 +18,8 @@ export const useStockStore = create((set) => ({
     updateStockJE: (idJuego, cantidad) => {
         set((anterior) => {
             const juegosActualizados = ServicioJuegoStock.actualizarStock(idJuego, cantidad, anterior.juegos)
-            // const juegoActualizado = ServicioJuegoStock.obtenerPorId(juegosActualizados, idJuego);
-            // ServicioJuegoStock.actualizarJuegoBD(juegoActualizado)
+            const juegoActualizado = ServicioJuegoStock.obtenerPorId(juegosActualizados, idJuego);
+            ServicioJuegoStock.actualizarJuegoBD(juegoActualizado)
             return {
                 juegos: juegosActualizados
             }
