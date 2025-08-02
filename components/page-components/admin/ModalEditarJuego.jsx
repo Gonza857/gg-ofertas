@@ -82,7 +82,7 @@ function ModalEditarJuego({estaAbierto, manejarModalEditar, juegoSeleccionado = 
 
     if (!juegoSeleccionado) return;
 
-    const fechaEditado = juegoSeleccionado.editado ?
+    const fechaEditado = juegoSeleccionado.editado !== "-" ?
         format(juegoSeleccionado.editado, "d 'de' MMMM 'de' yyyy HH:mm:ss", { locale: es })
         : "-"
 
