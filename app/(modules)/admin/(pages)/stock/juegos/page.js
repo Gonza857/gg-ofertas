@@ -9,7 +9,6 @@ import {Suspense} from "react"
 import TablaJuegosStock from "@/app/(modules)/admin/(components)/stock/TablaJuegosStock";
 import SmallSpinner from "@/app/(modules)/admin/(components)/SmallSpinner";
 
-export const revalidate = 3600;
 export const dynamic = "force-dynamic";
 
 async function StockJuegos() {

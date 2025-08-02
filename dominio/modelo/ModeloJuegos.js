@@ -171,8 +171,8 @@ class ModeloJuegos {
         if (usuario && cliente === "admin") {
             resultado = resultado.map(r => new JuegoStockAdmin(r));
         } else {
-            // es user normal
             resultado = resultado.filter(j => j.stock > 0)
+            // es user normal
         }
 
 

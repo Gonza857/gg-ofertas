@@ -77,7 +77,10 @@ const Registro = ({juego: j, editarJuego, eliminarJuego}) => {
                     <Button
                         variant="outline"
                         size="sm"
-                        onClick={() => updateStockJE(j.id, 1)}
+                        onClick={() => {
+                            console.log("Juego", j)
+                            updateStockJE(j.id, 1)
+                        }}
                         className="h-8 w-8 p-0"
                     >
                         <Plus className="h-4 w-4"/>

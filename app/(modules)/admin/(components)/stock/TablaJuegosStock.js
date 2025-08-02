@@ -5,7 +5,7 @@ import TablaJuegosStockAdmin from "@/components/page-components/admin/TablaJuego
 
 async function TablaJuegosStock() {
     const token = cookies().get("access-token")?.value
-    const resultado = await obtenerJuegosStock(token)
+    const resultado = await obtenerJuegosStock(token, undefined, "admin")
     if (!resultado.exito) {
         if (resultado.status === 401) {
             redirect("/")

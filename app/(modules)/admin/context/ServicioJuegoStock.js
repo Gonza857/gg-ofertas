@@ -7,6 +7,8 @@ class ServicioJuegoStock {
     static formatearJuego = (juego) => {
         juego.consola = ServicioJuegoStock.obtenerArrayDeConsola(juego.consola)
         juego.editado = new Date();
+        juego.precioCliente = Number(juego.precioCliente)
+        juego.precioReventa = Number(juego.precioReventa)
     }
 
     static obtenerPorId = (arrayJuegos, idJuego) => {
