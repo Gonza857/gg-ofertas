@@ -5,6 +5,7 @@ import {cookies} from "next/headers";
 import CookieManager from "@/dominio/utils/auth/cookiesManager";
 import ManejadorRespuesta from "@/infraestructura/ManejadorRespuesta";
 import {updateJuegoStock} from "@/app/schemas/backend/juegoStock";
+import UrlParametersHandlers from "@/app/helpers/UrlParametersHandlers";
 
 const modeloJuegos = container.resolve("ModeloJuegos");
 const modeloUsuario = container.resolve("ModeloUsuario");
@@ -33,11 +34,14 @@ export async function GET(req, res) {
     const resultado = await validarAdmin();
     if (!resultado.exito) return resultado;
 
-    const { searchParams } = new URL(req.url);
-    let consolaBuscada = searchParams.get('consola') === "undefined" ? undefined : searchParams.get('consola');
+    const parametrosNecesarios = [
+        "consola",
+        "cliente",
+    ]
+    const {consolaBuscada, cliente} = UrlParametersHandlers.obtenerParametros(parametrosNecesarios, req)
 
     try {
-        const juegos = await modeloJuegos.obtenerJuegosStock(consolaBuscada, resultado.usuario)
+        const juegos = await modeloJuegos.obtenerJuegosStock(consolaBuscada, cliente, resultado.usuario)
         return ManejadorRespuesta.ok(juegos)
     } catch (e) {
         return ManejadorRespuesta.error(e.message);

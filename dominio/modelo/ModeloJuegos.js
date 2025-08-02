@@ -155,7 +155,7 @@ class ModeloJuegos {
         arrayJuegos.sort((a, b) => a.name.localeCompare(b.name))
     }
 
-    async obtenerJuegosStock(consolaBuscada = null, usuario = null) {
+    async obtenerJuegosStock(consolaBuscada = null, cliente = "customer", usuario = null) {
         let juegos = await this.repositorioJuegos.obtenerTodosLosJuegosStock()
         juegos = this.#transformarFechaJuegos(juegos)
         juegos.sort((a, b) => a.nombre.localeCompare(b.nombre))
@@ -168,11 +168,13 @@ class ModeloJuegos {
 
         let resultado = consolaBuscada ? filtrados : juegos
 
-        if (usuario) {
+        if (usuario && cliente === "admin") {
             resultado = resultado.map(r => new JuegoStockAdmin(r));
         } else {
             // es user normal
+            resultado = resultado.filter(j => j.stock > 0)
         }
+
 
         return resultado;
     }

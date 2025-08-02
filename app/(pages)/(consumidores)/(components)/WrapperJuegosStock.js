@@ -3,9 +3,9 @@ import {obtenerJuegosStock} from "@/dominio/servicios/stock-juegos";
 import TablaJuegosStock from "@/components/page-components/principales/stock/TablaJuegosStock";
 import React from "react";
 
-async function WrapperJuegosStock ({consola = undefined, cliente = false}) {
+async function WrapperJuegosStock ({consola = undefined, cliente = false, tipoCliente = "customer"}) {
     const token = cookies().get("access-token")?.value
-    const resultado = await obtenerJuegosStock(token, consola);
+    const resultado = await obtenerJuegosStock(token, consola, tipoCliente);
 
     return (
         <TablaJuegosStock juegos={resultado.data ?? []} cliente={cliente}/>

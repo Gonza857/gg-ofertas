@@ -1,6 +1,6 @@
 import Fetcher from "@/infraestructura/Fetcher";
 
-export async function obtenerJuegosStock(token, consola) {
+export async function obtenerJuegosStock(token, consola, tipoCliente = "customer") {
     const fetchParams = {
         method: 'GET',
         next: {
@@ -10,7 +10,7 @@ export async function obtenerJuegosStock(token, consola) {
             Cookie: `access-token=${token}`,
         },
     }
-    return Fetcher.request(`/juegos/stock?consola=${consola}`, fetchParams)
+    return Fetcher.request(`/juegos/stock?consola=${consola}&cliente=${tipoCliente}`, fetchParams)
 }
 
 export async function recargarJuegosStock (consola = undefined) {

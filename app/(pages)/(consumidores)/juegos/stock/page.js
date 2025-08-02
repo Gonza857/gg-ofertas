@@ -23,7 +23,7 @@ async function JuegosEnStock () {
                 <Suspense fallback={
                     <BrandSpinner/>
                 }>
-                    <WrapperJuegosStock cliente={true}/>
+                    <WrapperJuegosStock cliente={true} tipoCliente={"customer"}/>
                 </Suspense>
             </article>
         </main>

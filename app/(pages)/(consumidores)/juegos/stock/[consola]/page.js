@@ -27,7 +27,7 @@ async function JuegosEnStock({params}) {
             <Suspense fallback={
                 <BrandSpinner/>
             }>
-                <WrapperJuegosStock consola={consola} cliente={true}/>
+                <WrapperJuegosStock consola={consola} cliente={true} tipoCliente={"customer"}/>
             </Suspense>
 
         </main>
