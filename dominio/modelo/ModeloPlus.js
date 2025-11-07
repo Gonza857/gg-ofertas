@@ -4,15 +4,15 @@ class ModeloPlus {
 
     repositorioPlus
     referenciaPrecios = [
-        {dias: 30, tipo: "essential", precio: 14850},
-        {dias: 90, tipo: "essential", precio: 22950},
-        {dias: 365, tipo: "essential", precio: 67500},
-        {dias: 30, tipo: "extra", precio: 22950},
-        {dias: 90, tipo: "extra", precio: 37800},
-        {dias: 365, tipo: "extra", precio: 121500},
-        {dias: 30, tipo: "deluxe", precio: 28350},
-        {dias: 90, tipo: "deluxe", precio: 43200},
-        {dias: 365, tipo: "deluxe", precio: 135000}
+        {dias: 30, tipo: "essential", precio: 9000},
+        {dias: 90, tipo: "essential", precio: 16000},
+        {dias: 365, tipo: "essential", precio: 40000},
+        {dias: 30, tipo: "extra", precio: 14000},
+        {dias: 90, tipo: "extra", precio: 27000},
+        {dias: 365, tipo: "extra", precio: 77000},
+        {dias: 30, tipo: "deluxe", precio: 18000},
+        {dias: 90, tipo: "deluxe", precio: 31000},
+        {dias: 365, tipo: "deluxe", precio: 85000}
     ];
 
     constructor(repositorio) {
@@ -107,10 +107,15 @@ class ModeloPlus {
     #obtenerPrecioFinalSegunParametros(diasRestantes, tipo, duracion) {
         diasRestantes = Number(diasRestantes);
         duracion = Number(duracion);
-        const ref = this.referenciaPrecios.find((ref) =>
-            ref.tipo.toLowerCase() === tipo.toLowerCase() && Number(ref.dias) === duracion);
-        const precioCalculado = this.#redondearCien((diasRestantes / ref.dias) * ref.precio)
-        if (diasRestantes !== duracion) return this.#redondearCien(precioCalculado * 0.7)
+
+        const ref = this.referenciaPrecios // buscar input en las referencias por tipo y días
+            .find(
+                (ref) => ref.tipo.toLowerCase() === tipo.toLowerCase()
+                    && Number(ref.dias) === duracion
+            );
+
+        const precioCalculado = this.#redondearCien((diasRestantes / ref.dias) * ref.precio) // con su costo, hago el calculo
+        if (diasRestantes !== duracion) return this.#redondearCien(precioCalculado * 0.85)
         return precioCalculado;
     }
 

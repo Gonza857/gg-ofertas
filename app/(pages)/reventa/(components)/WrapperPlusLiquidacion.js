@@ -7,7 +7,6 @@ async function WrapperPlusLiquidacion() {
 
     return (
         <TablaPlusLiquidacion subscripciones={data}/>
-
     )
 }
 

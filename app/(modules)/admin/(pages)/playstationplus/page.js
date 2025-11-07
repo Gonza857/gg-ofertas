@@ -5,7 +5,6 @@ import TablaPlayStationPlus from "@/app/(modules)/admin/(components)/playstation
 
 function PlayStationPlus () {
     const items = PlayStationPlusAdmin.procesarMembresias(reventaPsnPlus)
-    console.log("items", items);
 
     return (
         <div>
