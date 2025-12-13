@@ -13,12 +13,12 @@ export const images = [
     //     path: "/images/home-carousel/daysofplay-2805.png",
     //     urlTo: "/juegos/ofertas/days-of-play"
     // },
-    {
-        id: id++,
-        alt: "EA SPORTS FC 26",
-        path: "/images/home-carousel/fc26.jpg",
-        urlTo: "/juegos/preventas/4d14af10-1d61-47be-9d31-2340a2f5ef31"
-    },
+    // {
+    //     id: id++,
+    //     alt: "EA SPORTS FC 26",
+    //     path: "/images/home-carousel/fc26.jpg",
+    //     urlTo: "/juegos/preventas/4d14af10-1d61-47be-9d31-2340a2f5ef31"
+    // },
     {
         id: id++,
         alt: "Ofertas de fin de año",

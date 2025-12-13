@@ -1,14 +1,7 @@
-import TablaJuegosStock from "@/components/page-components/principales/stock/TablaJuegosStock";
-import {obtenerJuegosStock} from "@/dominio/servicios/stock-juegos";
-import Recordatorios from "@/components/page-components/consumidores/stock/Recordatorios";
-import {cookies} from "next/headers";
 import React, {Suspense} from "react";
 import BrandSpinner from "@/app/(modules)/admin/(components)/BrandSpinner";
-import GrillaTarjetas from "@/app/(pages)/(consumidores)/(components)/GrillaTarjetas";
 import WrapperJuegosStock from "@/app/(pages)/(consumidores)/(components)/WrapperJuegosStock";
 import InformacionJuegosStock from "@/app/(pages)/(consumidores)/(components)/InformacionJuegosStock";
-
-export const dynamic = "force-dynamic";
 
 export const metadata = {
     title: "Garret Games",
