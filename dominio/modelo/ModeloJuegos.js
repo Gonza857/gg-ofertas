@@ -219,15 +219,12 @@ class ModeloJuegos {
 
         // Oferta principal si es revendedor o cliente
         if (
-            nroOferta === 1 &&
-            (
-                tipoCliente === this.tipoCliente.RESELLER ||
-                tipoCliente === this.tipoCliente.CUSTOMER
-            )
+            tipoCliente === this.tipoCliente.RESELLER ||
+            tipoCliente === this.tipoCliente.CUSTOMER
         ) {
             const filtros = [
                 {atributo: "estaActiva", valor: true},
-                {atributo: "prioridad", valor: 1},
+                {atributo: "prioridad", valor: nroOferta},
             ]
             let oferta = await this.repositorioJuegos.obtenerOfertaActual(filtros)
             this.#ordenarPorDestacadoAndTitulo(oferta.juegos)

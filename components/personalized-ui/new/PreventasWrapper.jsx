@@ -9,7 +9,7 @@ function PreventasWrapper ({preventas}) {
     const router = useRouter();
     if (preventas.length === 0) {
         return (
-            <div className={"w-full md:w-1/2 mx-auto"}>
+            <div className={"w-full md:w-1/2 mx-auto pt-4"}>
                 <SinProductos
                     title={"No hay preventas."}
                     description={"En este momento no hay preventas activas."}
