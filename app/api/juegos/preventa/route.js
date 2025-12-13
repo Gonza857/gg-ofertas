@@ -7,28 +7,10 @@ import {revalidatePath} from "next/cache";
 import {redirect} from "next/navigation";
 import UrlParametersHandlers from "@/app/helpers/UrlParametersHandlers";
 import {juegosOferta} from "@/app/schemas/backend/ofertas";
+import {formDataToObject} from "@/app/helpers/form-parser";
 
 const modeloUsuario = container.resolve("ModeloUsuario");
 const modeloJuego = container.resolve("ModeloJuegos");
-
-const convertirFormData_a_Object = (formData) => {
-    const formObject = {};
-
-    for (let [key, value] of formData.entries()) {
-        // Si la clave ya existe (por ejemplo en inputs repetidos), agrupamos en array
-        if (formObject[key]) {
-            if (Array.isArray(formObject[key])) {
-                formObject[key].push(value);
-            } else {
-                formObject[key] = [formObject[key], value];
-            }
-        } else {
-            formObject[key] = value;
-        }
-    }
-
-    return formObject;
-};
 
 const validarAdmin = async () => {
     const sessionUser = CookieManager.get(cookies(), "access-token");
@@ -43,7 +25,7 @@ export async function POST (req, res) {
     if (!resultado.exito) return resultado;
 
     const body = await req.formData();
-    const formValues = convertirFormData_a_Object(body)
+    const formValues = formDataToObject(body)
 
     let preventa;
     try {

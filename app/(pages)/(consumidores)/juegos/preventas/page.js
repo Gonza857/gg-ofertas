@@ -1,7 +1,7 @@
-import React, {Children} from "react";
+import React from "react";
 import {cookies} from "next/headers";
 import {obtenerPreventas} from "@/dominio/servicios/preventas";
-import PreventaCard from "@/app/(pages)/(consumidores)/(components)/preventa/PreventaCard";
+import PreventasWrapper from "@/components/personalized-ui/new/PreventasWrapper";
 
 async function PreventasList() {
     const token = cookies().get("access-token")?.value
@@ -10,17 +10,11 @@ async function PreventasList() {
 
     return (
         <main className={"styledMain w-full sm:w-11/12 md:w-9/12 xl:w-8/12 mx-auto px-2 pt-20"}>
-            <h2 className="mt-4 text-2xl font-bold mb-2 text-center">Preventas</h2>
-
-            <div
-                className="w-full grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 md:gap-6 px-1 md:px-0 md:pb-4">
-                {resultadoPreventas.data.map((p, index) => (
-                    <PreventaCard key={index} preventa={p}/>
-                ))}
-            </div>
+            <PreventasWrapper  preventas={resultadoPreventas.data}/>
         </main>
 
     )
 }
 
 export default PreventasList;
+

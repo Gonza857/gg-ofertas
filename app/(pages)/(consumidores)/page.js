@@ -1,18 +1,14 @@
 import React from "react";
-import {obtenerJuegosOferta} from "@/dominio/servicios/juegos";
-import TablaJuegosOfertaConsumidores from "@/components/page-components/consumidores/TablaJuegosOfertaConsumidores";
 import AutoCarousel from "@/components/personalized-ui/AutoCarousel";
 import {images} from "@/static-data/home.carrousel.images";
 import BusinessFeatures from "@/components/personalized-ui/BusinessFeatures";
 import BusinessHighlights from "@/components/personalized-ui/BusinessHighlights";
 import PaymentMethods from "@/components/personalized-ui/PaymentMethods";
 import MyCarousel from "@/components/personalized-ui/MyCarousel";
-import {tarjetasPsn, tarjetasSteam} from "@/static-data/item.giftcards";
 import Link from "next/link";
 import {Button} from "@/components/ui/button";
 import {obtenerTodasLasTarjetas} from "@/dominio/servicios/giftcards";
 import {cookies} from "next/headers";
-import PlusOfertaBannerCuotas from "@/components/personalized-ui/shared/PlusOfertaBannerCuotas";
 import {obtenerPreventas} from "@/dominio/servicios/preventas";
 
 export const dynamic = "force-dynamic";

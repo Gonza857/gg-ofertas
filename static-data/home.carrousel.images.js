@@ -21,8 +21,8 @@ export const images = [
     },
     {
         id: id++,
-        alt: "Ofertas de mitad de año",
-        path: "/images/home-carousel/ahorrosdeverano-3007.webp",
+        alt: "Ofertas de fin de año",
+        path: "/images/home-carousel/findeano-1512.jpg",
         urlTo: "/juegos/ofertas"
     },
     {

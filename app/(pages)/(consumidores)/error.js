@@ -7,6 +7,7 @@ import {Alert, AlertDescription} from "@/components/ui/alert"
 import {AlertTriangle} from "lucide-react";
 
 function Error({error, reset}) {
+    console.warn(error.message)
     return (
         <main className="styledMain flex flex-col items-center justify-center px-2">
             <Card className={"border border-red-300"}>
@@ -22,9 +23,9 @@ function Error({error, reset}) {
                             </Link>
                         </Button>
                     </div>
-                    <CardDescription>
-                        {error.message}
-                    </CardDescription>
+                    {/*<CardDescription>*/}
+                    {/*    {error.message}*/}
+                    {/*</CardDescription>*/}
                 </CardHeader>
                 <CardContent className={"flex flex-col md:flex-row"}>
                     <Alert variant="destructive">
