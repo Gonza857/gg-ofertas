@@ -67,9 +67,11 @@ const NavbarConsumidores = () => {
                                 }
                                 {item?.tieneOferta &&
                                     <Badge
-                                        className="ms-4 bg-violet-500 hover:bg-violet-600 text-white flex items-center gap-1 z-20">
+                                        className="ms-2 bg-violet-500 hover:bg-violet-600 text-white flex items-center gap-1 z-20">
                                         <Flame className="h-3 w-3"/>
-                                        {item.texto}
+                                        <span className={"textoBadgeSidebar"}>
+                                            {item.texto}
+                                        </span>
                                     </Badge>
                                 }
                             </Link>
