@@ -13,6 +13,7 @@ import {useRouter, useSearchParams} from "next/navigation";
 import Link from "next/link";
 import {FaWhatsapp} from "react-icons/fa";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
+import {SiPlaystation4, SiPlaystation5} from "react-icons/si";
 
 function TablaJuegosStock({juegos: s, cliente = false}) {
     const [juegos, setJuegos] = useState(s || [])
@@ -119,14 +120,14 @@ function TablaJuegosStock({juegos: s, cliente = false}) {
                                     checked={filtros.tipo.includes("primaria")}
                                     onCheckedChange={() => handleFilterChange("tipo", "primaria")}
                                 />
-                                <span>Primaria</span>
+                                <span>Primaria (1°)</span>
                             </Label>
                             <Label className="flex items-center space-x-2">
                                 <Checkbox
                                     checked={filtros.tipo.includes("secundaria")}
                                     onCheckedChange={() => handleFilterChange("tipo", "secundaria")}
                                 />
-                                <span>Secundaria</span>
+                                <span>Secundaria (2°)</span>
                             </Label>
                         </div>
                     </div>
@@ -186,7 +187,7 @@ const Cabecera = () => {
     return (
         <TableHeader>
             <TableRow>
-                <TableHead className={"w-4/12 md:w-3/12 px-2 md:px-4"}>Nombre</TableHead>
+                <TableHead className={"w-8/12 md:w-3/12 px-2 md:px-4"}>Nombre</TableHead>
                 <TableHead className={"w-1/12 px-2 md:px-4 text-center"}>Consola</TableHead>
                 <TableHead className={"w-1/12 px-2 md:px-4 text-center"}>Precio</TableHead>
                 <TableHead className={"w-1/12 px-2 md:px-4 text-center"}>Tipo</TableHead>
@@ -215,17 +216,47 @@ const Registro = ({juego: j, cliente}) => {
     const precio = cliente ? j.precioCliente : j.precioReventa
     const textoParaCopiar = `${j.nombre} ${j.mostrarIdioma ? j.idioma : ""} | ${j.tipo} | ${j.consola} | $${precio.toLocaleString("es-AR")}`;
 
+    const consola_ = {
+        "PS4/PS5": <>
+            <SiPlaystation4 className={"h-8 w-10"}/>
+            <SiPlaystation5 className={"h-8 w-10"}/>
+        </>,
+        "PS4": <SiPlaystation4 className={"h-8 w-10"}/>,
+        "PS5": <SiPlaystation5 className={"h-8 w-10"}/>,
+    }
+
+    const renderizarConsola = (consolasArray) => {
+        if (consolasArray.length > 1) {
+            return (
+                <>
+                    <SiPlaystation4 className={"h-8 w-10"}/>
+                    <SiPlaystation5 className={"h-8 w-10"}/>
+                </>
+            )
+        }
+        return (
+            <>
+                {consola_[consolasArray[0]] ?? "-"}
+            </>
+        );
+    }
+
     return (
         <TableRow>
             <TableCell
-                className={"p-1 py-2"}
+                className={"p-1 py-2 tituloJuego md:text-base"}
                 onClick={() => copiar(textoParaCopiar, j.id)}
             >
                 {j.nombre} {j.mostrarIdioma && j.idioma}
             </TableCell>
-            <TableCell className={"p-1 py-2 text-center"}>{j.consola.join("/")}</TableCell>
-            <TableCell className={"p-1 py-2 text-center"}>${precio.toLocaleString("es-AR")}</TableCell>
-            <TableCell className={"p-1 py-2 text-center"}>{j.tipo}</TableCell>
+            <TableCell className={"p-1 py-2 text-center tituloJuego md:text-base"}>
+                <span className={"flex flex-col md:flex-row justify-center items-center"}>
+                    {renderizarConsola(j.consola)}
+                </span>
+            </TableCell>
+            <TableCell className={"p-1 py-2 text-center tituloJuego md:text-base"}>${precio.toLocaleString("es-AR")}</TableCell>
+            <TableCell className={"hidden md:table-cell p-1 py-2 text-center tituloJuego md:text-base"}>{j.tipo}</TableCell>
+            <TableCell className={"md:hidden p-1 py-2 text-center tituloJuego md:text-base"}>{j.tipo === "Primaria" ? "1°" : "2°"}</TableCell>
             <TableCell className="p-2">
                 <Link
                     href={`https://wa.me/5491132001372?text=${"Me interesa " + encodeURIComponent(textoParaCopiar)}`}
