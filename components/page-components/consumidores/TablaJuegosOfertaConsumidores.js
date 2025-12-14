@@ -102,7 +102,8 @@ function TablaJuegosOfertaConsumidores({juegos = [], fechaExpiracion, titulo = n
                 <CardContent className={"space-y-4 p-2 md:p-6"}>
                     <div className="flex flex-col md:flex-row gap-4">
                         <div className="relative flex-1">
-                            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                            <Search
+                                className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4"/>
                             <Input
                                 onChange={buscarJuego}
                                 placeholder={"Buscar por nombre de juego"}
@@ -124,6 +125,12 @@ function TablaJuegosOfertaConsumidores({juegos = [], fechaExpiracion, titulo = n
                                     </SelectGroup>
                                 </SelectContent>
                             </Select>
+                        </div>
+                        <div
+                            className="md:hidden bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-lg p-3">
+                            <p className="text-sm text-blue-900 dark:text-blue-100 text-center">
+                                💡 Desliza la tabla hacia la derecha para ver todas las columnas
+                            </p>
                         </div>
                     </div>
                     <TablaOfertas {...tablaProps}/>
