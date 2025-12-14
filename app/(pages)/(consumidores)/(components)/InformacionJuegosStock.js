@@ -1,5 +1,5 @@
 import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert";
-import {AlertCircle, CheckCircle, Clock, CreditCard, Info} from "lucide-react";
+import {AlertCircle, CheckCircle, Clock, CreditCard, Info, MessageCircleQuestion} from "lucide-react";
 import {Badge} from "@/components/ui/badge";
 import Link from "next/link";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
@@ -14,7 +14,7 @@ function InformacionJuegosStock () {
                     <div className="flex items-start gap-3">
                         <AlertCircle className="h-5 w-5 text-blue-600 mt-0.5" />
                         <div>
-                            <h3 className="font-semibold text-blue-800 mb-1">📋 Información de precios</h3>
+                            <h3 className="text-blue-800 mb-1">📋 Información de precios</h3>
                             <p className="text-sm text-blue-700">
                                 Si el juego publicado esta de oferta
                                 <strong> se toma el precio de oferta</strong>.
@@ -34,6 +34,27 @@ function InformacionJuegosStock () {
                     </Link>
                 </AlertDescription>
             </Alert>
+
+            <Card className="border-green-200 bg-blue-50">
+                <CardContent className="p-4">
+                    <div className="flex flex-col items-start gap-3">
+                        <div className={"flex gap-2 items-center"}>
+                            <MessageCircleQuestion className="h-4 w-4"/>
+                            <h3 className="text-blue-800">Preguntas frecuentes</h3>
+                        </div>
+                        <div>
+                            <p className="text-sm text-blue-700">
+                                Para más información sobre nuestros juegos digitales
+                                <Link href="/preguntas-frecuentes" className={"ms-1 underline transition-all"}>
+                                    click aqui
+                                </Link>
+                                .
+                            </p>
+
+                        </div>
+                    </div>
+                </CardContent>
+            </Card>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <Card className="border-l-4 border-l-green-500">

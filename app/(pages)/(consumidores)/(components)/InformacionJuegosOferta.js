@@ -1,4 +1,4 @@
-import {CheckCircle, Clock, CreditCard, Info} from "lucide-react";
+import {CheckCircle, Clock, CreditCard, Info, MessageCircleQuestion} from "lucide-react";
 import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert";
 import {Badge} from "@/components/ui/badge";
 import Link from "next/link";
@@ -31,6 +31,27 @@ function InformacionJuegosOferta({fecha}) {
                     </Link>
                 </AlertDescription>
             </Alert>
+
+            <Card className="border-green-200 bg-blue-50">
+                <CardContent className="p-4">
+                    <div className="flex flex-col items-start gap-3">
+                        <div className={"flex gap-2 items-center"}>
+                            <MessageCircleQuestion className="h-4 w-4"/>
+                            <h3 className="text-blue-800">Preguntas frecuentes</h3>
+                        </div>
+                        <div>
+                            <p className="text-sm text-blue-700">
+                                Para más información sobre nuestros juegos digitales
+                                <Link href="/preguntas-frecuentes" className={"ms-1 underline transition-all"}>
+                                    click aqui
+                                </Link>
+                                .
+                            </p>
+
+                        </div>
+                    </div>
+                </CardContent>
+            </Card>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <Card className="border-l-4 border-l-blue-500">
@@ -74,13 +95,13 @@ function InformacionJuegosOferta({fecha}) {
                     </CardHeader>
                     <CardContent className="space-y-3">
                         <div className="flex justify-between items-center">
-                            <span className="text-sm">Precio lista</span>
-                            <Badge variant="secondary">Hasta 3 cuotas sin interés</Badge>
+                            <span className="text-sm w-1/2">Precio lista</span>
+                            <Badge variant="secondary" className={"w-1/2"}>Hasta 3 cuotas sin interés</Badge>
                         </div>
                         <div className="flex justify-between items-center">
-                            <span className="text-sm">Precio transferencia</span>
+                            <span className="text-sm w-1/2">Precio transferencia</span>
                             <Badge className={"bg-green-600 text-white"}>
-                                20% OFF Abonando por CVU/CBU
+                                20% OFF
                             </Badge>
                         </div>
                         <Alert className="mt-3 p-2">
