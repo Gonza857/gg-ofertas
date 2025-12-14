@@ -149,7 +149,7 @@ const TablaOfertas = (props) => {
                 }
             </p>
             <div className={"overflow-x-auto"}>
-                <Table className={"w-full"}>
+                <Table className={"min-w-[500px]"}>
                     <TableCaption>Juegos en oferta - Precios actualizados</TableCaption>
                     <Cabecera/>
                     <Cuerpo {...props}/>
@@ -191,9 +191,10 @@ const Registro = ({juego}) => {
             >
                 {juego.nombre}
             </TableCell>
+            <TableCell className={"p-2 text-center text-cyan-800 font-semibold tituloJuego md:text-base"}>
+                ${juego.precioTransferencia}
+            </TableCell>
             <TableCell className={"p-2 text-center tituloJuego md:text-base"}>${juego.precioLista}</TableCell>
-            <TableCell
-                className={"p-2 text-center text-cyan-800 font-semibold tituloJuego md:text-base"}>${juego.precioTransferencia}</TableCell>
             <TableCell className="p-2 text-center">
                 <Link
                     href={`https://wa.me/5491132001372?text=${"Me interesa " + encodeURIComponent(mensaje)}`}
@@ -208,12 +209,12 @@ const Registro = ({juego}) => {
 
 const Cabecera = () => {
     return (
-        <TableHeader>
+        <TableHeader className={"sticky top-0"}>
             <TableRow>
-                <TableHead className={"w-7/2 p-2 text-center"}>Nombre del Juego</TableHead>
-                <TableHead className={"w-2/12 p-2 text-center"}>Precio Lista</TableHead>
-                <TableHead className={"w-2/12 p-2 text-center"}>Transferencia</TableHead>
-                <TableHead className={"w-1/12 p-2 hidden md:table-cell text-center"}>Contacto</TableHead>
+                <TableHead className={"w-[50%] p-2 text-center"}>Nombre del Juego</TableHead>
+                <TableHead className={"w-[20%] p-2 text-center"}>Transferencia</TableHead>
+                <TableHead className={"w-[20%] p-2 text-center"}>Precio Lista</TableHead>
+                <TableHead className={"w-[10%] p-2 hidden md:table-cell text-center"}>Contacto</TableHead>
             </TableRow>
         </TableHeader>
     )
