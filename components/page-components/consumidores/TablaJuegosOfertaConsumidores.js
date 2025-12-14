@@ -186,14 +186,14 @@ const Registro = ({juego}) => {
     return (
         <TableRow>
             <TableCell
-                className="font-medium p-2"
+                className="font-medium p-2 tituloJuego md:text-base"
                 onClick={() => copiar(mensaje, juego.nombre)}
             >
                 {juego.nombre}
             </TableCell>
-            <TableCell className={"p-2 text-center"}>${juego.precioLista}</TableCell>
+            <TableCell className={"p-2 text-center tituloJuego md:text-base"}>${juego.precioLista}</TableCell>
             <TableCell
-                className={"p-2 text-center text-cyan-800 font-semibold"}>${juego.precioTransferencia}</TableCell>
+                className={"p-2 text-center text-cyan-800 font-semibold tituloJuego md:text-base"}>${juego.precioTransferencia}</TableCell>
             <TableCell className="p-2 text-center">
                 <Link
                     href={`https://wa.me/5491132001372?text=${"Me interesa " + encodeURIComponent(mensaje)}`}
@@ -210,7 +210,7 @@ const Cabecera = () => {
     return (
         <TableHeader>
             <TableRow>
-                <TableHead className={"w-1/2 p-2 text-center"}>Nombre del Juego</TableHead>
+                <TableHead className={"w-7/2 p-2 text-center"}>Nombre del Juego</TableHead>
                 <TableHead className={"w-2/12 p-2 text-center"}>Precio Lista</TableHead>
                 <TableHead className={"w-2/12 p-2 text-center"}>Transferencia</TableHead>
                 <TableHead className={"w-1/12 p-2 hidden md:table-cell text-center"}>Contacto</TableHead>
