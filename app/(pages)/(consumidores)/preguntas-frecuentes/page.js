@@ -6,7 +6,7 @@ function PreguntasFrecuentes () {
     return (
         <main className={"styledMain pt-20 pb-4"}>
             <section className="w-full max-w-3xl mx-auto px-4 font-sans">
-                <h2 className="text-3xl font-bold text-center mb-8 text-primary">Preguntas Frecuentes</h2>
+                <h2 className="mt-4 text-3xl font-bold text-center mb-8 text-primary">Preguntas Frecuentes</h2>
                 <Accordion type="single" collapsible className="w-full space-y-6">
                     {PREGUNTAS_Y_RESPUESTAS.map((topic, topicIndex) => (
                         <AccordionItem key={topicIndex} value={`topic-${topicIndex}`} className="border rounded-lg shadow-md">
