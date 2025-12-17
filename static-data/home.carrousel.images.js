@@ -13,12 +13,12 @@ export const images = [
     //     path: "/images/home-carousel/daysofplay-2805.png",
     //     urlTo: "/juegos/ofertas/days-of-play"
     // },
-    {
-        id: id++,
-        alt: "The Game Awards",
-        path: "/images/home-carousel/thegameawards-1512.png",
-        urlTo: "/juegos/ofertas/game-awards"
-    },
+    // {
+    //     id: id++,
+    //     alt: "The Game Awards",
+    //     path: "/images/home-carousel/thegameawards-1512.png",
+    //     urlTo: "/juegos/ofertas/game-awards"
+    // },
     {
         id: id++,
         alt: "Ofertas de fin de año",
