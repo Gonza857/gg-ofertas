@@ -40,7 +40,7 @@ export async function GET(req, res) {
         const tarjetas = await modeloTarjetas.obtenerTodas(solicitante, resultado.usuario)
         return ManejadorRespuesta.ok(tarjetas)
     } catch (e) {
-        return ManejadorRespuesta.error(e.message);
+        return ManejadorRespuesta.error("Ocurrió un error al obtener las tarjetas de regalo.");
     }
 }
 
@@ -57,8 +57,7 @@ export async function POST(req, res) {
         revalidar()
         return ManejadorRespuesta.ok(id);
     } catch (e) {
-        console.error(e)
-        return ManejadorRespuesta.error(e.message)
+        return ManejadorRespuesta.error("Ocurrió un error al guardar la tarjeta de regalo.")
     }
 }
 

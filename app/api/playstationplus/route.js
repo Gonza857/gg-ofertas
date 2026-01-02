@@ -20,11 +20,11 @@ export async function POST(req, res) {
     if (!resultado.exito) return resultado;
     try {
         const cuerpo = await req.json();
-        const resultadoGuardar = await modeloPlus.guardarSubscripcion(cuerpo, resultado.usuario);
+        await modeloPlus.guardarSubscripcion(cuerpo, resultado.usuario);
         revalidar()
-        return ManejadorRespuesta.ok({data: resultadoGuardar})
+        return ManejadorRespuesta.ok(null, "Membresía guardada correctamente.")
     } catch (e) {
-        return ManejadorRespuesta.error(e.message)
+        return ManejadorRespuesta.error("Ocurrió un error al guardar la membresía.")
     }
 }
 
@@ -33,9 +33,9 @@ export async function PATCH(req, res) {
     if (!resultado.exito) return resultado;
     try {
         const cuerpo = await req.json();
-        const resultadoActualizar = await modeloPlus.actualizar(cuerpo, resultado.usuario);
+        await modeloPlus.actualizar(cuerpo, resultado.usuario);
         revalidar()
-        return ManejadorRespuesta.ok({data: resultadoActualizar})
+        return ManejadorRespuesta.ok(null, "Membresía actualizada correctamente.")
     } catch (e) {
         return ManejadorRespuesta.error(e.message)
     }
@@ -50,7 +50,7 @@ export async function GET(req, res) {
         return ManejadorRespuesta.ok(resultadoObtener)
     } catch (e) {
         console.error(e.message)
-        return ManejadorRespuesta.error(e.message)
+        return ManejadorRespuesta.error("Ocurrió un error al obtener las membresías.")
     }
 }
 
@@ -62,8 +62,8 @@ export async function DELETE(req) {
     try {
         const resultadoEliminar = await modeloPlus.eliminar(idPlus, resultado.usuario);
         revalidar()
-        return ManejadorRespuesta.ok({data: resultadoEliminar})
+        return ManejadorRespuesta.ok("Membresía eliminada correctamente", resultadoEliminar)
     } catch (e) {
-        return ManejadorRespuesta.error(e.message)
+        return ManejadorRespuesta.error("Ocurrió un error al eliminar la membresía.")
     }
 }

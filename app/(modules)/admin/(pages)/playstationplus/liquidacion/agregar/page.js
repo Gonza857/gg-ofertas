@@ -17,6 +17,7 @@ function AgregarPlaystationPlus() {
         slotsPs4: 2,
         slotsPs5: 2,
         duracion: null,
+        codigo: 0,
     });
 
     const router = useRouter()
@@ -25,11 +26,13 @@ function AgregarPlaystationPlus() {
         e.preventDefault()
         if (datosFormulario?.costo === 0) return toastError("Añade el costo total de la FULL.")
         if (!datosFormulario?.tipo) return toastError("Añade el tipo de PlayStation Plus.")
-        const data = await subirPlaystationplus(datosFormulario);
-        const {mensaje, exito} = data;
+        if (!datosFormulario?.codigo) return toastError("Completá con el código de cuenta.")
+
+        const {mensaje, exito} = await subirPlaystationplus(datosFormulario);
         if (exito) {
             toastSuccess(mensaje)
             router.push("/admin/playstationplus/liquidacion")
+            return;
         }
         return toastError(mensaje);
     }
@@ -43,6 +46,15 @@ function AgregarPlaystationPlus() {
     return (
         <section className={"w-full sm:w-11/12 md:w-8/12 lg:w-1/4 mx-auto"}>
             <form className={"space-y-4"} onSubmit={enviarFormulario}>
+                <InputWrapper>
+                    <Label>Código</Label>
+                    <Input
+                        name={"codigo"}
+                        type={"text"}
+                        onChange={manejarCampos}
+                        placeholder={"26-123"}
+                    />
+                </InputWrapper>
                 <div>
                     <Label>Selecciona el tipo de PlayStation Plus</Label>
                     <Select onValueChange={(valor) => manejarSelect("tipo", valor)} name="tipo">

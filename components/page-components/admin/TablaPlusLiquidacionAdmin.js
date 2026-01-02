@@ -123,16 +123,21 @@ const ModalEliminar = ({estaAbierto, manejarEliminarPlus, manejarModalEliminar})
 const ModalEditar = ({estaAbierto, manejarModalEditar, plusSeleccionado = null}) => {
     const [datosFormulario, setDatosFormulario] = useState({...plusSeleccionado});
 
-    console.log("plus seleccionado", plusSeleccionado)
-
     if (!plusSeleccionado) return;
 
     const enviarFormulario = async (e) => {
         e.preventDefault()
-        console.log("esto mando al back", {...plusSeleccionado, ...datosFormulario})
-        const data = await actualizarPlus({...plusSeleccionado, ...datosFormulario});
+        const entidad = {...plusSeleccionado, ...datosFormulario};
+        if (!entidad.codigo) {
+            toastError("Debes ingresar un código para la cuenta")
+            return;
+        }
+
+        const data = await actualizarPlus(entidad);
         const {mensaje, exito} = data;
         manejarModalEditar()
+
+        console.log("Resultado de petición", exito)
         if (exito) return toastSuccess(mensaje);
         return toastError(mensaje);
     }
@@ -147,6 +152,15 @@ const ModalEditar = ({estaAbierto, manejarModalEditar, plusSeleccionado = null})
         <ModalCustomizado estaAbierto={estaAbierto}>
             <ModalCustomizado.Titulo>{plusSeleccionado.id}</ModalCustomizado.Titulo>
             <form className={"space-y-4"} onSubmit={enviarFormulario}>
+                <InputWrapper>
+                    <Label>Código</Label>
+                    <Input
+                        name={"codigo"}
+                        type={"text"}
+                        onChange={manejarCampos}
+                        defaultValue={plusSeleccionado.codigo ?? ""}
+                    />
+                </InputWrapper>
                 <div>
                     <Label>Selecciona el tipo de PlayStation Plus</Label>
                     <Select
@@ -229,7 +243,8 @@ const Cabecera = () => {
     return (
         <TableHeader>
             <TableRow>
-                <TableHead className={"w-4/12 px-2 md:px-4"}>Membresia</TableHead>
+                <TableHead className={"w-1/12 px-2 md:px-4"}>Código</TableHead>
+                <TableHead className={"w-3/12 px-2 md:px-4"}>Membresia</TableHead>
                 <TableHead className={"w-1/12 px-2 md:px-4 text-center"}>Días restantes</TableHead>
                 <TableHead className={"w-2/12 px-2 md:px-4 text-center"}>Consola</TableHead>
                 <TableHead className={"w-2/12 px-2 md:px-4 text-center"}>Precio</TableHead>
@@ -272,6 +287,7 @@ const Registro = ({plus, editarPlus, eliminarPlus}) => {
     const consola = `${plus.slotsPs4 > 0 ? "PS4" : ""} ${(plus.slotsPs4 > 0 && plus.slotsPs5 > 0) ? "/" : ""} ${plus.slotsPs5 > 0 ? "PS5" : ""}`
     return (
         <TableRow>
+            <TableCell className={"p-1 text-left"}>{plus.codigo ?? "-"}</TableCell>
             <TableCell className={"p-1 py-2 flex items-center"}>
                 <Badge className={`${diccionarioTipos[plus.tipo.toLowerCase()]} mx-1 md:mx-2 h-6`}>
                     {plus.tipo}

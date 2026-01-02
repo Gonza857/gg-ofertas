@@ -23,11 +23,12 @@ class ManejadorRespuesta {
         )
     }
 
-    static ok(data) {
+    static ok(data, mensaje = undefined) {
         return NextResponse.json(
             {
                 exito: true,
                 data: data,
+                mensaje
             }
         )
     }

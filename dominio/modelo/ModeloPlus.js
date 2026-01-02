@@ -81,10 +81,33 @@ class ModeloPlus {
         })
 
         if (cliente === "admin") {
+            subscripciones.sort((a, b) => {
+                const codigoA = a.codigo || "";
+                const codigoB = b.codigo || "";
+                return codigoA.localeCompare(codigoB, undefined, { numeric: true, sensitivity: 'base' });
+            });
             return subscripciones
         }
 
-        return subscripciones.filter(s => s.diasRestantes > 0)
+        const agrupadas = subscripciones
+            .filter(s => s.diasRestantes > 0)
+            .reduce((acc, curr) => {
+            const tipo = curr.tipo || "otros"; // Fallback por si falta el tipo
+
+            if (!acc[tipo]) {
+                acc[tipo] = [];
+            }
+            acc[tipo].push(curr);
+            return acc;
+        }, {});
+
+        Object.keys(agrupadas).forEach((tipo) => {
+            agrupadas[tipo].sort((a, b) => {
+                return a.diasRestantes - b.diasRestantes;
+            });
+        });
+
+        return agrupadas
     }
 
     #obtenerFechaDeCreacion(subscripcion) {

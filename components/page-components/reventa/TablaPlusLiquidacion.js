@@ -21,7 +21,12 @@ const saberDuracion = {
 
 function TablaPlusLiquidacion({subscripciones}) {
     const {copiado, copiar} = useCopiarAlPortapapeles()
-    const textoCompleto = subscripciones
+
+    console.log("subs entrantes", subscripciones)
+
+    const todas = [...subscripciones.Essential, ...subscripciones.Extra, ...subscripciones.Deluxe]
+
+    const textoCompleto = todas
         .map(plus =>
             `PlayStation Plus ${plus.tipo} | ${plus.diasRestantes} días | ${plus.slotsPs4 > 0 ? "PS4" : ""}${(plus.slotsPs4 > 0 && plus.slotsPs5 > 0) ? "/" : ""}${plus.slotsPs5 > 0 ? "PS5" : ""} | $${plus.costo}`
         )
@@ -29,7 +34,7 @@ function TablaPlusLiquidacion({subscripciones}) {
 
     return (
         <>
-            <Tabla subscripciones={subscripciones}/>
+            <Tabla subscripciones={todas}/>
             <Button
                 variant={"outline"}
                 onClick={() => copiar(textoCompleto)}
