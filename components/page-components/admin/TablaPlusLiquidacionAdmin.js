@@ -1,9 +1,8 @@
 "use client"
 
 import {Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
-import {useCopiarAlPortapapeles} from "@/hooks/useCopyToClipboard";
 import {Badge} from "@/components/ui/badge";
-import {Check, Copy, Pen, Trash2} from "lucide-react";
+import {Pen, Trash2} from "lucide-react";
 import ModalCustomizado from "@/components/personalized-ui/Modal";
 import {useState} from "react";
 import {Button} from "@/components/ui/button";
@@ -14,8 +13,10 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/c
 import {Input} from "@/components/ui/input";
 import {CardDescription} from "@/components/ui/card";
 import Link from "next/link";
+import {PlaystationplusMapper} from "@/front/entities/playstationplus/playstationplus.mapper";
 
 function TablaPlusLiquidacionAdmin({subscripciones: s}) {
+
     const [subscripciones, setSubscripciones] = useState(s)
     const [modalEditarAbierto, setModalEditarAbierto] = useState(false)
     const [modalEliminarAbierto, setModalEliminarAbierto] = useState(false)
@@ -61,7 +62,7 @@ function TablaPlusLiquidacionAdmin({subscripciones: s}) {
     const tablaProps = {
         eliminarPlus,
         editarPlus,
-        subscripciones
+        subscripciones: PlaystationplusMapper.mapListToEntities(s)
     }
 
     const modalEditarProps = {
@@ -82,11 +83,18 @@ function TablaPlusLiquidacionAdmin({subscripciones: s}) {
             <ModalEliminar {...modalEliminarProps}/>
             <ModalEditar {...modalEditarProps}/>
             <Tabla {...tablaProps}/>
-            <Link href={"/admin/playstationplus/liquidacion/agregar"}>
-                <Button className={"w-full mt-2"} variant={"outline"}>
-                    Agregar
+            <div className={"flex justify-center"}>
+                <Button
+                    asChild
+                    className="w-full xl:w-1/2 mt-2 mx-auto"
+                    variant="outline"
+                >
+                    <Link href="/admin/playstationplus/liquidacion/agregar">
+                        Agregar
+                    </Link>
                 </Button>
-            </Link>
+            </div>
+
         </>)
 }
 
@@ -137,7 +145,6 @@ const ModalEditar = ({estaAbierto, manejarModalEditar, plusSeleccionado = null})
         const {mensaje, exito} = data;
         manejarModalEditar()
 
-        console.log("Resultado de petición", exito)
         if (exito) return toastSuccess(mensaje);
         return toastError(mensaje);
     }
@@ -231,7 +238,7 @@ const ModalEditar = ({estaAbierto, manejarModalEditar, plusSeleccionado = null})
 
 const Tabla = (props) => {
     return (
-        <Table>
+        <Table className={"w-full xl:w-6/12 mx-auto"}>
             <TableCaption>PlayStation Plus en liquidación - Precios actualizados</TableCaption>
             <Cabecera/>
             <Cuerpo {...props}/>
@@ -246,7 +253,8 @@ const Cabecera = () => {
                 <TableHead className={"w-1/12 px-2 md:px-4"}>Código</TableHead>
                 <TableHead className={"w-3/12 px-2 md:px-4"}>Membresia</TableHead>
                 <TableHead className={"w-1/12 px-2 md:px-4 text-center"}>Días restantes</TableHead>
-                <TableHead className={"w-2/12 px-2 md:px-4 text-center"}>Consola</TableHead>
+                <TableHead className={"w-1/12 px-2 md:px-4 text-center"}>SLOTS PS4</TableHead>
+                <TableHead className={"w-1/12 px-2 md:px-4 text-center"}>SLOTS PS5</TableHead>
                 <TableHead className={"w-2/12 px-2 md:px-4 text-center"}>Precio</TableHead>
                 <TableHead className={"w-1/12 px-2 md:px-4 text-center"}>Editar</TableHead>
                 <TableHead className={"w-1/12 px-2 md:px-4 text-center"}>Eliminar</TableHead>
@@ -256,6 +264,7 @@ const Cabecera = () => {
 }
 
 const Cuerpo = ({subscripciones, editarPlus, eliminarPlus}) => {
+    console.table(subscripciones)
     return (
         <TableBody>
             {subscripciones.map(p => (
@@ -296,7 +305,9 @@ const Registro = ({plus, editarPlus, eliminarPlus}) => {
             </TableCell>
 
             <TableCell className={"p-1 text-center"}>{plus.diasRestantes}</TableCell>
-            <TableCell className={"p-1 text-center"}>{consola}</TableCell>
+            <TableCell className={"p-1 text-center"}>{plus.slotsPs4}</TableCell>
+            <TableCell className={"p-1 text-center"}>{plus.slotsPs5}</TableCell>
+            {/*<TableCell className={"p-1 text-center"}>{consola}</TableCell>*/}
             <TableCell className={"p-1 text-center"}>${plus.costo}</TableCell>
             <TableCell className={"p-1 text-center"}>
                 <Pen

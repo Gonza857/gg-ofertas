@@ -23,7 +23,7 @@ export const navbarOptions = [
         hasSubmenu: true,
         submenu: [
             {icon: BadgePercent, label: `Juegos en oferta`, href: "/juegos/ofertas"},
-            {icon: BadgePercent, label: `The Game Awards`, href: "/juegos/ofertas/game-awards"},
+            // {icon: BadgePercent, label: `The Game Awards`, href: "/juegos/ofertas/game-awards"},
             {icon: Star, label: `Preventas`, href: "/juegos/preventas"},
             // {icon: BadgePercent, label: `${"Ofertas"} de 'Fin de semana'`, href: "/juegos/ofertas/fin-de-semana"},
             // {icon: BadgePercent, label: `Ofertas 'Days of Play'`, href: "/juegos/ofertas/days-of-play"},
@@ -64,13 +64,13 @@ export const sideNavbarOptions = [
         tieneOferta: true,
         texto: "Nuevas"
     },
-    {
-        name: "The Game Awards",
-        icon: <BadgePercent className="mr-2 h-6 w-6"/>,
-        href: "/juegos/ofertas/game-awards",
-        tieneOferta: true,
-        texto: "Imperdibles"
-    },
+    // {
+    //     name: "The Game Awards",
+    //     icon: <BadgePercent className="mr-2 h-6 w-6"/>,
+    //     href: "/juegos/ofertas/game-awards",
+    //     tieneOferta: true,
+    //     texto: "Imperdibles"
+    // },
     // {
     //     name: "Ofertas 'Days of Play'",
     //     icon: <BadgePercent className="mr-2 h-6 w-6"/>,
