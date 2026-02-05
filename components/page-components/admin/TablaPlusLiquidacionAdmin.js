@@ -238,7 +238,7 @@ const ModalEditar = ({estaAbierto, manejarModalEditar, plusSeleccionado = null})
 
 const Tabla = (props) => {
     return (
-        <Table className={"w-full xl:w-6/12 mx-auto"}>
+        <Table className={"w-full lg:w-10/12 xl:w-9/12 2xl:w-8/12 mx-auto"}>
             <TableCaption>PlayStation Plus en liquidación - Precios actualizados</TableCaption>
             <Cabecera/>
             <Cuerpo {...props}/>
